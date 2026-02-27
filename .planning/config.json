@@ -1,0 +1,13 @@
+{
+  "project_name": "Flux Website Builder",
+  "depth": "standard",
+  "tech_stack": [
+    "Next.js",
+    "TypeScript",
+    "Tailwind CSS",
+    "Supabase",
+    "Vercel API",
+    "GitHub API",
+    "OpenAI/Anthropic"
+  ]
+}

@@ -1,0 +1,171 @@
+.container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: #000;
+  color: #fff;
+}
+
+.header {
+  padding: 1.5rem 2rem;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  position: sticky;
+  top: 0;
+}
+
+.logo {
+  font-size: 1.75rem;
+  font-weight: 900;
+  letter-spacing: -0.05rem;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+}
+
+.logoHighlight {
+  background: linear-gradient(
+    45deg,
+    #0070f3 0%,
+    #ff0080 50%,
+    #0070f3 100%
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shine 4s linear infinite;
+  margin-left: 2px;
+}
+
+.main {
+  flex-grow: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 4rem 2rem;
+  background: radial-gradient(circle at center, rgba(0, 112, 243, 0.08), transparent 70%);
+}
+
+.card {
+  background: rgba(17, 17, 17, 0.5);
+  backdrop-filter: blur(30px);
+  padding: 6rem 4rem;
+  border-radius: 32px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  text-align: center;
+  max-width: 650px;
+  width: 100%;
+  animation: fadeIn 0.8s cubic-bezier(0.19, 1, 0.22, 1);
+  box-shadow: 0 40px 80px rgba(0, 0, 0, 0.4);
+}
+
+.icon {
+  font-size: 5rem;
+  margin-bottom: 3rem;
+  filter: drop-shadow(0 0 20px rgba(0, 112, 243, 0.4));
+  animation: bounce 2s infinite;
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+.card h1 {
+  font-size: 4rem;
+  font-weight: 800;
+  margin-bottom: 1.5rem;
+  letter-spacing: -0.1rem;
+  background: linear-gradient(to bottom, #fff, rgba(255, 255, 255, 0.6));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.message {
+  font-size: 1.25rem;
+  color: #a1a1a1;
+  margin-bottom: 4rem;
+  line-height: 1.6;
+}
+
+.countdownContainer {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 3rem 2rem;
+  border-radius: 24px;
+  margin-bottom: 4rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.countdownContainer::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(to right, transparent, #0070f3, transparent);
+}
+
+.countdownItem {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.time {
+  font-size: 4.5rem;
+  font-weight: 900;
+  color: #fff;
+  letter-spacing: -0.1rem;
+  text-shadow: 0 0 30px rgba(255, 255, 255, 0.1);
+}
+
+.label {
+  font-size: 0.875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.2rem;
+  color: #a1a1a1;
+  font-weight: 700;
+}
+
+.nextSteps {
+  color: #666;
+  margin-bottom: 4rem;
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.homeBtn {
+  display: inline-block;
+  background-color: #fff;
+  color: #000;
+  padding: 1.25rem 3.5rem;
+  border-radius: 12px;
+  font-weight: 700;
+  text-decoration: none;
+  font-size: 1.125rem;
+  transition: all 0.3s cubic-bezier(0.19, 1, 0.22, 1);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.homeBtn:hover {
+  transform: translateY(-4px) scale(1.02);
+  background-color: rgba(255, 255, 255, 0.95);
+  box-shadow: 0 20px 40px rgba(255, 255, 255, 0.1);
+}
+
+@media (max-width: 768px) {
+  .card h1 {
+    font-size: 2.5rem;
+  }
+  .card {
+    padding: 3rem 2rem;
+  }
+  .time {
+    font-size: 3rem;
+  }
+}

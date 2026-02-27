@@ -1,0 +1,99 @@
+"use client";
+
+import { useEffect, useState } from "react";
+import { useParams } from "next/navigation";
+import styles from "./success.module.css";
+import Link from "next/link";
+import Magnetic from "@/components/ui/Magnetic";
+
+export default function LaunchGuidePage() {
+  const { id } = useParams();
+  const [intake, setIntake] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchIntake = async () => {
+      try {
+        const res = await fetch(`/api/admin/intakes`);
+        const data = await res.json();
+        const item = data.find((i: any) => i.id === id);
+        setIntake(item);
+      } catch (err) {
+        console.error(err);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchIntake();
+  }, [id]);
+
+  if (loading) return <div className={styles.loading}>Finalizing Launch Sequence...</div>;
+  if (!intake) return <div className={styles.error}>Vision not found.</div>;
+
+  return (
+    <div className={styles.container}>
+      <header className={styles.header}>
+        <div className={styles.logo}>
+          Flux<span className={styles.logoHighlight}>Webs</span> Success
+        </div>
+      </header>
+
+      <main className={styles.main}>
+        <div className={styles.card}>
+          <div className={styles.icon}>🌌</div>
+          <h1>Mission Accomplished.</h1>
+          <p className={styles.subtitle}>
+            Your visionary website for <strong>{intake.business_name}</strong> is ready for the world.
+          </p>
+
+          <div className={styles.dnsSection}>
+            <h2>The Launch Sequence</h2>
+            <p className={styles.dnsDesc}>
+              To take your site live on your custom domain, update your DNS settings with these values:
+            </p>
+
+            <div className={styles.dnsGrid}>
+              <div className={styles.dnsRow}>
+                <div className={styles.dnsCol}>
+                  <label>Type</label>
+                  <span>A Record</span>
+                </div>
+                <div className={styles.dnsCol}>
+                  <label>Name</label>
+                  <span>@</span>
+                </div>
+                <div className={styles.dnsCol}>
+                  <label>Value</label>
+                  <code>76.76.21.21</code>
+                </div>
+              </div>
+              <div className={styles.dnsRow}>
+                <div className={styles.dnsCol}>
+                  <label>Type</label>
+                  <span>CNAME</span>
+                </div>
+                <div className={styles.dnsCol}>
+                  <label>Name</label>
+                  <span>www</span>
+                </div>
+                <div className={styles.dnsCol}>
+                  <label>Value</label>
+                  <code>cname.vercel-dns.com</code>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className={styles.footer}>
+            <p>Once updated, your site will be live within 2-24 hours.</p>
+            <Magnetic intensity={0.2}>
+              <a href={intake.staging_url} target="_blank" rel="noopener noreferrer" className={styles.liveBtn}>
+                Visit Your Digital Home
+              </a>
+            </Magnetic>
+          </div>
+        </div>
+      </main>
+    </div>
+  );
+}

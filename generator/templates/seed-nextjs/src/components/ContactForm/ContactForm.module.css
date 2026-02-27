@@ -1,0 +1,96 @@
+.contact {
+  padding: 8rem 2rem;
+  background: var(--background);
+  border-top: 1px solid var(--border);
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.card {
+  background: white;
+  padding: 5rem 4rem;
+  border-radius: 32px;
+  border: 1px solid var(--border);
+  max-width: 800px;
+  margin: 0 auto;
+  box-shadow: 0 40px 100px rgba(0, 0, 0, 0.05);
+  text-align: center;
+}
+
+.title {
+  font-size: 3rem;
+  font-weight: 800;
+  margin-bottom: 1.5rem;
+  letter-spacing: -0.1rem;
+}
+
+.subtitle {
+  font-size: 1.125rem;
+  color: var(--foreground);
+  opacity: 0.6;
+  margin-bottom: 4rem;
+}
+
+.form {
+  text-align: left;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+
+.field {
+  margin-bottom: 2rem;
+}
+
+.field label {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--foreground);
+  margin-bottom: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1rem;
+}
+
+.field input, .field textarea {
+  width: 100%;
+  padding: 1rem 0;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid var(--border);
+  font-size: 1.25rem;
+  font-weight: 500;
+  color: var(--foreground);
+  outline: none;
+}
+
+.field textarea {
+  height: 120px;
+  resize: vertical;
+}
+
+.submit {
+  width: 100%;
+  background: var(--primary);
+  color: var(--primary-foreground);
+  padding: 1.5rem;
+  border-radius: 12px;
+  font-size: 1.125rem;
+  font-weight: 800;
+  border: none;
+  cursor: pointer;
+  margin-top: 2rem;
+  transition: all 0.2s;
+}
+
+.submit:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+}
