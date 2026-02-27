@@ -3,6 +3,8 @@ import { spawn } from "child_process";
 import path from "path";
 import fs from "fs";
 
+export const dynamic = "force-dynamic";
+
 export async function POST(req: Request) {
   try {
     const { intakeId } = await req.json();
