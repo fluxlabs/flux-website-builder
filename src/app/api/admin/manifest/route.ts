@@ -16,6 +16,7 @@ export async function POST(req: Request) {
     // Trigger the manifest script as a background process
     const scriptPath = path.join(process.cwd(), "generator", "manifest.ts");
     const logPath = path.join(process.cwd(), "manifest.log");
+    const buildLogPath = path.join(process.cwd(), `manifest-${intakeId}.log`);
 
     console.log(`Script path: ${scriptPath}`);
 
@@ -34,8 +35,13 @@ export async function POST(req: Request) {
     });
 
     const logStream = fs.createWriteStream(logPath, { flags: 'a' });
+    const buildLogStream = fs.createWriteStream(buildLogPath, { flags: 'w' });
+    
     child.stdout.pipe(logStream);
     child.stderr.pipe(logStream);
+    
+    child.stdout.pipe(buildLogStream);
+    child.stderr.pipe(buildLogStream);
 
     child.unref();
 

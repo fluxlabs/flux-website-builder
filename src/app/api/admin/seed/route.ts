@@ -7,7 +7,12 @@ export async function POST() {
     const testLead = {
       name: "Elon Musk",
       email: "elon@spacex.com",
+      phone: "+1 (310) 555-0199",
       business_name: "Mars Colonization Corp",
+      industry: "Aerospace & Interplanetary Logistics",
+      location: "Boca Chica, Texas",
+      employee_count: "200+",
+      has_website: true,
       current_url: "https://spacex.com",
       links: "https://tesla.com, https://x.com",
       goal: "Sell Products",

@@ -2,16 +2,23 @@ import { NextResponse } from "next/server";
 import fs from "fs";
 import path from "path";
 
-export async function GET() {
+export async function GET(req: Request) {
   try {
-    const logPath = path.join(process.cwd(), "manifest.log");
+    const { searchParams } = new URL(req.url);
+    const intakeId = searchParams.get("intakeId");
+    
+    let logPath = path.join(process.cwd(), "manifest.log");
+    if (intakeId) {
+      logPath = path.join(process.cwd(), `manifest-${intakeId}.log`);
+    }
+
     if (!fs.existsSync(logPath)) {
       return NextResponse.json({ logs: "No logs found yet." });
     }
 
     const content = fs.readFileSync(logPath, "utf-8");
-    // Get last 50 lines
-    const lines = content.split("\n").slice(-50).join("\n");
+    // Get last 100 lines for more context
+    const lines = content.split("\n").slice(-100).join("\n");
 
     return NextResponse.json({ logs: lines });
   } catch (error) {

@@ -14,12 +14,16 @@ export async function createGitHubRepo(repoName: string) {
       private: true,
       auto_init: false,
     });
-    console.log(`Repo created: ${data.html_url}`);
-    return data.html_url;
+    console.log(`Repo created: ${data.html_url} (ID: ${data.id})`);
+    return { url: data.html_url, id: data.id };
   } catch (error: any) {
     if (error.status === 422) {
-      console.log("Repo already exists, continuing...");
-      return `https://github.com/${GITHUB_ORG}/${repoName}`;
+      console.log("Repo already exists, fetching details...");
+      const { data } = await octokit.rest.repos.get({
+        owner: GITHUB_ORG,
+        repo: repoName,
+      });
+      return { url: data.html_url, id: data.id };
     }
     throw error;
   }
@@ -58,7 +62,7 @@ export async function pushToGitHub(buildDir: string, repoUrl: string) {
   }
 }
 
-function slugify(text: string) {
+export function slugify(text: string) {
   return text
     .toString()
     .toLowerCase()
@@ -68,7 +72,7 @@ function slugify(text: string) {
     .replace(/\-\-+/g, '-');   // Replace multiple - with single -
 }
 
-export async function deployToVercel(repoName: string, businessName: string) {
+export async function deployToVercel(repoName: string, businessName: string, repoId: number) {
   console.log(`Triggering Vercel deployment for ${businessName}...`);
   const VERCEL_TOKEN = process.env.VERCEL_TOKEN;
   const VERCEL_TEAM_ID = process.env.VERCEL_TEAM_ID;
@@ -95,48 +99,96 @@ export async function deployToVercel(repoName: string, businessName: string) {
         gitRepository: {
           type: "github",
           repo: `${GITHUB_ORG}/${repoName}`,
+          repoId: repoId,
         },
       }),
     });
 
     const projectData: any = await createRes.json();
-    if (projectData.error && projectData.error.code !== "name_already_exists") {
+    if (projectData.error && projectData.error.code !== "name_already_exists" && projectData.error.code !== "conflict") {
         throw new Error(`Vercel Project Creation Failed: ${JSON.stringify(projectData.error)}`);
     }
 
-    console.log("Vercel project linked. Triggering deployment...");
+    const projectId = projectData.id || (await getProjectId(repoName, VERCEL_TOKEN, VERCEL_TEAM_ID));
 
-    // 2. Trigger a deployment
-    const deployRes = await fetch(`https://api.vercel.com/v13/deployments${teamParam}`, {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${VERCEL_TOKEN}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        name: repoName,
-        project: repoName,
-        gitSource: {
-          type: "github",
-          ref: "main",
-          repoId: projectData.id || (await getProjectId(repoName, VERCEL_TOKEN, VERCEL_TEAM_ID)),
+    console.log("Vercel project linked. Waiting for registration (10s)...");
+    await new Promise(resolve => setTimeout(resolve, 10000)); 
+
+    console.log("Triggering initial deployment...");
+
+    // 2. Trigger an explicit deployment to force the first build
+    // Attempt with retry if GitHub sync is lagging
+    let deployData: any;
+    for (let attempt = 1; attempt <= 5; attempt++) {
+      const deployRes = await fetch(`https://api.vercel.com/v13/deployments${teamParam}`, {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${VERCEL_TOKEN}`,
+          "Content-Type": "application/json",
         },
-      }),
-    });
+        body: JSON.stringify({
+          name: repoName,
+          project: projectId, // Use project ID
+          gitSource: {
+            type: "github",
+            ref: "main",
+            repoId: repoId,
+          },
+        }),
+      });
 
-    const deployData: any = await deployRes.json();
-    const stagingUrl = `https://${deployData.alias?.[0] || repoName + '.vercel.app'}`;
+      deployData = await deployRes.json();
+      if (!deployData.error) {
+          console.log(`Deployment triggered successfully on attempt ${attempt}.`);
+          break;
+      }
+      
+      console.warn(`Deployment attempt ${attempt} failed: ${deployData.error.message}. Retrying in 15s...`);
+      await new Promise(resolve => setTimeout(resolve, 15000));
+    }
+
+    if (deployData.error) {
+        console.error("Manual Deployment Trigger finally failed after 5 attempts:", deployData.error);
+    }
+
+    const vercelUrl = `https://${deployData.alias?.[0] || repoName + '.vercel.app'}`;
     
-    // 3. Assign Whitelabel Domain using Business Name
+    // 3. Create a Deploy Hook for future re-builds
+    const deployHook = await createDeployHook(projectId, VERCEL_TOKEN, VERCEL_TEAM_ID);
+    
+    // 4. Assign Whitelabel Domain using Business Name
     const clientSlug = slugify(businessName);
     const whitelabelUrl = await assignCustomDomain(repoName, clientSlug, VERCEL_TOKEN, VERCEL_TEAM_ID);
     
-    const finalUrl = whitelabelUrl || stagingUrl;
+    const finalUrl = whitelabelUrl || vercelUrl;
     console.log(`Live Vision at: ${finalUrl}`);
-    return finalUrl;
+    return { url: finalUrl, deployHook };
   } catch (error) {
     console.error("Vercel Deployment Error:", error);
-    return `https://${repoName}.vercel.app`;
+    return { url: `https://${repoName}.vercel.app`, deployHook: null };
+  }
+}
+
+async function createDeployHook(projectId: string, token: string, teamId?: string) {
+  console.log("Creating Vercel Deploy Hook...");
+  const teamParam = teamId ? `?teamId=${teamId}` : "";
+  try {
+    const res = await fetch(`https://api.vercel.com/v1/projects/${projectId}/deploy-hooks${teamParam}`, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        name: "Flux AI Auto-Build",
+        ref: "main"
+      }),
+    });
+    const data: any = await res.json();
+    return data.url || null;
+  } catch (e) {
+    console.error("Failed to create deploy hook:", e);
+    return null;
   }
 }
 
@@ -176,7 +228,7 @@ async function assignCustomDomain(repoName: string, subdomainSlug: string, token
         headers: { Authorization: `Bearer ${token}` }
     });
 
-    console.log(`Whitelabel domain assigned and verification triggered: ${customSubdomain}`);
+    console.log(`Whitelabel domain assigned: https://${customSubdomain}`);
     return `https://${customSubdomain}`;
   } catch (e) {
     console.error("Failed to assign custom domain:", e);

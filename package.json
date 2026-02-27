@@ -7,7 +7,9 @@
     "dev": "next dev -p 0",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "worker": "npx ts-node --esm generator/worker.ts",
+    "manifest": "npx ts-node --esm generator/manifest.ts"
   },
   "keywords": [],
   "author": "",
@@ -19,6 +21,7 @@
     "framer-motion": "^12.34.3",
     "fs-extra": "^11.3.3",
     "next": "^16.1.6",
+    "node-vibrant": "^4.0.4",
     "octokit": "^5.0.5",
     "react": "^19.2.4",
     "react-dom": "^19.2.4",

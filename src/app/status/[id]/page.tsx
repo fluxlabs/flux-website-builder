@@ -1,0 +1,124 @@
+"use client";
+
+import { useEffect, useState } from "react";
+import { useParams } from "next/navigation";
+import styles from "./status.module.css";
+import Link from "next/link";
+import { motion, AnimatePresence } from "framer-motion";
+
+const PIPELINE_STEPS = [
+  { id: 1, name: "QUEUED", label: "Awaiting AI Resources" },
+  { id: 2, name: "VISION", label: "LLM Strategic Research" },
+  { id: 3, name: "BUILD", label: "Project Architecture" },
+  { id: 4, name: "DEPLOY", label: "Live Manifestation" },
+  { id: 5, name: "READY", label: "Review Your Site" }
+];
+
+export default function BuildStatusPage() {
+  const params = useParams();
+  const id = params.id as string;
+  const [intake, setIntake] = useState<any>(null);
+  const [logs, setLogs] = useState<string>("");
+  const [currentStep, setCurrentStep] = useState(1);
+  const [loading, setLoading] = useState(true);
+
+  const fetchData = async () => {
+    try {
+      const res = await fetch(`/api/intake?id=${id}`);
+      const data = await res.json();
+      setIntake(data);
+      
+      if (data.status === 'ai_generating') {
+        const logRes = await fetch(`/api/admin/logs?intakeId=${id}`);
+        const logData = await logRes.json();
+        setLogs(logData.logs || "");
+        
+        // Update steps based on logs
+        if (logData.logs.includes("MANIFESTATION COMPLETE")) setCurrentStep(5);
+        else if (logData.logs.includes("STARTING AUTOMATED DEPLOYMENT")) setCurrentStep(4);
+        else if (logData.logs.includes("Installing dependencies")) setCurrentStep(3);
+        else if (logData.logs.includes("Initiating AI research")) setCurrentStep(2);
+        else setCurrentStep(1);
+      } else if (data.status === 'client_review' || data.status === 'approved' || data.status === 'live') {
+        setCurrentStep(5);
+      }
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+    const interval = setInterval(fetchData, 3000);
+    return () => clearInterval(interval);
+  }, [id]);
+
+  if (loading) return <div className={styles.loading}>Connecting to Flux Neural Grid...</div>;
+  if (!intake) return <div className={styles.error}>Vision not found.</div>;
+
+  return (
+    <div className={styles.container}>
+      <header className={styles.header}>
+        <Link href="/" className={styles.logo}>
+          Flux<span className={styles.logoHighlight}>Webs</span>
+        </Link>
+      </header>
+
+      <main className={styles.main}>
+        <div className={styles.statusCard}>
+          <div className={styles.headerInfo}>
+            <h1>Manifesting: {intake.business_name || intake.current_url}</h1>
+            <p>Your visionary digital experience is being brought to life.</p>
+          </div>
+
+          <div className={styles.pipeline}>
+            {PIPELINE_STEPS.map((step) => (
+              <div key={step.id} className={`${styles.step} ${currentStep >= step.id ? styles.active : ''}`}>
+                <div className={styles.stepCircle}>
+                  {currentStep > step.id ? "✓" : step.id}
+                </div>
+                <div className={styles.stepLabel}>
+                  <strong>{step.name}</strong>
+                  <span>{step.label}</span>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <AnimatePresence>
+            {currentStep < 5 ? (
+              <motion.div 
+                initial={{ opacity: 0 }} 
+                animate={{ opacity: 1 }} 
+                className={styles.logSection}
+              >
+                <div className={styles.logHeader}>
+                  <div className={styles.pulse} />
+                  <span>LIVE MANIFESTATION STREAM</span>
+                </div>
+                <div className={styles.logBox}>
+                  <pre>{logs || "Initializing build process..."}</pre>
+                </div>
+              </motion.div>
+            ) : (
+              <motion.div 
+                initial={{ opacity: 0, scale: 0.95 }} 
+                animate={{ opacity: 1, scale: 1 }} 
+                className={styles.readySection}
+              >
+                <div className={styles.readyIcon}>🚀</div>
+                <h2>Your Vision is Manifested!</h2>
+                <p>The AI has completed your site. It is now live on our staging environment for your review.</p>
+                <div className={styles.actionRow}>
+                  <a href={intake.staging_url} target="_blank" className={styles.primaryBtn}>Review Staging Site →</a>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
+      </main>
+    </div>
+  );
+}
