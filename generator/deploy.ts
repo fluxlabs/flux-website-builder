@@ -80,7 +80,7 @@ export async function deployToVercel(repoName: string, businessName: string, rep
 
   if (!VERCEL_TOKEN) {
     console.warn("VERCEL_TOKEN missing, falling back to predicted URL.");
-    return `https://${repoName}.vercel.app`;
+    return { url: `https://${repoName}.vercel.app`, deployHook: null };
   }
 
   const teamParam = VERCEL_TEAM_ID ? `?teamId=${VERCEL_TEAM_ID}` : "";

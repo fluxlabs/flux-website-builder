@@ -6,7 +6,6 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import Magnetic from "@/components/ui/Magnetic";
-import Vibrant from "node-vibrant";
 
 export default function IntakePage() {
   const router = useRouter();
@@ -73,10 +72,11 @@ export default function IntakePage() {
 
       setExtractingColors(true);
       try {
+        const { Vibrant } = (await import("node-vibrant")) as any;
         const palette = await Vibrant.from(previewUrl).getPalette();
         const colors = Object.values(palette)
           .filter(swatch => swatch !== null)
-          .map(swatch => swatch!.getHex());
+          .map((swatch: any) => swatch.getHex());
         
         setFormData(prev => ({ 
           ...prev, 
@@ -153,6 +153,7 @@ export default function IntakePage() {
     : (formData.businessName && formData.industry && formData.location);
   const isStep3Valid = !!formData.vertical && !!formData.layout;
   const isStep4Valid = true; // Logo is optional
+  const isStep5Valid = !!formData.colors;
   const isStep6Valid = formData.pages.length > 0;
   const isStep7Valid = formData.brandVoice && formData.targetAudience;
 

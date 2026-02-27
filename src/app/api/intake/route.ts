@@ -90,8 +90,8 @@ export async function POST(req: Request) {
 
         return NextResponse.json({ success: true, id: intakeId });
     } else {
-
-    return NextResponse.json({ success: true });
+        return NextResponse.json({ success: true });
+    }
   } catch (error) {
     console.error("Internal Server Error:", error);
     return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
