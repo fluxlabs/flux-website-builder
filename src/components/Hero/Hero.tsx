@@ -66,7 +66,7 @@ export default function Hero() {
               <div className={styles.shine} />
             </Link>
           </Magnetic>
-          <p className={styles.ctaSubtext}>No credit card required. Finalize after delivery.</p>
+          <p className={styles.ctaSubtext}>Join 50+ visionaries. No credit card required. Finalize after delivery.</p>
         </motion.div>
 
         <motion.div variants={itemVariants} className={styles.stats}>
