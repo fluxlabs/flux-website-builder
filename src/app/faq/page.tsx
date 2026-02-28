@@ -12,23 +12,23 @@ const MotionTypography = motion(Typography);
 const faqs = [
   {
     question: "How does the 48-72 hour guarantee work?",
-    answer: "Once you submit your intake form, our Flux AI engine immediately begins synthesizing your vision. Within 48-72 hours, you'll receive a staging link to review your custom-built Next.js site."
+    answer: "Once you submit your form, we start building immediately. Within 2-3 days, you'll receive a preview link to review your new professional website."
   },
   {
     question: "Is this just a template?",
-    answer: "No. While we use advanced architectural patterns for reliability, every site is synthesized from scratch based on your specific business goals, brand voice, and industry niche."
+    answer: "No. While we use proven designs for speed, every site is built from scratch based on your specific business goals and industry. It is truly custom-made for you."
   },
   {
-    question: "Do I own the code?",
-    answer: "Yes. Once you approve the build and the site goes live, we hand over the GitHub repository to you. You have full ownership of the source code and assets."
+    question: "Do I own the site?",
+    answer: "Yes. Once you approve the build and the site goes live, we hand over all the website files to you. You have full ownership of everything."
   },
   {
-    question: "What if I need changes after the site is live?",
-    answer: "We offer a 'Satisfaction Guarantee'—we'll tweak the AI draft until you're happy. Post-launch, you can manage the site via the provided repository or request a maintenance package from us."
+    question: "What if I need changes later?",
+    answer: "We want you to be happy. We'll tweak the first draft until you love it. After your site is live, you can easily make updates yourself or ask us for help."
   },
   {
     question: "Can I use my own domain?",
-    answer: "Absolutely. We provide a step-by-step Launch Guide to help you point your domain (GoDaddy, Namecheap, etc.) to our high-performance Vercel hosting."
+    answer: "Absolutely. We provide a simple guide to help you connect your domain (like from GoDaddy or Namecheap) to your new fast and secure hosting."
   }
 ];
 

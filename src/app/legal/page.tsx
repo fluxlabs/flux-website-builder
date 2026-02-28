@@ -49,21 +49,21 @@ export default function LegalPage() {
                 <Box component="section">
                   <Typography variant="h5" sx={{ fontWeight: 700, mb: 2 }}>1. Information We Collect</Typography>
                   <Typography sx={{ color: '#888', lineHeight: 1.8, fontSize: '1.125rem' }}>
-                    We collect information you provide directly to us via our intake form, including your name, email address, phone number, and business details. This data is used solely to synthesize and deploy your website.
+                    We collect information you provide to us when you fill out our form, including your name, email address, phone number, and business details. This data is used only to build and launch your website.
                   </Typography>
                 </Box>
 
                 <Box component="section">
                   <Typography variant="h5" sx={{ fontWeight: 700, mb: 2 }}>2. How We Use Your Data</Typography>
                   <Typography sx={{ color: '#888', lineHeight: 1.8, fontSize: '1.125rem' }}>
-                    Your data is processed by our AI synthesis engine to generate source code and assets for your project. We do not sell your personal information to third parties.
+                    Your data is processed by our AI technology to create the text and designs for your project. We do not sell your personal information to others.
                   </Typography>
                 </Box>
 
                 <Box component="section">
                   <Typography variant="h5" sx={{ fontWeight: 700, mb: 2 }}>3. Cookies & Tracking</Typography>
                   <Typography sx={{ color: '#888', lineHeight: 1.8, fontSize: '1.125rem' }}>
-                    We use essential cookies to maintain your session and improve our intake experience. We do not use invasive tracking pixels for advertising.
+                    We use basic cookies to keep you logged in and improve our website experience. We do not use invasive tracking tools for advertising.
                   </Typography>
                 </Box>
               </Stack>
@@ -77,21 +77,21 @@ export default function LegalPage() {
                 <Box component="section">
                   <Typography variant="h5" sx={{ fontWeight: 700, mb: 2 }}>1. Service Delivery</Typography>
                   <Typography sx={{ color: '#888', lineHeight: 1.8, fontSize: '1.125rem' }}>
-                    Flux provides an AI-driven website generation service. The 48-72 hour delivery guarantee applies to the initial staging link after a successful intake submission.
+                    Flux provides an AI website building service. Our 48-72 hour guarantee applies to when you receive your first preview link after submitting your form.
                   </Typography>
                 </Box>
 
                 <Box component="section">
-                  <Typography variant="h5" sx={{ fontWeight: 700, mb: 2 }}>2. Intellectual Property</Typography>
+                  <Typography variant="h5" sx={{ fontWeight: 700, mb: 2 }}>2. Ownership</Typography>
                   <Typography sx={{ color: '#888', lineHeight: 1.8, fontSize: '1.125rem' }}>
-                    Upon final approval and delivery, you own the generated code for your specific instance. Flux retains ownership of its underlying AI models, internal tooling, and template logic.
+                    Once you approve and pay for your site, you own the website files created for you. Flux keeps ownership of our underlying AI systems and designs.
                   </Typography>
                 </Box>
 
                 <Box component="section">
-                  <Typography variant="h5" sx={{ fontWeight: 700, mb: 2 }}>3. Hosting & DNS</Typography>
+                  <Typography variant="h5" sx={{ fontWeight: 700, mb: 2 }}>3. Hosting & Domains</Typography>
                   <Typography sx={{ color: '#888', lineHeight: 1.8, fontSize: '1.125rem' }}>
-                    While we provide a Launch Guide, the responsibility for pointing DNS records and maintaining domain ownership lies with the client.
+                    While we help you launch your site, you are responsible for keeping your domain name active and pointing it to our hosting service.
                   </Typography>
                 </Box>
               </Stack>

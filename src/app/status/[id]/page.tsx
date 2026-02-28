@@ -7,11 +7,11 @@ import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 
 const PIPELINE_STEPS = [
-  { id: 1, name: "QUEUED", label: "Awaiting AI Resources" },
-  { id: 2, name: "VISION", label: "LLM Strategic Research" },
-  { id: 3, name: "BUILD", label: "Project Architecture" },
-  { id: 4, name: "DEPLOY", label: "Live Realization" },
-  { id: 5, name: "READY", label: "Review Your Site" }
+  { id: 1, name: "WAITING", label: "Getting started" },
+  { id: 2, name: "RESEARCH", label: "Learning about your business" },
+  { id: 3, name: "DESIGNING", label: "Building your custom site" },
+  { id: 4, name: "LAUNCHING", label: "Putting it online" },
+  { id: 5, name: "DONE", label: "Ready for you to see" }
 ];
 
 export default function BuildStatusPage() {
@@ -55,8 +55,8 @@ export default function BuildStatusPage() {
     return () => clearInterval(interval);
   }, [id]);
 
-  if (loading) return <div className={styles.loading}>Connecting to Flux Neural Grid...</div>;
-  if (!intake) return <div className={styles.error}>Vision not found.</div>;
+  if (loading) return <div className={styles.loading}>Connecting...</div>;
+  if (!intake) return <div className={styles.error}>Website not found.</div>;
 
   return (
     <div className={styles.container}>
@@ -69,8 +69,8 @@ export default function BuildStatusPage() {
       <main className={styles.main}>
         <div className={styles.statusCard}>
           <div className={styles.headerInfo}>
-            <h1>Synthesizing: {intake.business_name || intake.current_url}</h1>
-            <p>Your visionary digital experience is being brought to life.</p>
+            <h1>Building: {intake.business_name || intake.current_url}</h1>
+            <p>Your professional website is being built right now.</p>
           </div>
 
           <div className={styles.pipeline}>
@@ -96,10 +96,10 @@ export default function BuildStatusPage() {
               >
                 <div className={styles.logHeader}>
                   <div className={styles.pulse} />
-                  <span>LIVE SYNTHESIS STREAM</span>
+                  <span>PROGRESS LOG</span>
                 </div>
                 <div className={styles.logBox}>
-                  <pre>{logs || "Initializing build process..."}</pre>
+                  <pre>{logs || "Getting everything ready..."}</pre>
                 </div>
               </motion.div>
             ) : (
@@ -109,10 +109,10 @@ export default function BuildStatusPage() {
                 className={styles.readySection}
               >
                 <div className={styles.readyIcon}>🚀</div>
-                <h2>Your Vision is Realized!</h2>
-                <p>The AI has completed your site. It is now live on our staging environment for your review.</p>
+                <h2>Your website is ready!</h2>
+                <p>Our team and AI have finished your site. You can now review the first draft below.</p>
                 <div className={styles.actionRow}>
-                  <a href={intake.staging_url} target="_blank" className={styles.primaryBtn}>Review Staging Site →</a>
+                  <a href={intake.staging_url} target="_blank" className={styles.primaryBtn}>Review Your Site →</a>
                 </div>
               </motion.div>
             )}

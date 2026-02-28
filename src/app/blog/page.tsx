@@ -10,19 +10,19 @@ const MotionTypography = motion(Typography);
 
 const posts = [
   {
-    title: "Why Speed is the Only SEO Factor That Matters in 2026",
-    category: "Insights",
+    title: "Why Website Speed Matters More Than Ever in 2026",
+    category: "Tips",
     date: "Feb 24, 2026",
     image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800&q=80"
   },
   {
-    title: "Synthesizing Brand Voice: How AI Understands Your Industry",
+    title: "How Our AI Understands Your Unique Brand",
     category: "Technology",
     date: "Feb 20, 2026",
     image: "https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&w=800&q=80"
   },
   {
-    title: "The Death of the Multi-Month Web Project",
+    title: "Why You Shouldn't Wait Months for a New Website",
     category: "Business",
     date: "Feb 15, 2026",
     image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=800&q=80"
@@ -50,10 +50,10 @@ export default function BlogPage() {
               WebkitTextFillColor: 'transparent'
             }}
           >
-            Insights.
+            Articles.
           </MotionTypography>
-          <Typography variant="h5" sx={{ color: '#666', maxWidth: 700, mx: 'auto', lineHeight: 1.6 }}>
-            Thought leadership at the intersection of AI and digital architecture.
+          <Typography variant="h5" sx={{ color: '#888', maxWidth: 700, mx: 'auto', lineHeight: 1.6 }}>
+            Tips and stories about building great websites for your business.
           </Typography>
         </Box>
 

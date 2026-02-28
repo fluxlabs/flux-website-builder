@@ -44,10 +44,10 @@ export default function ContactPage() {
                   WebkitTextFillColor: 'transparent'
                 }}
               >
-                Let's Scale Your Vision.
+                We're here <br/> to help.
               </MotionTypography>
-              <Typography variant="h5" sx={{ color: '#666', lineHeight: 1.6, maxWidth: 500 }}>
-                Have questions about a complex project? Need a custom quote? We're here to help you move fast.
+              <Typography variant="h5" sx={{ color: '#888', lineHeight: 1.6, maxWidth: 500 }}>
+                Have questions? Need a custom quote? Send us a message and we'll get back to you quickly.
               </Typography>
             </Box>
 
@@ -58,8 +58,8 @@ export default function ContactPage() {
               </Box>
               <Box>
                 <Typography variant="overline" sx={{ color: '#444', fontWeight: 800, letterSpacing: '0.1rem', display: 'block', mb: 1 }}>Operation Hours</Typography>
-                <Typography variant="h6" sx={{ fontWeight: 700, mb: 0.5 }}>24/7 AI Synthesis Pipeline</Typography>
-                <Typography variant="body1" sx={{ color: '#666' }}>Human Support: Mon-Fri 9am-6pm CST</Typography>
+                <Typography variant="h6" sx={{ fontWeight: 700, mb: 0.5 }}>Always Building</Typography>
+                <Typography variant="body1" sx={{ color: '#666' }}>Support: Mon-Fri 9am-6pm CST</Typography>
               </Box>
             </Stack>
           </Grid>

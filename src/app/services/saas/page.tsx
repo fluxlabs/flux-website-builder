@@ -30,10 +30,10 @@ export default function SaasService() {
               WebkitTextFillColor: 'transparent'
             }}
           >
-            SaaS Infrastructure <br/> at Light Speed.
+            Build your software <br/> faster.
           </MotionTypography>
-          <Typography variant="h5" sx={{ color: '#666', maxWidth: 700, mx: 'auto', mb: 6, lineHeight: 1.6 }}>
-            Founders: Stop building your own boilerplate. Let Flux synthesize your core architecture in 72 hours.
+          <Typography variant="h5" sx={{ color: '#888', maxWidth: 700, mx: 'auto', mb: 6, lineHeight: 1.6 }}>
+            Founders: Stop wasting time on the basic setup. We build the foundation of your software in just 3 days.
           </Typography>
           <Button 
             component={Link} 
@@ -56,13 +56,13 @@ export default function SaasService() {
 
         <Grid container spacing={4} sx={{ mb: 20 }}>
           {[
-            { icon: <Server size={40} />, title: "Core Boilerplate", desc: "Everything you need to launch: Auth, Database, API routes, and clean App Router architecture." },
-            { icon: <Globe size={40} />, title: "Global Edge", desc: "Deployment-ready infrastructure optimized for sub-10ms latency across the globe." },
-            { icon: <Cpu size={40} />, title: "AI-Augmented Code", desc: "High-performance TypeScript code synthesized by our engine, following strict modern patterns." }
+            { icon: <Server size={40} />, title: "Ready-to-use foundation", desc: "Get everything you need to start: logins, databases, and a clean structure that's easy to build on." },
+            { icon: <Globe size={40} />, title: "Fast worldwide access", desc: "Your software will be ready to work for users all over the world with super-fast loading speeds." },
+            { icon: <Cpu size={40} />, title: "High-quality code", desc: "Our system writes clean, professional code that follows the best modern standards automatically." }
           ].map((v, i) => (
             <Grid size={{ xs: 12, md: 4 }} key={i}>
               <Box sx={{ p: 5, background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.05)', borderRadius: '32px', height: '100%', transition: 'all 0.3s ease', '&:hover': { background: 'rgba(255,255,255,0.04)', borderColor: 'rgba(255,255,255,0.1)', transform: 'translateY(-10px)' } }}>
-                <Box sx={{ color: '#0070f3', mb: 3 }}>{v.icon}</Box>
+                <Box sx={{ color: '#fff', mb: 3 }}>{v.icon}</Box>
                 <Typography variant="h5" sx={{ fontWeight: 700, mb: 2 }}>{v.title}</Typography>
                 <Typography sx={{ color: '#888', lineHeight: 1.7 }}>{v.desc}</Typography>
               </Box>
@@ -71,17 +71,17 @@ export default function SaasService() {
         </Grid>
 
         <Box sx={{ textAlign: 'center' }}>
-          <Typography variant="h2" sx={{ fontWeight: 800, mb: 8, letterSpacing: '-0.1rem' }}>Synthesize Your Scale.</Typography>
+          <Typography variant="h2" sx={{ fontWeight: 800, mb: 8, letterSpacing: '-0.1rem' }}>Built to grow with you.</Typography>
           <Grid container spacing={8}>
             {[
-              { title: "Auth Architect", desc: "Automated setup of complex RBAC and multi-tenant authentication systems." },
-              { title: "Database Schema", desc: "Optimized PostgreSQL migrations and types generated from your business requirements." },
-              { title: "API Synthesis", desc: "REST or GraphQL architectures synthesized with full documentation and testing suites." }
+              { title: "Easy user logins", desc: "Secure and simple login systems so your users can sign up and start using your tool right away." },
+              { title: "Smart data storage", desc: "We set up your database so it stays organized and fast as you add more and more users." },
+              { title: "Connected systems", desc: "Our builds make it easy for your software to talk to other tools and services you already use." }
             ].map((v, i) => (
               <Grid size={{ xs: 12, md: 4 }} key={i} sx={{ textAlign: 'left' }}>
                 <Box sx={{ borderLeft: '1px solid rgba(255,255,255,0.1)', pl: 3 }}>
-                  <Typography variant="h6" sx={{ fontWeight: 700, mb: 2, color: '#0070f3' }}>{v.title}</Typography>
-                  <Typography sx={{ color: '#666', lineHeight: 1.6 }}>{v.desc}</Typography>
+                  <Typography variant="h6" sx={{ fontWeight: 700, mb: 2, color: '#fff' }}>{v.title}</Typography>
+                  <Typography sx={{ color: '#888', lineHeight: 1.6 }}>{v.desc}</Typography>
                 </Box>
               </Grid>
             ))}

@@ -330,7 +330,12 @@ function IntakeContent() {
                     <Chip key={p} label={p} onClick={() => handlePageToggle(p)} sx={{ py: 4, px: 2, fontSize: '1.25rem', borderRadius: '20px', border: '1px solid rgba(255,255,255,0.1)', bgcolor: formData.pages.includes(p) ? '#fff' : 'transparent', color: formData.pages.includes(p) ? '#000' : '#888', fontWeight: 800, '&:hover': { bgcolor: formData.pages.includes(p) ? '#fff' : 'rgba(255,255,255,0.05)' } }} />
                   ))}
                 </Box>
-                <TextField fullWidth multiline rows={3} label="List your services or products" name="servicesList" value={formData.servicesList} onChange={handleChange} variant="standard" placeholder="Tell us exactly what you do or sell so we can write the text for you." inputProps={{ sx: { fontSize: '1.25rem', color: '#fff' } }} />
+                <Stack spacing={4}>
+                  <TextField fullWidth multiline rows={2} label="List your services or products" name="servicesList" value={formData.servicesList} onChange={handleChange} variant="standard" placeholder="e.g. Roof repair, Home cleaning, or specific products you sell." inputProps={{ sx: { fontSize: '1.25rem', color: '#fff' } }} />
+                  {formData.pages.includes("About Us") && (
+                    <TextField fullWidth multiline rows={2} label="Your Story (Optional)" name="heroMessage" value={formData.heroMessage} onChange={handleChange} variant="standard" placeholder="Tell us how you started or what your mission is." inputProps={{ sx: { fontSize: '1.25rem', color: '#fff' } }} />
+                  )}
+                </Stack>
               </MotionBox>
             )}
 

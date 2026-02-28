@@ -30,10 +30,10 @@ export default function LandingPagesService() {
               WebkitTextFillColor: 'transparent'
             }}
           >
-            High-Conversion <br/> Landing Pages.
+            Pages that get <br/> you customers.
           </MotionTypography>
-          <Typography variant="h5" sx={{ color: '#666', maxWidth: 700, mx: 'auto', mb: 6, lineHeight: 1.6 }}>
-            Stop losing leads. Our AI synthesizes landing pages designed for one thing: Results.
+          <Typography variant="h5" sx={{ color: '#888', maxWidth: 700, mx: 'auto', mb: 6, lineHeight: 1.6 }}>
+            Stop losing potential business. We build simple, beautiful pages designed to get people to call or email you.
           </Typography>
           <Button 
             component={Link} 
@@ -56,13 +56,13 @@ export default function LandingPagesService() {
 
         <Grid container spacing={4} sx={{ mb: 20 }}>
           {[
-            { icon: <Target size={40} />, title: "Precision Targeting", desc: "Our engine analyzes your target audience to generate copy that resonates and converts." },
-            { icon: <Zap size={40} />, title: "48-Hour Delivery", desc: "From intake to live URL in under two days. Speed is your competitive advantage." },
-            { icon: <MousePointer2 size={40} />, title: "A/B Ready", desc: "Architectures built on proven conversion patterns used by the world's top startups." }
+            { icon: <Target size={40} />, title: "Built for your audience", desc: "We study your customers to write text that makes them want to work with you." },
+            { icon: <Zap size={40} />, title: "Ready in 2 days", desc: "From start to finish in just 48 hours. We move as fast as your business does." },
+            { icon: <MousePointer2 size={40} />, title: "Proven designs", desc: "We use layouts that are already proven to work for successful businesses." }
           ].map((v, i) => (
             <Grid size={{ xs: 12, md: 4 }} key={i}>
               <Box sx={{ p: 5, background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.05)', borderRadius: '32px', height: '100%', transition: 'all 0.3s ease', '&:hover': { background: 'rgba(255,255,255,0.04)', borderColor: 'rgba(255,255,255,0.1)', transform: 'translateY(-10px)' } }}>
-                <Box sx={{ color: '#0070f3', mb: 3 }}>{v.icon}</Box>
+                <Box sx={{ color: '#fff', mb: 3 }}>{v.icon}</Box>
                 <Typography variant="h5" sx={{ fontWeight: 700, mb: 2 }}>{v.title}</Typography>
                 <Typography sx={{ color: '#888', lineHeight: 1.7 }}>{v.desc}</Typography>
               </Box>
@@ -71,17 +71,17 @@ export default function LandingPagesService() {
         </Grid>
 
         <Box sx={{ textAlign: 'center' }}>
-          <Typography variant="h2" sx={{ fontWeight: 800, mb: 8, letterSpacing: '-0.1rem' }}>Engineered for Inbound.</Typography>
+          <Typography variant="h2" sx={{ fontWeight: 800, mb: 8, letterSpacing: '-0.1rem' }}>Built to grow your business.</Typography>
           <Grid container spacing={8}>
             {[
-              { title: "Dynamic Content", desc: "Personalize headings and CTAs based on visitor source or behavior automatically." },
-              { title: "Sub-100ms Load", desc: "Serialized assets and edge caching ensure your leads never wait for a page load." },
-              { title: "Smart Forms", desc: "Integrated validation and enrichment to ensure every lead is a quality lead." }
+              { title: "Smart messaging", desc: "We use words that speak directly to what your customers are looking for." },
+              { title: "Super fast loading", desc: "No one likes waiting. Your pages will load almost instantly on any device." },
+              { title: "Easy contact forms", desc: "We make it incredibly simple for people to reach out and ask about your services." }
             ].map((v, i) => (
               <Grid size={{ xs: 12, md: 4 }} key={i} sx={{ textAlign: 'left' }}>
                 <Box sx={{ borderLeft: '1px solid rgba(255,255,255,0.1)', pl: 3 }}>
-                  <Typography variant="h6" sx={{ fontWeight: 700, mb: 2, color: '#0070f3' }}>{v.title}</Typography>
-                  <Typography sx={{ color: '#666', lineHeight: 1.6 }}>{v.desc}</Typography>
+                  <Typography variant="h6" sx={{ fontWeight: 700, mb: 2, color: '#fff' }}>{v.title}</Typography>
+                  <Typography sx={{ color: '#888', lineHeight: 1.6 }}>{v.desc}</Typography>
                 </Box>
               </Grid>
             ))}

@@ -29,10 +29,10 @@ export default function TechnologyPage() {
               WebkitTextFillColor: 'transparent'
             }}
           >
-            The Synthesis <br/> Stack.
+            How we <br/> build.
           </MotionTypography>
-          <Typography variant="h5" sx={{ color: '#666', maxWidth: 700, mx: 'auto', lineHeight: 1.6 }}>
-            Our proprietary engine transforms abstract brand concepts into optimized production code.
+          <Typography variant="h5" sx={{ color: '#888', maxWidth: 700, mx: 'auto', lineHeight: 1.6 }}>
+            Our smart system takes your ideas and turns them into a professional, high-speed website.
           </Typography>
         </Box>
 
@@ -41,26 +41,26 @@ export default function TechnologyPage() {
             { 
               icon: <Cpu size={32} />, 
               num: "01",
-              title: "Identity Ingestion", 
-              desc: "The engine begins by analyzing your intake data—colors, layout preferences, and brand voice. It doesn't just copy inputs; it understands the 'vibe' of your industry." 
+              title: "Learning your brand", 
+              desc: "First, our system looks at your colors, logo, and business type. It learns the 'look and feel' that works best for your specific industry." 
             },
             { 
               icon: <Layers size={32} />, 
               num: "02",
-              title: "Neural Layout Generation", 
-              desc: "We use a specialized LLM pipeline to synthesize a bespoke digital architecture. This isn't a template selection—it's a custom-built Next.js App Router structure generated in real-time." 
+              title: "Designing your site", 
+              desc: "Using advanced AI, we create a custom layout just for you. This isn't a basic template—it's a site built from scratch to help your business stand out." 
             },
             { 
               icon: <GitBranch size={32} />, 
               num: "03",
-              title: "Automated Provisioning", 
-              desc: "Flux programmatically creates a GitHub repository, pushes the generated code, and triggers a Vercel deployment hook. Everything is version-controlled from the first second." 
+              title: "Setting everything up", 
+              desc: "We handle all the technical parts of setting up your site's files and folders. Everything is organized and ready for the modern web." 
             },
             { 
               icon: <Shield size={32} />, 
               num: "04",
-              title: "Compilation Guardrails", 
-              desc: "Before a site ever reaches your eyes, it must pass an automated 'Synthesis Audit.' We run full build checks, linting, and accessibility scans to ensure zero-error delivery." 
+              title: "The Quality Check", 
+              desc: "Before you ever see the site, we run it through dozens of automatic tests. We check for errors, make sure it's fast, and ensure it works on every device." 
             }
           ].map((step, i) => (
             <Box key={i} sx={{ display: 'flex', gap: { xs: 4, md: 8 }, alignItems: 'flex-start', maxWidth: 900, mx: 'auto', flexDirection: { xs: 'column', md: 'row' }, textAlign: { xs: 'center', md: 'left' } }}>
@@ -73,7 +73,7 @@ export default function TechnologyPage() {
                 display: 'flex', 
                 justifyContent: 'center', 
                 alignItems: 'center', 
-                color: '#0070f3',
+                color: '#fff',
                 flexShrink: 0,
                 mx: { xs: 'auto', md: 0 }
               }}>
@@ -93,11 +93,11 @@ export default function TechnologyPage() {
         </Stack>
 
         <Box component="section" sx={{ textAlign: 'center', p: { xs: 5, md: 10 }, background: 'rgba(255, 255, 255, 0.01)', borderRadius: '40px', border: '1px solid rgba(255, 255, 255, 0.03)' }}>
-          <Typography variant="h3" sx={{ fontWeight: 800, mb: 8 }}>Built on the Edge</Typography>
+          <Typography variant="h3" sx={{ fontWeight: 800, mb: 8 }}>Built for Speed</Typography>
           <Grid container spacing={3}>
-            {["Next.js 15", "TypeScript", "Tailwind CSS", "Supabase", "Vercel", "Octokit"].map((item) => (
+            {["High-Speed Hosting", "Secure Code", "Mobile Ready", "Custom Design", "SEO Built-In", "Full Ownership"].map((item) => (
               <Grid size={{ xs: 12, sm: 4 }} key={item}>
-                <Paper sx={{ p: 3, background: 'rgba(255, 255, 255, 0.02)', border: '1px solid rgba(255, 255, 255, 0.05)', borderRadius: '16px', fontSize: '1.25rem', fontWeight: 700, color: '#444', transition: 'all 0.3s', '&:hover': { color: '#fff', borderColor: 'rgba(255, 255, 255, 0.2)', background: 'rgba(255, 255, 255, 0.05)' } }}>
+                <Paper sx={{ p: 3, background: 'rgba(255, 255, 255, 0.02)', border: '1px solid rgba(255, 255, 255, 0.05)', borderRadius: '16px', fontSize: '1.25rem', fontWeight: 700, color: '#666', transition: 'all 0.3s', '&:hover': { color: '#fff', borderColor: 'rgba(255, 255, 255, 0.2)', background: 'rgba(255, 255, 255, 0.05)' } }}>
                   {item}
                 </Paper>
               </Grid>
