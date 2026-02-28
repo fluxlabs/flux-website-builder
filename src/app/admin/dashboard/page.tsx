@@ -94,6 +94,21 @@ export default function AdminDashboard() {
     }
   };
 
+  const deleteIntake = async (id: string) => {
+    if (!confirm("Are you sure you want to delete this vision? This cannot be undone.")) return;
+    try {
+      const res = await fetch(`/api/admin/intakes?id=${id}`, {
+        method: "DELETE",
+      });
+      if (res.ok) {
+        fetchIntakes();
+        if (selectedIntake?.id === id) setSelectedIntake(null);
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   const triggerManifest = async (id: string) => {
     try {
       alert(`Triggering AI Manifestation for build: ${id}. This will take 60-90 seconds.`);
@@ -318,18 +333,31 @@ export default function AdminDashboard() {
                               Manifest Vision 🚀
                             </button>
                           )}
-                          <select 
-                            value={intake.status} 
-                            onClick={(e) => e.stopPropagation()}
-                            onChange={(e) => {
-                              e.stopPropagation();
-                              updateStatus(intake.id, e.target.value);
-                            }}
-                          >
-                            {STATUSES.map(s => (
-                              <option key={s} value={s}>{getStatusLabel(s)}</option>
-                            ))}
-                          </select>
+                          <div style={{ display: 'flex', gap: '0.5rem', width: '100%' }}>
+                            <select 
+                              style={{ flex: 1 }}
+                              value={intake.status} 
+                              onClick={(e) => e.stopPropagation()}
+                              onChange={(e) => {
+                                e.stopPropagation();
+                                updateStatus(intake.id, e.target.value);
+                              }}
+                            >
+                              {STATUSES.map(s => (
+                                <option key={s} value={s}>{getStatusLabel(s)}</option>
+                              ))}
+                            </select>
+                            <button 
+                              className={styles.deleteBtn}
+                              title="Delete Vision"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                deleteIntake(intake.id);
+                              }}
+                            >
+                              🗑️
+                            </button>
+                          </div>
                         </div>
                       </motion.div>
                     ))}
