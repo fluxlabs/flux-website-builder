@@ -1,3 +1,5 @@
+"use client";
+
 import styles from "./restaurant.module.css";
 import Link from "next/link";
 

@@ -1,3 +1,5 @@
+"use client";
+
 import styles from "./saas.module.css";
 import Link from "next/link";
 

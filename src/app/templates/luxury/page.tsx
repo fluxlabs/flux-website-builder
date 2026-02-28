@@ -1,3 +1,5 @@
+"use client";
+
 import styles from "./luxury.module.css";
 import Link from "next/link";
 

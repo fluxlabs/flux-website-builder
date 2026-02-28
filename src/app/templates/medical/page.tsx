@@ -1,3 +1,5 @@
+"use client";
+
 import styles from "./medical.module.css";
 import Link from "next/link";
 
