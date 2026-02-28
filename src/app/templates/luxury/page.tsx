@@ -17,9 +17,10 @@ export default function LuxuryTemplate() {
     <div className={styles.container}>
       <nav className={styles.nav}>
         <div style={{ display: 'flex', gap: '3rem', alignItems: 'center' }}>
-          <a href="#collection" style={{ color: '#1c1917', textDecoration: 'none', fontSize: '0.8rem', letterSpacing: '0.1rem' }}>COLLECTION</a>
+          <Link href="/templates/luxury/about" style={{ color: '#1c1917', textDecoration: 'none', fontSize: '0.8rem', letterSpacing: '0.1rem' }}>STORY</Link>
           <div className={styles.logo} style={{ margin: '0 2rem' }}>VALENTE</div>
-          <a href="#contact" style={{ color: '#1c1917', textDecoration: 'none', fontSize: '0.8rem', letterSpacing: '0.1rem' }}>CONSULTATION</a>
+          <Link href="/templates/luxury/services" style={{ color: '#1c1917', textDecoration: 'none', fontSize: '0.8rem', letterSpacing: '0.1rem' }}>ATELIER</Link>
+          <Link href="/templates/luxury/contact" style={{ color: '#1c1917', textDecoration: 'none', fontSize: '0.8rem', letterSpacing: '0.1rem' }}>INQUIRY</Link>
         </div>
       </nav>
 

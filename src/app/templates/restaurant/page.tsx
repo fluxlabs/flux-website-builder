@@ -17,10 +17,10 @@ export default function RestaurantTemplate() {
     <div className={styles.container}>
       <nav className={styles.nav}>
         <div className={styles.logo}>AURA</div>
-        <div style={{ display: 'flex', gap: '3rem', fontSize: '0.8rem', letterSpacing: '0.1rem', textTransform: 'uppercase', alignItems: 'center' }}>
-          <a href="#menu" style={{ color: '#fff', textDecoration: 'none' }}>Menu</a>
-          <a href="#story" style={{ color: '#fff', textDecoration: 'none' }}>Story</a>
-          <a href="#reserve" className={styles.cta} style={{ padding: '0.5rem 1.5rem' }}>Reserve</a>
+        <div style={{ display: 'flex', gap: '3rem', fontFamily: 'Inter', fontSize: '0.75rem', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.2rem', alignItems: 'center' }}>
+          <Link href="/templates/restaurant/about" style={{ color: '#fff', textDecoration: 'none' }}>Story</Link>
+          <Link href="/templates/restaurant/services" style={{ color: '#fff', textDecoration: 'none' }}>Menu</Link>
+          <Link href="/templates/restaurant/contact" className={styles.cta} style={{ padding: '0.5rem 1.5rem', fontSize: '0.7rem' }}>Reserve</Link>
         </div>
       </nav>
 

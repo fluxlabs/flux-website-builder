@@ -18,8 +18,9 @@ export default function BoldTemplate() {
       <nav className={styles.nav}>
         <div className={styles.logo}>FORGE</div>
         <div style={{ display: 'flex', gap: '2rem', alignItems: 'center' }}>
-          <a href="#projects" style={{ color: '#fff', textDecoration: 'none', fontWeight: 900 }}>PROJECTS</a>
-          <a href="#quote" className={styles.cta} style={{ padding: '0.5rem 1.5rem', fontSize: '1rem' }}>QUOTE</a>
+          <Link href="/templates/bold/about" style={{ color: '#fff', textDecoration: 'none', fontWeight: 900 }}>ABOUT</Link>
+          <Link href="/templates/bold/services" style={{ color: '#fff', textDecoration: 'none', fontWeight: 900 }}>SERVICES</Link>
+          <Link href="/templates/bold/contact" className={styles.cta} style={{ padding: '0.5rem 1.5rem', fontSize: '1rem' }}>QUOTE</Link>
         </div>
       </nav>
 

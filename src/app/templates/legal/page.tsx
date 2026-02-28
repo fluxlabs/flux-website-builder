@@ -18,9 +18,9 @@ export default function LegalTemplate() {
       <nav className={styles.nav}>
         <div className={styles.logo}>JUSTICE & CO</div>
         <div style={{ display: 'flex', gap: '3rem', fontFamily: 'Inter', fontSize: '0.75rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.1rem', alignItems: 'center' }}>
-          <a href="#expertise" style={{ color: '#fff', textDecoration: 'none' }}>Expertise</a>
-          <a href="#partners" style={{ color: '#fff', textDecoration: 'none' }}>Partners</a>
-          <a href="#consult" className={styles.cta} style={{ padding: '0.5rem 1.5rem' }}>Consultation</a>
+          <Link href="/templates/legal/about" style={{ color: '#fff', textDecoration: 'none' }}>About</Link>
+          <Link href="/templates/legal/services" style={{ color: '#fff', textDecoration: 'none' }}>Expertise</Link>
+          <Link href="/templates/legal/contact" className={styles.cta} style={{ padding: '0.5rem 1.5rem' }}>Consultation</Link>
         </div>
       </nav>
 

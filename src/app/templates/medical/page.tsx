@@ -21,11 +21,14 @@ export default function MedicalTemplate() {
       </div>
       
       <nav className={styles.nav}>
-        <div className={styles.logo}>PulseHealth</div>
+        <div className={styles.logo}>
+          <div style={{ width: '30px', height: '30px', background: '#0070f3', borderRadius: '8px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', fontWeight: 900 }}>+</div>
+          PULSE MEDICAL
+        </div>
         <div style={{ display: 'flex', gap: '2.5rem', fontWeight: 600, alignItems: 'center' }}>
-          <a href="#services" style={{ color: '#1a1a1a', textDecoration: 'none' }}>Specialties</a>
-          <a href="#team" style={{ color: '#1a1a1a', textDecoration: 'none' }}>Doctors</a>
-          <a href="#book" className={styles.cta} style={{ padding: '0.6rem 1.5rem' }}>Book Now</a>
+          <Link href="/templates/medical/about" style={{ color: '#666', textDecoration: 'none' }}>About Us</Link>
+          <Link href="/templates/medical/services" style={{ color: '#666', textDecoration: 'none' }}>Specialties</Link>
+          <Link href="/templates/medical/contact" className={styles.cta} style={{ padding: '0.6rem 1.5rem' }}>Book Now</Link>
         </div>
       </nav>
 

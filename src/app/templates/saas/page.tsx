@@ -18,10 +18,9 @@ export default function SaaSTemplate() {
       <nav className={styles.nav}>
         <div className={styles.logo}>NovaSaaS</div>
         <div style={{ display: 'flex', gap: '2rem', alignItems: 'center' }}>
-          <a href="#features" style={{ color: '#fff', textDecoration: 'none' }}>Features</a>
-          <a href="#integrations" style={{ color: '#fff', textDecoration: 'none' }}>Integrations</a>
-          <a href="#pricing" style={{ color: '#fff', textDecoration: 'none' }}>Pricing</a>
-          <Link href="/intake" className={styles.cta} style={{ padding: '0.5rem 1.5rem', fontSize: '1rem' }}>Start Free</Link>
+          <Link href="/templates/saas/about" style={{ color: '#fff', textDecoration: 'none' }}>About</Link>
+          <Link href="/templates/saas/services" style={{ color: '#fff', textDecoration: 'none' }}>Platform</Link>
+          <Link href="/templates/saas/contact" className={styles.cta} style={{ padding: '0.5rem 1.5rem', fontSize: '1rem' }}>Get Started</Link>
         </div>
       </nav>
 
