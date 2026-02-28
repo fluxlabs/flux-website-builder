@@ -54,7 +54,7 @@ export default function Pricing() {
 
                 <Button 
                   component={Link} 
-                  href="/intake" 
+                  href={`/intake?plan=${plan.name}`} 
                   variant={plan.popular ? "contained" : "outlined"}
                   fullWidth
                   sx={{ 

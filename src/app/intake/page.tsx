@@ -1,8 +1,8 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect, Suspense } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { 
   Box, 
@@ -22,13 +22,14 @@ import {
   IconButton,
   Chip
 } from "@mui/material";
-import { ArrowLeft, ArrowRight, Upload, CheckCircle2, AlertCircle } from "lucide-react";
+import { ArrowLeft, ArrowRight, Upload, CheckCircle2, AlertCircle, Target, ShoppingBag, Layout, FileText } from "lucide-react";
 import Magnetic from "@/components/ui/Magnetic";
 
 const MotionBox = motion(Box);
 
-export default function IntakePage() {
+function IntakeContent() {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [step, setStep] = useState(1);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -59,7 +60,15 @@ export default function IntakePage() {
     targetAudience: "",
     heroMessage: "",
     pages: [] as string[],
+    plan: "Growth"
   });
+
+  useEffect(() => {
+    const planParam = searchParams.get('plan');
+    if (planParam) {
+      setFormData(prev => ({ ...prev, plan: planParam }));
+    }
+  }, [searchParams]);
 
   const totalSteps = 9;
   const nextStep = () => setStep((s) => Math.min(s + 1, totalSteps));
@@ -160,10 +169,10 @@ export default function IntakePage() {
   const isStep7Valid = formData.pages.length > 0;
 
   const GOAL_OPTIONS = [
-    { id: "Generate Leads", label: "Lead Generation", icon: "🎯", desc: "Convert visitors into customers with high-impact landing pages." },
-    { id: "Sell Products", label: "E-Commerce", icon: "🛍️", desc: "A premium storefront designed to showcase and sell your inventory." },
-    { id: "Portfolio Showcase", label: "Portfolio", icon: "🎨", desc: "A visual-first experience for creatives and professionals." },
-    { id: "Information / Blog", label: "Authority / Blog", icon: "✍️", desc: "Establish thought leadership with a content-rich destination." }
+    { id: "Generate Leads", label: "Lead Generation", icon: <Target size={32} />, desc: "Convert visitors into customers with high-impact landing pages." },
+    { id: "Sell Products", label: "E-Commerce", icon: <ShoppingBag size={32} />, desc: "A premium storefront designed to showcase and sell your inventory." },
+    { id: "Portfolio Showcase", label: "Portfolio", icon: <Layout size={32} />, desc: "A visual-first experience for creatives and professionals." },
+    { id: "Information / Blog", label: "Authority / Blog", icon: <FileText size={32} />, desc: "Establish thought leadership with a content-rich destination." }
   ];
 
   const VERTICAL_OPTIONS = ["Professional Services", "Creative & Design", "Tech & SaaS", "Health & Wellness", "Home Services", "E-commerce", "Non-profit"];
@@ -202,7 +211,7 @@ export default function IntakePage() {
                     <Grid size={{ xs: 12, sm: 6 }} key={g.id}>
                       <Card onClick={() => { setFormData(prev => ({ ...prev, goal: g.id })); setTimeout(nextStep, 400); }} sx={{ cursor: 'pointer', background: formData.goal === g.id ? '#fff' : 'rgba(255,255,255,0.02)', color: formData.goal === g.id ? '#000' : '#fff', border: '1px solid rgba(255,255,255,0.05)', borderRadius: '32px', transition: 'all 0.3s ease', '&:hover': { transform: 'translateY(-8px)', background: formData.goal === g.id ? '#fff' : 'rgba(255,255,255,0.04)' } }}>
                         <CardContent sx={{ p: 4, display: 'flex', alignItems: 'center', gap: 3 }}>
-                          <Typography variant="h3">{g.icon}</Typography>
+                          <Box sx={{ color: formData.goal === g.id ? '#0055ff' : '#d6c5a5' }}>{g.icon}</Box>
                           <Box><Typography variant="h5" sx={{ fontWeight: 800 }}>{g.label}</Typography><Typography variant="body2" sx={{ opacity: 0.6 }}>{g.desc}</Typography></Box>
                         </CardContent>
                       </Card>
@@ -355,7 +364,7 @@ export default function IntakePage() {
                     <Box sx={{ p: 4, bgcolor: 'rgba(255,255,255,0.02)', borderRadius: '24px', border: '1px solid rgba(255,255,255,0.05)' }}>
                       <Typography variant="overline" sx={{ color: '#444' }}>Blueprint</Typography>
                       <Typography variant="h5" sx={{ fontWeight: 800, mb: 1 }}>{formData.vertical}</Typography>
-                      <Typography variant="body2" sx={{ color: '#0070f3', fontWeight: 800 }}>{formData.layout} Layout</Typography>
+                      <Typography variant="body2" sx={{ color: '#0070f3', fontWeight: 800 }}>{formData.layout} Layout • {formData.plan} Plan</Typography>
                     </Box>
                   </Grid>
                   <Grid size={{ xs: 12 }}>
@@ -387,5 +396,13 @@ export default function IntakePage() {
         </Box>
       </Container>
     </Box>
+  );
+}
+
+export default function IntakePage() {
+  return (
+    <Suspense fallback={<Box sx={{ bgcolor: '#000', height: '100vh' }} />}>
+      <IntakeContent />
+    </Suspense>
   );
 }
