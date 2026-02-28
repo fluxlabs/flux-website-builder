@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Box, Container, Typography, Grid2 as Grid } from "@mui/material";
+import { Box, Container, Typography, Grid } from "@mui/material";
 
 const MotionBox = motion(Box);
 

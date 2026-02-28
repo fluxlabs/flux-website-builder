@@ -157,9 +157,7 @@ export default function IntakePage() {
   const isStep2Valid = formData.name && formData.email && formData.phone && formData.hasWebsite !== null;
   const isStep3Valid = formData.hasWebsite ? formData.currentUrl : (formData.businessName && formData.industry && formData.location);
   const isStep4Valid = !!formData.vertical && !!formData.layout;
-  const isStep6Valid = !!formData.colors;
   const isStep7Valid = formData.pages.length > 0;
-  const isStep8Valid = formData.brandVoice && formData.targetAudience;
 
   const GOAL_OPTIONS = [
     { id: "Generate Leads", label: "Lead Generation", icon: "🎯", desc: "Convert visitors into customers with high-impact landing pages." },
@@ -201,7 +199,7 @@ export default function IntakePage() {
                 <Typography variant="h2" sx={{ fontWeight: 800, mb: 6, textAlign: 'center', letterSpacing: '-0.15rem' }}>What are we building?</Typography>
                 <Grid container spacing={3}>
                   {GOAL_OPTIONS.map(g => (
-                    <Grid item xs={12} sm={6} key={g.id}>
+                    <Grid size={{ xs: 12, sm: 6 }} key={g.id}>
                       <Card onClick={() => { setFormData(prev => ({ ...prev, goal: g.id })); setTimeout(nextStep, 400); }} sx={{ cursor: 'pointer', background: formData.goal === g.id ? '#fff' : 'rgba(255,255,255,0.02)', color: formData.goal === g.id ? '#000' : '#fff', border: '1px solid rgba(255,255,255,0.05)', borderRadius: '32px', transition: 'all 0.3s ease', '&:hover': { transform: 'translateY(-8px)', background: formData.goal === g.id ? '#fff' : 'rgba(255,255,255,0.04)' } }}>
                         <CardContent sx={{ p: 4, display: 'flex', alignItems: 'center', gap: 3 }}>
                           <Typography variant="h3">{g.icon}</Typography>
@@ -218,9 +216,9 @@ export default function IntakePage() {
               <MotionBox key="step2" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} sx={{ width: '100%', maxWidth: 800, mx: 'auto' }}>
                 <Typography variant="h2" sx={{ fontWeight: 800, mb: 6, textAlign: 'center' }}>The Foundation</Typography>
                 <Grid container spacing={4}>
-                  <Grid item xs={12}><TextField fullWidth label="Your Name" name="name" value={formData.name} onChange={handleChange} variant="standard" InputLabelProps={{ sx: { color: '#444' } }} inputProps={{ sx: { fontSize: '1.5rem', py: 2, color: '#fff' } }} sx={{ '& .MuiInput-underline:before': { borderBottomColor: 'rgba(255,255,255,0.1)' } }} /></Grid>
-                  <Grid item xs={12} sm={6}><TextField fullWidth label="Email Address" type="email" name="email" value={formData.email} onChange={handleChange} variant="standard" InputLabelProps={{ sx: { color: '#444' } }} inputProps={{ sx: { fontSize: '1.5rem', py: 2, color: '#fff' } }} sx={{ '& .MuiInput-underline:before': { borderBottomColor: 'rgba(255,255,255,0.1)' } }} /></Grid>
-                  <Grid item xs={12} sm={6}><TextField fullWidth label="Phone Number" name="phone" value={formData.phone} onChange={handleChange} variant="standard" InputLabelProps={{ sx: { color: '#444' } }} inputProps={{ sx: { fontSize: '1.5rem', py: 2, color: '#fff' } }} sx={{ '& .MuiInput-underline:before': { borderBottomColor: 'rgba(255,255,255,0.1)' } }} /></Grid>
+                  <Grid size={{ xs: 12 }}><TextField fullWidth label="Your Name" name="name" value={formData.name} onChange={handleChange} variant="standard" InputLabelProps={{ sx: { color: '#444' } }} inputProps={{ sx: { fontSize: '1.5rem', py: 2, color: '#fff' } }} sx={{ '& .MuiInput-underline:before': { borderBottomColor: 'rgba(255,255,255,0.1)' } }} /></Grid>
+                  <Grid size={{ xs: 12, sm: 6 }}><TextField fullWidth label="Email Address" type="email" name="email" value={formData.email} onChange={handleChange} variant="standard" InputLabelProps={{ sx: { color: '#444' } }} inputProps={{ sx: { fontSize: '1.5rem', py: 2, color: '#fff' } }} sx={{ '& .MuiInput-underline:before': { borderBottomColor: 'rgba(255,255,255,0.1)' } }} /></Grid>
+                  <Grid size={{ xs: 12, sm: 6 }}><TextField fullWidth label="Phone Number" name="phone" value={formData.phone} onChange={handleChange} variant="standard" InputLabelProps={{ sx: { color: '#444' } }} inputProps={{ sx: { fontSize: '1.5rem', py: 2, color: '#fff' } }} sx={{ '& .MuiInput-underline:before': { borderBottomColor: 'rgba(255,255,255,0.1)' } }} /></Grid>
                 </Grid>
                 <Box sx={{ mt: 8 }}>
                   <Typography variant="overline" sx={{ color: '#444', fontWeight: 800, mb: 2, display: 'block' }}>Do you currently have a website?</Typography>
@@ -242,9 +240,9 @@ export default function IntakePage() {
                   </Stack>
                 ) : (
                   <Grid container spacing={4}>
-                    <Grid item xs={12}><TextField fullWidth label="Business Name" name="businessName" value={formData.businessName} onChange={handleChange} variant="standard" inputProps={{ sx: { fontSize: '1.5rem', py: 2, color: '#fff' } }} /></Grid>
-                    <Grid item xs={12} sm={6}><TextField fullWidth label="Industry Niche" name="industry" value={formData.industry} onChange={handleChange} variant="standard" inputProps={{ sx: { fontSize: '1.5rem', py: 2, color: '#fff' } }} /></Grid>
-                    <Grid item xs={12} sm={6}><TextField fullWidth label="Location" name="location" value={formData.location} onChange={handleChange} variant="standard" inputProps={{ sx: { fontSize: '1.5rem', py: 2, color: '#fff' } }} /></Grid>
+                    <Grid size={{ xs: 12 }}><TextField fullWidth label="Business Name" name="businessName" value={formData.businessName} onChange={handleChange} variant="standard" inputProps={{ sx: { fontSize: '1.5rem', py: 2, color: '#fff' } }} /></Grid>
+                    <Grid size={{ xs: 12, sm: 6 }}><TextField fullWidth label="Industry Niche" name="industry" value={formData.industry} onChange={handleChange} variant="standard" inputProps={{ sx: { fontSize: '1.5rem', py: 2, color: '#fff' } }} /></Grid>
+                    <Grid size={{ xs: 12, sm: 6 }}><TextField fullWidth label="Location" name="location" value={formData.location} onChange={handleChange} variant="standard" inputProps={{ sx: { fontSize: '1.5rem', py: 2, color: '#fff' } }} /></Grid>
                   </Grid>
                 )}
               </MotionBox>
@@ -263,7 +261,7 @@ export default function IntakePage() {
                 </Box>
                 <Grid container spacing={3}>
                   {LAYOUT_OPTIONS.map(l => (
-                    <Grid item xs={12} sm={6} key={l.id}>
+                    <Grid size={{ xs: 12, sm: 6 }} key={l.id}>
                       <Card onClick={() => setFormData(p => ({ ...p, layout: l.id }))} sx={{ cursor: 'pointer', background: formData.layout === l.id ? 'rgba(255,255,255,0.05)' : 'transparent', border: formData.layout === l.id ? '1px solid #fff' : '1px solid rgba(255,255,255,0.05)', borderRadius: '24px' }}>
                         <CardContent sx={{ p: 3, display: 'flex', alignItems: 'center', gap: 3 }}>
                           <Box sx={{ width: 60, height: 60, borderRadius: '12px', background: l.gradient, flexShrink: 0 }} />
@@ -346,21 +344,21 @@ export default function IntakePage() {
               <MotionBox key="step9" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} sx={{ width: '100%', maxWidth: 1000, mx: 'auto' }}>
                 <Typography variant="h2" sx={{ fontWeight: 800, mb: 6, textAlign: 'center' }}>The Vision</Typography>
                 <Grid container spacing={4}>
-                  <Grid item xs={12} md={6}>
+                  <Grid size={{ xs: 12, md: 6 }}>
                     <Box sx={{ p: 4, bgcolor: 'rgba(255,255,255,0.02)', borderRadius: '24px', border: '1px solid rgba(255,255,255,0.05)' }}>
                       <Typography variant="overline" sx={{ color: '#444' }}>Identity</Typography>
                       <Typography variant="h5" sx={{ fontWeight: 800, mb: 1 }}>{formData.businessName || formData.currentUrl}</Typography>
                       <Typography variant="body2" sx={{ color: '#666' }}>{formData.name} • {formData.email}</Typography>
                     </Box>
                   </Grid>
-                  <Grid item xs={12} md={6}>
+                  <Grid size={{ xs: 12, md: 6 }}>
                     <Box sx={{ p: 4, bgcolor: 'rgba(255,255,255,0.02)', borderRadius: '24px', border: '1px solid rgba(255,255,255,0.05)' }}>
                       <Typography variant="overline" sx={{ color: '#444' }}>Blueprint</Typography>
                       <Typography variant="h5" sx={{ fontWeight: 800, mb: 1 }}>{formData.vertical}</Typography>
                       <Typography variant="body2" sx={{ color: '#0070f3', fontWeight: 800 }}>{formData.layout} Layout</Typography>
                     </Box>
                   </Grid>
-                  <Grid item xs={12}>
+                  <Grid size={{ xs: 12 }}>
                     <Box sx={{ p: 4, bgcolor: 'rgba(255,255,255,0.02)', borderRadius: '24px', border: '1px solid rgba(255,255,255,0.05)' }}>
                       <Typography variant="overline" sx={{ color: '#444' }}>Personality</Typography>
                       <Typography variant="h5" sx={{ fontWeight: 800, mb: 1 }}>{formData.brandVoice}</Typography>

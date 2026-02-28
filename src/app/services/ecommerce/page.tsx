@@ -2,7 +2,7 @@
 
 import Navbar from "@/components/Navbar/Navbar";
 import Footer from "@/components/Footer/Footer";
-import { Box, Container, Typography, Grid2 as Grid, Button, Stack } from "@mui/material";
+import { Box, Container, Typography, Grid, Button, Stack } from "@mui/material";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { ShoppingBag, Rocket, ShieldCheck } from "lucide-react";
@@ -26,7 +26,7 @@ export default function EcommerceService() {
               letterSpacing: '-0.2rem',
               lineHeight: 1,
               background: 'linear-gradient(to bottom, #fff, rgba(255, 255, 255, 0.5))',
-              WebkitBackgroundClip: 'text',
+              WebkitBackgroundClip: text,
               WebkitTextFillColor: 'transparent'
             }}
           >

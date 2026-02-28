@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import { Bot, Zap, BarChart3, Key, MonitorSmartphone, Palette } from "lucide-react";
-import { Box, Container, Typography, Grid2 as Grid, Card, CardContent } from "@mui/material";
+import { Box, Container, Typography, Grid, Card, CardContent } from "@mui/material";
 
 const MotionCard = motion(Card);
 

@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { Box, Container, Typography, Grid2 as Grid, Button, Stack } from "@mui/material";
+import { Box, Container, Typography, Grid, Button, Stack } from "@mui/material";
 import SpotlightCard from "@/components/ui/SpotlightCard";
 import ScrollReveal from "@/components/ui/ScrollReveal";
 import Magnetic from "@/components/ui/Magnetic";

@@ -2,7 +2,7 @@
 
 import Navbar from "@/components/Navbar/Navbar";
 import Footer from "@/components/Footer/Footer";
-import { Box, Container, Typography, Grid2 as Grid, Card, CardContent, CardMedia, Link as MuiLink } from "@mui/material";
+import { Box, Container, Typography, Grid, Card, CardContent, CardMedia, Link as MuiLink } from "@mui/material";
 import { motion } from "framer-motion";
 import Link from "next/link";
 

@@ -2,7 +2,7 @@
 
 import Navbar from "@/components/Navbar/Navbar";
 import Footer from "@/components/Footer/Footer";
-import { Box, Container, Typography, Grid2 as Grid, Stack, Paper } from "@mui/material";
+import { Box, Container, Typography, Grid, Stack, Paper } from "@mui/material";
 import { motion } from "framer-motion";
 import { Cpu, Layers, GitBranch, Shield } from "lucide-react";
 

@@ -15,7 +15,7 @@ export default function Footer() {
     >
       <Container maxWidth="lg">
         <Grid container spacing={8}>
-          <Grid item xs={12} md={4}>
+          <Grid size={{ xs: 12, md: 4 }}>
             <Typography 
               variant="h6" 
               sx={{ 
@@ -40,9 +40,9 @@ export default function Footer() {
             </Typography>
           </Grid>
 
-          <Grid item xs={12} md={8}>
+          <Grid size={{ xs: 12, md: 8 }}>
             <Grid container spacing={4}>
-              <Grid item xs={6} sm={4}>
+              <Grid size={{ xs: 6, sm: 4 }}>
                 <Typography variant="subtitle2" sx={{ color: '#fff', fontWeight: 800, mb: 3, textTransform: 'uppercase', letterSpacing: '0.1rem' }}>Services</Typography>
                 <Stack spacing={1.5}>
                   <MuiLink component={Link} href="/services/landing-pages" sx={{ color: '#888', textDecoration: 'none', fontSize: '0.875rem', '&:hover': { color: '#d6c5a5' } }}>Landing Pages</MuiLink>
@@ -51,7 +51,7 @@ export default function Footer() {
                 </Stack>
               </Grid>
 
-              <Grid item xs={6} sm={4}>
+              <Grid size={{ xs: 6, sm: 4 }}>
                 <Typography variant="subtitle2" sx={{ color: '#fff', fontWeight: 800, mb: 3, textTransform: 'uppercase', letterSpacing: '0.1rem' }}>Company</Typography>
                 <Stack spacing={1.5}>
                   <MuiLink component={Link} href="/about" sx={{ color: '#888', textDecoration: 'none', fontSize: '0.875rem', '&:hover': { color: '#d6c5a5' } }}>About Us</MuiLink>
@@ -60,7 +60,7 @@ export default function Footer() {
                 </Stack>
               </Grid>
 
-              <Grid item xs={6} sm={4}>
+              <Grid size={{ xs: 6, sm: 4 }}>
                 <Typography variant="subtitle2" sx={{ color: '#fff', fontWeight: 800, mb: 3, textTransform: 'uppercase', letterSpacing: '0.1rem' }}>Support</Typography>
                 <Stack spacing={1.5}>
                   <MuiLink component={Link} href="/faq" sx={{ color: '#888', textDecoration: 'none', fontSize: '0.875rem', '&:hover': { color: '#d6c5a5' } }}>FAQ</MuiLink>

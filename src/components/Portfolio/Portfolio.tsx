@@ -1,6 +1,6 @@
 "use client";
 
-import { Box, Container, Typography, Grid2 as Grid, Link as MuiLink } from "@mui/material";
+import { Box, Container, Typography, Grid, Link as MuiLink } from "@mui/material";
 import SpotlightCard from "@/components/ui/SpotlightCard";
 import ScrollReveal from "@/components/ui/ScrollReveal";
 import Link from "next/link";
