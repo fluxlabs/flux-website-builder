@@ -44,7 +44,7 @@ export default function BuildStatusPage() {
         
         // Update steps based on logs (check most recent logs first)
         const messages = logsArray.map((log: any) => log.message);
-        const hasLog = (text: string) => messages.some(m => m.includes(text));
+        const hasLog = (text: string) => messages.some((m: string) => m && m.includes(text));
 
         if (hasLog("SYNTHESIS COMPLETE")) setCurrentStep(5);
         else if (hasLog("STARTING AUTOMATED DEPLOYMENT") || hasLog("Triggering Vercel deployment")) setCurrentStep(4);
