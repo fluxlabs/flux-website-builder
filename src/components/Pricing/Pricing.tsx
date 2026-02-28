@@ -53,7 +53,7 @@ export default function Pricing() {
   ];
 
   return (
-    <Box id="pricing" component="section" sx={{ py: 15, background: '#000' }}>
+    <Box id="pricing" component="section" sx={{ py: 15, background: '#fff' }}>
       <ScrollReveal>
         <Container maxWidth="lg">
           <Box sx={{ textAlign: 'center', mb: 10 }}>
@@ -63,12 +63,13 @@ export default function Pricing() {
                 fontSize: { xs: '2.5rem', md: '3.5rem' }, 
                 fontWeight: 800, 
                 mb: 2,
-                letterSpacing: '-0.1rem'
+                letterSpacing: '-0.04em',
+                color: '#111'
               }}
             >
               Simple, No-Guess Pricing
             </Typography>
-            <Typography variant="body1" sx={{ color: '#888', fontSize: '1.25rem' }}>
+            <Typography variant="body1" sx={{ color: '#555', fontSize: '1.25rem' }}>
               Pay once, own forever. No hidden monthly fees for building.
             </Typography>
           </Box>
@@ -76,46 +77,53 @@ export default function Pricing() {
           <Grid container spacing={4}>
             {plans.map((plan) => (
               <Grid size={{ xs: 12, md: 4 }} key={plan.name}>
-                <SpotlightCard sx={{ 
+                <Box sx={{ 
                   height: '100%', 
-                  border: plan.isPopular ? '1px solid #0070f3' : '1px solid rgba(255,255,255,0.05)',
-                  background: plan.isPopular ? 'rgba(0, 112, 243, 0.05)' : 'rgba(255,255,255,0.02)'
+                  border: plan.isPopular ? '2px solid #0055ff' : '1px solid rgba(0,0,0,0.08)',
+                  background: plan.isPopular ? '#fff' : '#fafafa',
+                  borderRadius: '24px',
+                  boxShadow: plan.isPopular ? '0 24px 48px rgba(0, 85, 255, 0.08)' : 'none',
+                  transition: 'transform 0.3s ease',
+                  position: 'relative',
+                  '&:hover': { transform: 'translateY(-8px)' }
                 }}>
-                  <Box sx={{ p: 4, height: '100%', display: 'flex', flexDirection: 'column' }}>
+                  <Box sx={{ p: 5, height: '100%', display: 'flex', flexDirection: 'column' }}>
                     {plan.isPopular && (
                       <Typography 
                         sx={{ 
-                          fontSize: '0.6rem', 
-                          fontWeight: 900, 
+                          fontSize: '0.7rem', 
+                          fontWeight: 800, 
                           textTransform: 'uppercase', 
                           letterSpacing: '0.1rem',
-                          background: '#0070f3',
+                          background: '#0055ff',
                           color: '#fff',
-                          px: 1.5,
+                          px: 2,
                           py: 0.5,
-                          borderRadius: '4px',
-                          width: 'fit-content',
-                          mb: 3
+                          borderRadius: '50px',
+                          position: 'absolute',
+                          top: -12,
+                          left: '50%',
+                          transform: 'translateX(-50%)'
                         }}
                       >
                         Most Popular
                       </Typography>
                     )}
                     
-                    <Box sx={{ mb: 4 }}>
-                      <Typography variant="h4" sx={{ fontWeight: 800, mb: 1 }}>{plan.name}</Typography>
-                      <Typography variant="body2" sx={{ color: '#666', mb: 3 }}>{plan.description}</Typography>
-                      <Typography variant="h3" sx={{ fontWeight: 800 }}>
+                    <Box sx={{ mb: 4, textAlign: 'center' }}>
+                      <Typography variant="h4" sx={{ fontWeight: 800, mb: 1, color: '#111' }}>{plan.name}</Typography>
+                      <Typography variant="body2" sx={{ color: '#666', mb: 4 }}>{plan.description}</Typography>
+                      <Typography variant="h3" sx={{ fontWeight: 800, color: '#111', letterSpacing: '-0.05em' }}>
                         {plan.price}
-                        <Box component="span" sx={{ fontSize: '1rem', color: '#444', ml: 1 }}>/build</Box>
+                        <Box component="span" sx={{ fontSize: '1rem', color: '#888', ml: 1, fontWeight: 500, letterSpacing: 0 }}>/build</Box>
                       </Typography>
                     </Box>
 
                     <Stack spacing={2} sx={{ mb: 6, flexGrow: 1 }}>
                       {plan.features.map((feature) => (
-                        <Box key={feature} sx={{ display: 'flex', gap: 1.5, alignItems: 'center' }}>
-                          <Typography sx={{ color: '#0070f3', fontWeight: 900 }}>✓</Typography>
-                          <Typography variant="body2" sx={{ color: '#888', fontWeight: 500 }}>{feature}</Typography>
+                        <Box key={feature} sx={{ display: 'flex', gap: 2, alignItems: 'center' }}>
+                          <Typography sx={{ color: '#0055ff', fontWeight: 900, fontSize: '1.2rem' }}>✓</Typography>
+                          <Typography variant="body2" sx={{ color: '#555', fontWeight: 500, fontSize: '0.95rem' }}>{feature}</Typography>
                         </Box>
                       ))}
                     </Stack>
@@ -124,29 +132,35 @@ export default function Pricing() {
                       <Button 
                         component={Link} 
                         href="/intake" 
-                        variant="outlined"
+                        variant={plan.isPopular ? "contained" : "outlined"}
+                        disableElevation
                         fullWidth
                         sx={{ 
-                          borderRadius: '12px', 
+                          borderRadius: '50px', 
                           py: 1.5, 
-                          fontWeight: 800, 
-                          color: '#fff', 
-                          borderColor: 'rgba(255,255,255,0.1)',
+                          fontWeight: 700, 
+                          fontSize: '1rem',
                           textTransform: 'none',
-                          '&:hover': { borderColor: '#fff', background: 'rgba(255,255,255,0.05)' }
+                          color: plan.isPopular ? '#fff' : '#111',
+                          borderColor: plan.isPopular ? 'transparent' : 'rgba(0,0,0,0.1)',
+                          backgroundColor: plan.isPopular ? '#0055ff' : 'transparent',
+                          '&:hover': { 
+                            backgroundColor: plan.isPopular ? '#0044cc' : 'rgba(0,0,0,0.03)',
+                            borderColor: plan.isPopular ? 'transparent' : 'rgba(0,0,0,0.2)'
+                          }
                         }}
                       >
-                        Choose {plan.name} →
+                        Choose {plan.name}
                       </Button>
                     </Magnetic>
                   </Box>
-                </SpotlightCard>
+                </Box>
               </Grid>
             ))}
           </Grid>
           
           <Box sx={{ mt: 10, textAlign: 'center' }}>
-            <Typography sx={{ color: '#444', fontWeight: 700, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 1.5 }}>
+            <Typography sx={{ color: '#666', fontWeight: 600, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 1.5 }}>
               <Box component="span" sx={{ fontSize: '1.25rem' }}>🛡️</Box>
               100% Satisfaction Guarantee. We build until you love it.
             </Typography>

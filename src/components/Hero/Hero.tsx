@@ -17,13 +17,13 @@ export default function Hero() {
       opacity: 1,
       transition: {
         staggerChildren: 0.1,
-        delayChildren: 0.3,
+        delayChildren: 0.2,
       },
     },
   };
 
   const itemVariants: Variants = {
-    hidden: { opacity: 0, y: 20 },
+    hidden: { opacity: 0, y: 10 },
     visible: { 
       opacity: 1, 
       y: 0, 
@@ -44,22 +44,21 @@ export default function Hero() {
         minHeight: '90vh',
         display: 'flex',
         alignItems: 'center',
-        pt: { xs: 10, md: 15 },
-        pb: { xs: 15, md: 20 },
+        pt: { xs: 15, md: 20 },
+        pb: { xs: 10, md: 15 },
         position: 'relative',
         overflow: 'hidden',
-        background: '#000'
+        background: '#fafafa'
       }}
     >
-      {/* Background Orbs */}
       <Box sx={{
         position: 'absolute',
-        top: '10%',
+        top: '20%',
         left: '50%',
         transform: 'translateX(-50%)',
-        width: '60vw',
-        height: '60vw',
-        background: 'radial-gradient(circle, rgba(0, 112, 243, 0.05) 0%, transparent 70%)',
+        width: '80vw',
+        height: '80vw',
+        background: 'radial-gradient(circle, rgba(0, 85, 255, 0.03) 0%, transparent 60%)',
         zIndex: 0,
         pointerEvents: 'none'
       }} />
@@ -79,31 +78,29 @@ export default function Hero() {
             variants={itemVariants} 
             variant="h1" 
             sx={{ 
-              fontSize: { xs: '3rem', md: '5rem' },
+              fontSize: { xs: '3.5rem', md: '6rem' },
               fontWeight: 800,
-              letterSpacing: '-0.15rem',
-              lineHeight: 1.1,
-              mb: 4
+              letterSpacing: '-0.05em',
+              lineHeight: 1.05,
+              mb: 4,
+              color: '#111'
             }}
           >
             The Digital Home <br/>
-            <Box component="span" sx={{ color: '#888' }}>your business </Box>
-            <Box component="span" sx={{ 
-              background: 'linear-gradient(to right, #fff, #888)',
-              WebkitBackgroundClip: 'text',
-              WebkitTextFillColor: 'transparent'
-            }}>deserves.</Box>
+            <Box component="span" sx={{ color: '#888', fontWeight: 400 }}>your business </Box>
+            deserves.
           </MotionTypography>
           
           <MotionTypography 
             variants={itemVariants} 
             sx={{ 
               fontSize: { xs: '1.125rem', md: '1.5rem' },
-              color: '#888',
-              maxWidth: '750px',
+              color: '#555',
+              maxWidth: '650px',
               mx: 'auto',
               mb: 6,
-              lineHeight: 1.6
+              lineHeight: 1.5,
+              fontWeight: 400
             }}
           >
             Stop waiting weeks for a developer. Flux transforms your vision into a 
@@ -111,28 +108,29 @@ export default function Hero() {
           </MotionTypography>
           
           <MotionBox variants={itemVariants} sx={{ mb: 10 }}>
-            <Magnetic intensity={0.2}>
+            <Magnetic intensity={0.1}>
               <Button 
                 component={Link} 
                 href="/intake" 
                 variant="contained"
+                disableElevation
                 sx={{ 
-                  backgroundColor: '#fff', 
-                  color: '#000', 
+                  backgroundColor: '#0055ff', 
+                  color: '#fff', 
                   borderRadius: '100px', 
-                  px: { xs: 4, md: 6 },
-                  py: 2,
+                  px: { xs: 4, md: 5 },
+                  py: 1.8,
                   fontSize: '1.125rem',
-                  fontWeight: 800,
+                  fontWeight: 700,
                   textTransform: 'none',
-                  '&:hover': { backgroundColor: '#eee' },
-                  boxShadow: '0 20px 40px rgba(255,255,255,0.1)'
+                  '&:hover': { backgroundColor: '#0044cc' },
+                  boxShadow: '0 8px 24px rgba(0, 85, 255, 0.25)'
                 }}
               >
                 Start Your Build
               </Button>
             </Magnetic>
-            <Typography sx={{ mt: 3, color: '#444', fontSize: '0.875rem', fontWeight: 600 }}>
+            <Typography sx={{ mt: 3, color: '#888', fontSize: '0.875rem', fontWeight: 500 }}>
               Join 50+ visionaries. No credit card required. Finalize after delivery.
             </Typography>
           </MotionBox>
@@ -140,28 +138,28 @@ export default function Hero() {
           <MotionBox variants={itemVariants}>
             <Stack 
               direction="row" 
-              spacing={4} 
+              spacing={5} 
               justifyContent="center" 
-              divider={<Divider orientation="vertical" flexItem sx={{ borderColor: 'rgba(255,255,255,0.1)' }} />}
+              divider={<Divider orientation="vertical" flexItem sx={{ borderColor: 'rgba(0,0,0,0.08)' }} />}
             >
               <Box>
-                <Typography sx={{ fontSize: '1.5rem', fontWeight: 800 }}>48h</Typography>
-                <Typography sx={{ fontSize: '0.75rem', color: '#444', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.1rem' }}>Delivery</Typography>
+                <Typography sx={{ fontSize: '1.75rem', fontWeight: 800, color: '#111' }}>48h</Typography>
+                <Typography sx={{ fontSize: '0.75rem', color: '#888', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.1rem' }}>Delivery</Typography>
               </Box>
               <Box>
-                <Typography sx={{ fontSize: '1.5rem', fontWeight: 800 }}>99+</Typography>
-                <Typography sx={{ fontSize: '0.75rem', color: '#444', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.1rem' }}>Perf Score</Typography>
+                <Typography sx={{ fontSize: '1.75rem', fontWeight: 800, color: '#111' }}>99+</Typography>
+                <Typography sx={{ fontSize: '0.75rem', color: '#888', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.1rem' }}>Perf Score</Typography>
               </Box>
               <Box>
-                <Typography sx={{ fontSize: '1.5rem', fontWeight: 800 }}>24/7</Typography>
-                <Typography sx={{ fontSize: '0.75rem', color: '#444', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.1rem' }}>AI Support</Typography>
+                <Typography sx={{ fontSize: '1.75rem', fontWeight: 800, color: '#111' }}>24/7</Typography>
+                <Typography sx={{ fontSize: '0.75rem', color: '#888', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.1rem' }}>AI Support</Typography>
               </Box>
             </Stack>
           </MotionBox>
         </MotionBox>
       </Container>
     </Box>
-    <Box sx={{ mt: -8, position: 'relative', zIndex: 10 }}>
+    <Box sx={{ pb: 8, position: 'relative', zIndex: 10, background: '#fafafa', borderBottom: '1px solid rgba(0,0,0,0.04)' }}>
       <InfiniteMarquee items={trustedBrands} speed="slow" />
     </Box>
     </>

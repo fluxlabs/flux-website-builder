@@ -41,19 +41,17 @@ const features = [
 
 export default function Features() {
   return (
-    <Box component="section" sx={{ py: 15, background: '#000', position: 'relative' }}>
+    <Box component="section" sx={{ py: 15, background: '#fff', position: 'relative' }}>
       <Container maxWidth="lg">
         <Box sx={{ textAlign: 'center', mb: 10 }}>
           <Typography 
             variant="h2" 
             sx={{ 
               fontSize: { xs: '2.5rem', md: '3.5rem' }, 
-              fontWeight: 300, 
+              fontWeight: 800, 
               mb: 2,
-              fontFamily: 'serif',
-              background: 'linear-gradient(135deg, #fff 0%, #d6c5a5 100%)',
-              WebkitBackgroundClip: 'text',
-              WebkitTextFillColor: 'transparent'
+              color: '#111',
+              letterSpacing: '-0.04em'
             }}
           >
             Why Flux Wins
@@ -61,10 +59,10 @@ export default function Features() {
           <Typography 
             variant="body1" 
             sx={{ 
-              color: '#888', 
-              letterSpacing: '0.1rem', 
-              textTransform: 'uppercase',
-              fontSize: '0.875rem'
+              color: '#555', 
+              fontSize: '1.25rem',
+              maxWidth: '600px',
+              mx: 'auto'
             }}
           >
             We replaced the slow agency model with an intelligent engine.
@@ -75,46 +73,37 @@ export default function Features() {
           {features.map((feature, i) => (
             <Grid size={{ xs: 12, sm: 6, md: 4 }} key={i}>
               <MotionCard 
+                elevation={0}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.1 }}
                 sx={{ 
                   height: '100%',
-                  background: 'transparent',
-                  border: 'none',
-                  borderTop: '1px solid rgba(214, 197, 165, 0.1)',
-                  borderRadius: 0,
-                  pt: 4,
-                  position: 'relative',
-                  '&::after': {
-                    content: '""',
-                    position: 'absolute',
-                    bottom: 0,
-                    left: 0,
-                    width: '0%',
-                    height: '1px',
-                    background: '#d6c5a5',
-                    transition: 'width 0.5s cubic-bezier(0.19, 1, 0.22, 1)'
-                  },
-                  '&:hover::after': {
-                    width: '100%'
-                  },
-                  '&:hover .icon-box': {
-                    color: '#fff',
-                    transform: 'scale(1.05)'
+                  background: '#fafafa',
+                  borderRadius: '24px',
+                  border: '1px solid rgba(0,0,0,0.04)',
+                  p: 2,
+                  transition: 'all 0.3s ease',
+                  '&:hover': {
+                    transform: 'translateY(-5px)',
+                    boxShadow: '0 12px 30px rgba(0,0,0,0.04)',
+                    borderColor: 'rgba(0,0,0,0.08)'
                   }
                 }}
               >
-                <CardContent sx={{ p: 0 }}>
+                <CardContent>
                   <Box 
-                    className="icon-box"
                     sx={{ 
                       mb: 3, 
-                      color: '#d6c5a5', 
-                      transition: 'all 0.5s ease',
+                      width: 56,
+                      height: 56,
+                      borderRadius: '16px',
+                      background: 'rgba(0, 85, 255, 0.08)',
+                      color: '#0055ff', 
                       display: 'flex',
-                      alignItems: 'center'
+                      alignItems: 'center',
+                      justifyContent: 'center'
                     }}
                   >
                     {feature.icon}
@@ -122,10 +111,10 @@ export default function Features() {
                   <Typography 
                     variant="h5" 
                     sx={{ 
-                      fontWeight: 400, 
-                      mb: 2, 
-                      color: '#fff',
-                      letterSpacing: '0.05rem'
+                      fontWeight: 700, 
+                      mb: 1.5, 
+                      color: '#111',
+                      letterSpacing: '-0.02em'
                     }}
                   >
                     {feature.title}
@@ -133,9 +122,9 @@ export default function Features() {
                   <Typography 
                     variant="body2" 
                     sx={{ 
-                      color: '#888', 
-                      lineHeight: 1.8,
-                      fontWeight: 300
+                      color: '#666', 
+                      lineHeight: 1.6,
+                      fontSize: '1rem'
                     }}
                   >
                     {feature.description}

@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { Box, Container, Typography, Button, Stack } from "@mui/material";
+import { Box, Typography, Button, Stack } from "@mui/material";
 
 export default function Navbar() {
   return (
@@ -19,18 +19,18 @@ export default function Navbar() {
     >
       <Box 
         sx={{
-          background: 'rgba(10, 10, 10, 0.7)',
+          background: 'rgba(255, 255, 255, 0.85)',
           backdropFilter: 'blur(24px)',
-          border: '1px solid rgba(255, 255, 255, 0.08)',
+          border: '1px solid rgba(0, 0, 0, 0.06)',
           borderRadius: { xs: 0, md: '50px' },
           width: '100%',
           maxWidth: 1000,
-          px: { xs: 2, md: 4 },
+          px: { xs: 2, md: 3 },
           py: 1.5,
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between',
-          boxShadow: '0 20px 40px rgba(0,0,0,0.5)'
+          boxShadow: '0 10px 40px rgba(0,0,0,0.03)'
         }}
       >
         <Typography 
@@ -39,7 +39,7 @@ export default function Navbar() {
           href="/" 
           sx={{ 
             fontWeight: 900, 
-            color: '#fff', 
+            color: '#111', 
             textDecoration: 'none',
             letterSpacing: '-0.05rem',
             display: 'flex',
@@ -58,27 +58,27 @@ export default function Navbar() {
           alignItems="center"
           sx={{ display: { xs: 'none', md: 'flex' } }}
         >
-          <Typography component={Link} href="/#pricing" sx={{ color: '#888', textDecoration: 'none', fontSize: '0.875rem', fontWeight: 600, transition: 'color 0.2s', '&:hover': { color: '#fff' } }}>Pricing</Typography>
-          <Typography component={Link} href="/#portfolio" sx={{ color: '#888', textDecoration: 'none', fontSize: '0.875rem', fontWeight: 600, transition: 'color 0.2s', '&:hover': { color: '#fff' } }}>Architectures</Typography>
-          <Typography component={Link} href="/technology" sx={{ color: '#888', textDecoration: 'none', fontSize: '0.875rem', fontWeight: 600, transition: 'color 0.2s', '&:hover': { color: '#fff' } }}>Engine</Typography>
-          <Typography component={Link} href="/about" sx={{ color: '#888', textDecoration: 'none', fontSize: '0.875rem', fontWeight: 600, transition: 'color 0.2s', '&:hover': { color: '#fff' } }}>About</Typography>
+          <Typography component={Link} href="/#pricing" sx={{ color: '#555', textDecoration: 'none', fontSize: '0.875rem', fontWeight: 600, transition: 'color 0.2s', '&:hover': { color: '#0055ff' } }}>Pricing</Typography>
+          <Typography component={Link} href="/#portfolio" sx={{ color: '#555', textDecoration: 'none', fontSize: '0.875rem', fontWeight: 600, transition: 'color 0.2s', '&:hover': { color: '#0055ff' } }}>Architectures</Typography>
+          <Typography component={Link} href="/technology" sx={{ color: '#555', textDecoration: 'none', fontSize: '0.875rem', fontWeight: 600, transition: 'color 0.2s', '&:hover': { color: '#0055ff' } }}>Engine</Typography>
+          <Typography component={Link} href="/about" sx={{ color: '#555', textDecoration: 'none', fontSize: '0.875rem', fontWeight: 600, transition: 'color 0.2s', '&:hover': { color: '#0055ff' } }}>About</Typography>
         </Stack>
 
         <Button 
           component={Link} 
           href="/intake" 
           variant="contained" 
+          disableElevation
           sx={{ 
-            backgroundColor: '#fff', 
-            color: '#000', 
+            backgroundColor: '#111', 
+            color: '#fff', 
             borderRadius: '50px', 
             px: 3,
             py: 1,
             fontSize: '0.875rem',
-            fontWeight: 800,
+            fontWeight: 700,
             textTransform: 'none',
-            boxShadow: 'none',
-            '&:hover': { backgroundColor: '#e0e0e0', boxShadow: 'none' }
+            '&:hover': { backgroundColor: '#333' }
           }}
         >
           Start Your Build
@@ -87,4 +87,3 @@ export default function Navbar() {
     </Box>
   );
 }
-

@@ -25,7 +25,7 @@ const steps = [
 
 export default function HowItWorks() {
   return (
-    <Box component="section" sx={{ py: 15, background: '#000' }}>
+    <Box component="section" sx={{ py: 15, background: '#fafafa', borderTop: '1px solid rgba(0,0,0,0.04)' }}>
       <Container maxWidth="lg">
         <Box sx={{ textAlign: 'center', mb: 10 }}>
           <Typography 
@@ -34,42 +34,54 @@ export default function HowItWorks() {
               fontSize: { xs: '2.5rem', md: '3.5rem' }, 
               fontWeight: 800, 
               mb: 2,
-              letterSpacing: '-0.1rem'
+              letterSpacing: '-0.04em',
+              color: '#111'
             }}
           >
             The Process
           </Typography>
-          <Typography variant="body1" sx={{ color: '#888', fontSize: '1.25rem' }}>
+          <Typography variant="body1" sx={{ color: '#555', fontSize: '1.25rem' }}>
             From concept to code in under 48 hours.
           </Typography>
         </Box>
 
-        <Grid container spacing={6} sx={{ position: 'relative' }}>
+        <Grid container spacing={6}>
           {steps.map((step, i) => (
             <Grid size={{ xs: 12, md: 4 }} key={i}>
               <MotionBox 
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ delay: i * 0.2 }}
-                sx={{ position: 'relative', zIndex: 1 }}
+                transition={{ delay: i * 0.15 }}
+                sx={{ 
+                  background: '#fff',
+                  border: '1px solid rgba(0,0,0,0.06)',
+                  borderRadius: '24px',
+                  p: 5,
+                  height: '100%',
+                  position: 'relative',
+                  overflow: 'hidden'
+                }}
               >
                 <Typography 
                   sx={{ 
-                    fontSize: '4rem', 
+                    fontSize: '6rem', 
                     fontWeight: 900, 
-                    color: 'rgba(255,255,255,0.05)',
-                    lineHeight: 1,
-                    mb: -2
+                    color: 'rgba(0,0,0,0.03)',
+                    lineHeight: 0.8,
+                    position: 'absolute',
+                    top: 20,
+                    right: 20,
+                    letterSpacing: '-0.05em'
                   }}
                 >
                   {step.num}
                 </Typography>
-                <Box sx={{ pl: 2 }}>
-                  <Typography variant="h5" sx={{ fontWeight: 700, mb: 2, color: '#fff' }}>
+                <Box sx={{ position: 'relative', zIndex: 1, mt: 4 }}>
+                  <Typography variant="h5" sx={{ fontWeight: 700, mb: 2, color: '#111' }}>
                     {step.title}
                   </Typography>
-                  <Typography sx={{ color: '#666', lineHeight: 1.7 }}>
+                  <Typography sx={{ color: '#666', lineHeight: 1.6, fontSize: '1.05rem' }}>
                     {step.description}
                   </Typography>
                 </Box>

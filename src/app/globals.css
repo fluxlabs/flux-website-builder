@@ -1,11 +1,11 @@
 :root {
-  --background: #000000;
-  --foreground: #ffffff;
-  --accent: #ffffff;
-  --accent-secondary: #888888;
-  --border: rgba(255, 255, 255, 0.1);
-  --glass: rgba(255, 255, 255, 0.03);
-  --text-muted: #888888;
+  --background: #fafafa;
+  --foreground: #111111;
+  --accent: #0055ff;
+  --accent-secondary: #555555;
+  --border: rgba(0, 0, 0, 0.08);
+  --glass: rgba(255, 255, 255, 0.8);
+  --text-muted: #555555;
 }
 
 body {
@@ -23,30 +23,13 @@ body {
   box-sizing: border-box;
 }
 
-/* Iridescent Flow */
-@keyframes iridescent {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-}
-
-.iridescent-bg {
-  background: linear-gradient(
-    45deg,
-    rgba(255, 255, 255, 0) 0%,
-    rgba(255, 255, 255, 0.05) 50%,
-    rgba(255, 255, 255, 0) 100%
-  );
-  background-size: 200% 200%;
-  animation: iridescent 8s ease infinite;
-}
-
 /* Soft Float */
 @keyframes soft-float {
   0%, 100% { transform: translateY(0) scale(1); }
-  50% { transform: translateY(-20px) scale(1.02); }
+  50% { transform: translateY(-10px) scale(1.01); }
 }
 
 .floating {
   animation: soft-float 6s ease-in-out infinite;
 }
+
