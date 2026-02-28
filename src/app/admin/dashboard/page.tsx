@@ -1,12 +1,45 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import styles from "./dashboard.module.css";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
+import { 
+  Box, 
+  Container, 
+  Typography, 
+  Grid, 
+  Card, 
+  CardContent, 
+  Button, 
+  Drawer, 
+  IconButton, 
+  Stack, 
+  Chip, 
+  Divider,
+  Avatar,
+  Tab,
+  Tabs,
+  Select,
+  MenuItem,
+  FormControl,
+  InputLabel
+} from "@mui/material";
+import { 
+  Rocket, 
+  Search, 
+  Trash2, 
+  RefreshCcw, 
+  ExternalLink, 
+  User, 
+  Calendar,
+  X,
+  Plus,
+  Activity
+} from "lucide-react";
+
+const MotionCard = motion(Card);
 
 const STATUSES = ["new", "ai_generating", "staging_ready", "client_review", "approved", "live"];
-
 type View = 'pipeline' | 'clients' | 'analytics' | 'client-detail';
 
 export default function AdminDashboard() {
@@ -16,19 +49,13 @@ export default function AdminDashboard() {
   const [selectedClientEmail, setSelectedClientEmail] = useState<string | null>(null);
   const [liveLogs, setLiveLogs] = useState<any[]>([]);
   const [currentView, setCurrentView] = useState<View>('pipeline');
+  const [tabValue, setTabValue] = useState(0);
 
   const fetchIntakes = async () => {
     try {
       const res = await fetch("/api/admin/intakes");
-      const rawData = await res.json();
-      const data = Array.isArray(rawData) ? rawData : [];
-      setIntakes(data);
-      
-      // Keep selected intake in sync if it exists
-      if (selectedIntake) {
-        const updated = data.find(i => i.id === selectedIntake.id);
-        if (updated) setSelectedIntake(updated);
-      }
+      const data = await res.json();
+      setIntakes(Array.isArray(data) ? data : []);
     } catch (err) {
       console.error(err);
     } finally {
@@ -36,24 +63,12 @@ export default function AdminDashboard() {
     }
   };
 
-  const [currentStep, setCurrentStep] = useState<number>(0);
-
   const fetchLogs = async () => {
     const intakeId = currentView === 'analytics' ? '' : (selectedIntake?.id || '');
     try {
       const res = await fetch(`/api/admin/logs?intakeId=${intakeId}&limit=100`);
       const data = await res.json();
-      const logs = data.logs || [];
-      setLiveLogs(logs);
-      
-      if (selectedIntake) {
-        // Update pipeline step based on log messages
-        if (logs.some((l: any) => l.message.includes("Synthesis complete"))) setCurrentStep(4);
-        else if (logs.some((l: any) => l.message.includes("Triggering Vercel"))) setCurrentStep(3);
-        else if (logs.some((l: any) => l.message.includes("Installing dependencies"))) setCurrentStep(2);
-        else if (logs.some((l: any) => l.message.includes("Vision Generated"))) setCurrentStep(1);
-        else setCurrentStep(0);
-      }
+      setLiveLogs(data.logs || []);
     } catch (err) {
       console.error(err);
     }
@@ -72,17 +87,9 @@ export default function AdminDashboard() {
       logInterval = setInterval(fetchLogs, 3000);
     } else {
       setLiveLogs([]);
-      setCurrentStep(0);
     }
     return () => clearInterval(logInterval);
   }, [selectedIntake, currentView]);
-
-  const PIPELINE_STEPS = [
-    { id: 1, name: "VISION", label: "LLM Synthesis" },
-    { id: 2, name: "BUILD", label: "Project Generation" },
-    { id: 3, name: "DEPLOY", label: "Global Cloud" },
-    { id: 4, name: "VERIFY", label: "Live Handshake" }
-  ];
 
   const updateStatus = async (id: string, status: string) => {
     try {
@@ -92,649 +99,192 @@ export default function AdminDashboard() {
         body: JSON.stringify({ id, status }),
       });
       fetchIntakes();
-    } catch (err) {
-      console.error(err);
-    }
+    } catch (err) { console.error(err); }
   };
 
   const deleteIntake = async (id: string) => {
-    if (!confirm("Are you sure you want to delete this vision? This cannot be undone.")) return;
+    if (!confirm("Are you sure?")) return;
     try {
-      const res = await fetch(`/api/admin/intakes?id=${id}`, {
-        method: "DELETE",
-      });
-      if (res.ok) {
-        fetchIntakes();
-        if (selectedIntake?.id === id) setSelectedIntake(null);
-      }
-    } catch (err) {
-      console.error(err);
-    }
+      await fetch(`/api/admin/intakes?id=${id}`, { method: "DELETE" });
+      fetchIntakes();
+      if (selectedIntake?.id === id) setSelectedIntake(null);
+    } catch (err) { console.error(err); }
   };
 
   const triggerSynthesis = async (id: string) => {
     try {
-      alert(`Triggering AI Synthesis for build: ${id}. This will take 60-90 seconds.`);
-      const res = await fetch("/api/admin/synthesize", {
+      alert("Triggering synthesis...");
+      await fetch("/api/admin/synthesize", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ intakeId: id }),
       });
-      if (res.ok) {
-        fetchIntakes();
-      }
-    } catch (err) {
-      console.error(err);
-    }
+      fetchIntakes();
+    } catch (err) { console.error(err); }
   };
 
-  const triggerDeployHook = async (hookUrl: string) => {
-    try {
-      const res = await fetch(hookUrl, { method: "POST" });
-      if (res.ok) {
-        alert("Manifestation Triggered Successfully!");
-      } else {
-        alert("Failed to trigger deploy hook.");
-      }
-    } catch (err) {
-      console.error(err);
-      alert("Error triggering deploy hook.");
-    }
-  };
+  const getStatusLabel = (s: string) => s.replace("_", " ").toUpperCase();
 
-  const seedTestLead = async () => {
-    console.log("Seed button clicked");
-    try {
-      const res = await fetch("/api/admin/seed", { method: "POST" });
-      console.log("Seed API response status:", res.status);
-      if (res.ok) {
-        console.log("Seed successful, refreshing intakes...");
-        fetchIntakes();
-      } else {
-        const errData = await res.json();
-        console.error("Seed API error data:", errData);
-      }
-    } catch (err) {
-      console.error("Seed fetch catch:", err);
-    }
-  };
-
-  const getStatusLabel = (status: string) => {
-    return status.replace("_", " ").toUpperCase();
-  };
-
-  // Grouping logic for Clients view
   const clients = intakes.reduce((acc, intake) => {
     const email = intake.email || "no-email";
     if (!acc[email]) {
-      acc[email] = {
-        email: email,
-        name: intake.name,
-        business_name: intake.business_name,
-        projects: [],
-        last_activity: intake.created_at,
-        total_projects: 0,
-        live_projects: 0
-      };
+      acc[email] = { email, name: intake.name, business_name: intake.business_name, projects: [], total_projects: 0, live_projects: 0 };
     }
     acc[email].projects.push(intake);
     acc[email].total_projects++;
     if (intake.status === 'live') acc[email].live_projects++;
-    if (new Date(intake.created_at) > new Date(acc[email].last_activity)) {
-      acc[email].last_activity = intake.created_at;
-    }
     return acc;
   }, {} as Record<string, any>);
 
-  const clientList = Object.values(clients).sort((a: any, b: any) => 
-    new Date(b.last_activity).getTime() - new Date(a.last_activity).getTime()
-  );
-
-  const selectedClient = selectedClientEmail ? clients[selectedClientEmail] : null;
-
-  // Global Stats
+  const clientList = Object.values(clients);
   const avgBuildTime = intakes.filter(i => i.build_time_ms).reduce((acc, i) => acc + i.build_time_ms, 0) / (intakes.filter(i => i.build_time_ms).length || 1);
-  const liveCount = intakes.filter(i => i.status === 'live').length;
-  const activeCount = intakes.filter(i => i.status !== 'live' && i.status !== 'approved').length;
 
-  if (loading) return <div className={styles.loading}>Loading CRM...</div>;
+  if (loading) return <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', background: '#000', color: '#fff' }}>Loading CRM...</Box>;
 
   return (
-    <div className={styles.container}>
-      <header className={styles.header}>
-        <div className={styles.headerContent}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '2.5rem' }}>
-            <Link href="/" className={styles.logo}>
-              Flux<span className={styles.logoHighlight}>Webs</span>
-            </Link>
-            <nav className={styles.nav}>
-              <button 
-                className={`${styles.navItem} ${(currentView === 'pipeline' || currentView === 'client-detail') ? styles.activeNav : ''}`}
-                onClick={() => {
-                  setCurrentView('pipeline');
-                  setSelectedClientEmail(null);
-                }}
-              >
-                Pipeline
-              </button>
-              <button 
-                className={`${styles.navItem} ${currentView === 'clients' ? styles.activeNav : ''}`}
-                onClick={() => {
-                  setCurrentView('clients');
-                  setSelectedClientEmail(null);
-                }}
-              >
-                Clients
-              </button>
-              <button 
-                className={`${styles.navItem} ${currentView === 'analytics' ? styles.activeNav : ''}`}
-                onClick={() => {
-                  setCurrentView('analytics');
-                  setSelectedClientEmail(null);
-                }}
-              >
-                Analytics
-              </button>
-            </nav>
-          </div>
-          <div className={styles.stats}>
-            <button className={styles.seedBtn} onClick={seedTestLead}>+ Seed Vision</button>
-            <div className={styles.liveIndicator}>
-              <div className="statusDot" />
-              <span>{intakes.length} BUILDS</span>
-            </div>
-          </div>
-        </div>
-      </header>
+    <Box sx={{ background: '#000', color: '#fff', minHeight: '100vh' }}>
+      <Box component="header" sx={{ position: 'sticky', top: 0, zIndex: 100, background: 'rgba(10,10,10,0.8)', backdropFilter: 'blur(20px)', borderBottom: '1px solid rgba(255,255,255,0.05)', py: 2 }}>
+        <Container maxWidth="xl">
+          <Stack direction="row" justifyContent="space-between" alignItems="center">
+            <Stack direction="row" spacing={6} alignItems="center">
+              <Typography component={Link} href="/" variant="h6" sx={{ fontWeight: 900, textDecoration: 'none', color: '#fff' }}>Flux<Box component="span" sx={{ color: '#0070f3' }}>Webs</Box></Typography>
+              <Tabs value={tabValue} onChange={(_, v) => { setTabValue(v); setCurrentView(v === 0 ? 'pipeline' : v === 1 ? 'clients' : 'analytics'); }} textColor="inherit" TabIndicatorProps={{ sx: { bgcolor: '#0070f3' } }}>
+                <Tab label="Pipeline" sx={{ fontWeight: 700 }} />
+                <Tab label="Clients" sx={{ fontWeight: 700 }} />
+                <Tab label="Analytics" sx={{ fontWeight: 700 }} />
+              </Tabs>
+            </Stack>
+            <Button variant="contained" onClick={() => {}} sx={{ bgcolor: '#fff', color: '#000', fontWeight: 800, borderRadius: '8px', '&:hover': { bgcolor: '#eee' } }}>+ Seed Vision</Button>
+          </Stack>
+        </Container>
+      </Box>
 
-      <main className={styles.main}>
-        {currentView === 'analytics' && (
-          <>
-            <div className={styles.analyticsRow}>
-              <div className={styles.statCard}>
-                <label>Average Build Time</label>
-                <div className={styles.statValue}>{(avgBuildTime / 1000).toFixed(1)}s</div>
-              </div>
-              <div className={styles.statCard}>
-                <label>Live Projects</label>
-                <div className={styles.statValue}>{liveCount}</div>
-              </div>
-              <div className={styles.statCard}>
-                <label>Active Pipeline</label>
-                <div className={styles.statValue}>{activeCount}</div>
-              </div>
-              <div className={styles.statCard}>
-                <label>Total Visionaries</label>
-                <div className={styles.statValue}>{clientList.length}</div>
-              </div>
-            </div>
-
-            <div className={styles.systemSection}>
-              <div className={styles.sectionHeader}>
-                <h2>Global System Logs</h2>
-                <button className={styles.refreshBtn} onClick={fetchLogs}>Refresh Logs</button>
-              </div>
-              <div className={styles.globalLogViewer}>
-                <div className={styles.logHeader}>
-                  <span>Time</span>
-                  <span>Category</span>
-                  <span>Level</span>
-                  <span>Message</span>
-                  <span>Client ID</span>
-                </div>
-                {liveLogs.map((log: any) => (
-                  <div key={log.id} className={`${styles.globalLogEntry} ${styles[log.level.toLowerCase()]}`}>
-                    <span className={styles.logTime}>{new Date(log.created_at).toLocaleString()}</span>
-                    <span className={styles.logCategory}>{log.category}</span>
-                    <span className={styles.logLevel}>{log.level}</span>
-                    <span className={styles.logMessage}>{log.message}</span>
-                    <span className={styles.logIntakeId}>{log.intake_id?.slice(0, 8) || 'SYSTEM'}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </>
-        )}
-
+      <Container maxWidth="xl" sx={{ py: 6 }}>
         {currentView === 'pipeline' && (
-          <div className={styles.kanban}>
-            {/* ... same kanban logic ... */}
-            {STATUSES.map((status) => (
-              <div key={status} className={styles.column}>
-                <div className={styles.columnHeader}>
-                  {getStatusLabel(status)}
-                  <span className={styles.count}>
-                    {intakes.filter((i) => i.status === status).length}
-                  </span>
-                </div>
-                
-                <div className={styles.cards}>
-                  {intakes.filter((i) => i.status === status).length === 0 && (
-                    <div className={styles.emptyColumn}>No visions yet</div>
-                  )}
-                  {intakes
-                    .filter((i) => i.status === status)
-                    .map((intake) => (
-                      <motion.div 
-                        key={intake.id} 
-                        className={styles.card}
-                        layoutId={intake.id}
-                        onClick={() => setSelectedIntake(intake)}
-                      >
-                        <div className={styles.cardHeader}>
-                          <h3>{intake.business_name}</h3>
-                          <span className={styles.date}>
-                            {new Date(intake.created_at).toLocaleDateString()}
-                          </span>
-                        </div>
-                        
-                        <div className={styles.clientInfo}>
-                          <p>{intake.name}</p>
-                          <p className={styles.email}>{intake.email}</p>
-                        </div>
-
-                        <div className={styles.badgeRow}>
-                           {intake.brand_voice && <span className={styles.voiceBadge}>{intake.brand_voice}</span>}
-                           <span className={styles.goalBadge}>{intake.goal}</span>
-                        </div>
-
-                        {intake.build_time_ms && (
-                          <div className={styles.buildMetric}>
-                            Synthesized in {(intake.build_time_ms / 1000).toFixed(1)}s
-                          </div>
-                        )}
-
-                        {intake.staging_url && (
-                          <div className={styles.stagingLink}>
-                            <a href={intake.staging_url} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()}>View Staging →</a>
-                          </div>
-                        )}
-
-                        <div className={styles.actions}>
-                          {intake.status === "new" && (
-                            <button 
-                              className={styles.manifestBtn} 
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                triggerSynthesis(intake.id);
-                              }}
-                            >
-                              Synthesize Vision 🚀
-                            </button>
-                          )}
-                          <div style={{ display: 'flex', gap: '0.5rem', width: '100%' }}>
-                            <select 
-                              style={{ flex: 1 }}
-                              value={intake.status} 
-                              onClick={(e) => e.stopPropagation()}
-                              onChange={(e) => {
-                                e.stopPropagation();
-                                updateStatus(intake.id, e.target.value);
-                              }}
-                            >
-                              {STATUSES.map(s => (
-                                <option key={s} value={s}>{getStatusLabel(s)}</option>
-                              ))}
-                            </select>
-                            <button 
-                              className={styles.deleteBtn}
-                              title="Delete Vision"
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                deleteIntake(intake.id);
-                              }}
-                            >
-                              🗑️
-                            </button>
-                          </div>
-                        </div>
-                      </motion.div>
-                    ))}
-                </div>
-              </div>
+          <Box sx={{ display: 'flex', gap: 3, overflowX: 'auto', pb: 4 }}>
+            {STATUSES.map(status => (
+              <Box key={status} sx={{ minWidth: 320, width: 320 }}>
+                <Stack direction="row" spacing={2} alignItems="center" sx={{ mb: 3 }}>
+                  <Typography variant="subtitle2" sx={{ fontWeight: 800, color: '#444', letterSpacing: '0.1rem' }}>{getStatusLabel(status)}</Typography>
+                  <Chip label={intakes.filter(i => i.status === status).length} size="small" sx={{ bgcolor: 'rgba(255,255,255,0.05)', fontWeight: 800 }} />
+                </Stack>
+                <Stack spacing={2}>
+                  {intakes.filter(i => i.status === status).map(intake => (
+                    <MotionCard key={intake.id} onClick={() => setSelectedIntake(intake)} sx={{ bgcolor: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.05)', cursor: 'pointer', borderRadius: '16px', '&:hover': { bgcolor: 'rgba(255,255,255,0.04)', borderColor: 'rgba(255,255,255,0.1)' } }}>
+                      <CardContent sx={{ p: 3 }}>
+                        <Typography variant="h6" sx={{ fontWeight: 800, mb: 1, fontSize: '1rem' }}>{intake.business_name}</Typography>
+                        <Typography variant="body2" sx={{ color: '#666', mb: 2 }}>{intake.name}</Typography>
+                        <Stack direction="row" spacing={1} sx={{ mb: 2 }}>
+                          <Chip label={intake.goal} size="small" sx={{ fontSize: '0.6rem', fontWeight: 800, bgcolor: 'rgba(0,112,243,0.1)', color: '#0070f3' }} />
+                        </Stack>
+                        <Stack direction="row" justifyContent="space-between" alignItems="center">
+                          <Typography variant="caption" sx={{ color: '#333' }}>{new Date(intake.created_at).toLocaleDateString()}</Typography>
+                          <IconButton size="small" onClick={(e) => { e.stopPropagation(); deleteIntake(intake.id); }} sx={{ color: '#222', '&:hover': { color: '#ef4444' } }}><Trash2 size={16} /></IconButton>
+                        </Stack>
+                      </CardContent>
+                    </MotionCard>
+                  ))}
+                </Stack>
+              </Box>
             ))}
-          </div>
+          </Box>
         )}
 
         {currentView === 'clients' && (
-          <div className={styles.clientGrid}>
-            <div className={styles.clientHeaderRow}>
-              <span>Client</span>
-              <span>Latest Business</span>
-              <span>Projects</span>
-              <span>Last Activity</span>
-              <span>Actions</span>
-            </div>
+          <Grid container spacing={3}>
             {clientList.map((client: any) => (
-              <div key={client.email} className={styles.clientRow}>
-                <div className={styles.clientMain}>
-                  <div className={styles.clientAvatar}>{client.name?.charAt(0) || "V"}</div>
-                  <div>
-                    <div className={styles.clientName}>{client.name}</div>
-                    <div className={styles.clientEmail}>{client.email}</div>
-                  </div>
-                </div>
-                <div className={styles.clientBusiness}>{client.business_name}</div>
-                <div className={styles.clientProjectCount}>
-                  <span className={styles.totalCount}>{client.total_projects} Total</span>
-                  {client.live_projects > 0 && <span className={styles.liveCountBadge}>{client.live_projects} Live</span>}
-                </div>
-                <div className={styles.clientDate}>
-                  {new Date(client.last_activity).toLocaleDateString()}
-                </div>
-                <div className={styles.clientActions}>
-                   <button onClick={() => {
-                     setSelectedClientEmail(client.email);
-                     setCurrentView('client-detail');
-                   }}>Full Profile →</button>
-                </div>
-              </div>
+              <Grid item xs={12} md={4} key={client.email}>
+                <Card sx={{ bgcolor: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.05)', borderRadius: '24px' }}>
+                  <CardContent sx={{ p: 4 }}>
+                    <Stack direction="row" spacing={3} alignItems="center" sx={{ mb: 3 }}>
+                      <Avatar sx={{ bgcolor: '#0070f3', fontWeight: 800 }}>{client.name?.charAt(0)}</Avatar>
+                      <Box>
+                        <Typography variant="h6" sx={{ fontWeight: 800 }}>{client.name}</Typography>
+                        <Typography variant="body2" sx={{ color: '#666' }}>{client.email}</Typography>
+                      </Box>
+                    </Stack>
+                    <Divider sx={{ borderColor: 'rgba(255,255,255,0.05)', mb: 3 }} />
+                    <Stack direction="row" justifyContent="space-between">
+                      <Box>
+                        <Typography variant="caption" sx={{ color: '#444', fontWeight: 800, display: 'block' }}>PROJECTS</Typography>
+                        <Typography sx={{ fontWeight: 700 }}>{client.total_projects}</Typography>
+                      </Box>
+                      <Box sx={{ textAlign: 'right' }}>
+                        <Typography variant="caption" sx={{ color: '#444', fontWeight: 800, display: 'block' }}>LIVE SITES</Typography>
+                        <Typography sx={{ fontWeight: 700, color: '#00ff41' }}>{client.live_projects}</Typography>
+                      </Box>
+                    </Stack>
+                  </CardContent>
+                </Card>
+              </Grid>
             ))}
-          </div>
+          </Grid>
         )}
 
-        {currentView === 'client-detail' && selectedClient && (
-          <div className={styles.detailPage}>
-            <header className={styles.detailHeader}>
-              <div className={styles.detailHeaderMain}>
-                <button className={styles.backBtn} onClick={() => setCurrentView('clients')}>← Back to Clients</button>
-                <div className={styles.detailTitle}>
-                  <h1>{selectedClient.name}</h1>
-                  <span className={styles.detailEmail}>{selectedClient.email}</span>
-                </div>
-              </div>
-              <div className={styles.detailActions}>
-                <button className={styles.primaryBtn}>New Build Vision +</button>
-                <button className={styles.secondaryBtn}>Export Data</button>
-              </div>
-            </header>
-
-            <div className={styles.detailGrid}>
-              <div className={styles.detailSidebar}>
-                <section className={styles.detailCard}>
-                  <label>Client Overview</label>
-                  <div className={styles.overviewStats}>
-                    <div className={styles.ovStat}>
-                      <span>Total Work</span>
-                      <strong>{selectedClient.total_projects} Projects</strong>
-                    </div>
-                    <div className={styles.ovStat}>
-                      <span>Live Now</span>
-                      <strong>{selectedClient.live_projects} Sites</strong>
-                    </div>
-                    <div className={styles.ovStat}>
-                      <span>Since</span>
-                      <strong>{new Date(selectedClient.projects[selectedClient.projects.length - 1].created_at).toLocaleDateString()}</strong>
-                    </div>
-                  </div>
-                </section>
-
-                <section className={styles.detailCard}>
-                  <label>Comms History (Auto-Logged)</label>
-                  <div className={styles.commsTimeline}>
-                    <div className={styles.commsEntry}>
-                      <span className={styles.commsDate}>Today, 2:45 PM</span>
-                      <p>Email Sent: "Review Ready"</p>
-                      <span className={styles.commsStatus}>Delivered ✓</span>
-                    </div>
-                    <div className={styles.commsEntry}>
-                      <span className={styles.commsDate}>Feb 25, 10:12 AM</span>
-                      <p>Email Sent: "Build Started"</p>
-                      <span className={styles.commsStatus}>Opened 👁️</span>
-                    </div>
-                    <div className={styles.commsEntry}>
-                      <span className={styles.commsDate}>Feb 25, 10:10 AM</span>
-                      <p>Intake Received</p>
-                      <span className={styles.commsStatus}>Processed</span>
-                    </div>
-                  </div>
-                </section>
-              </div>
-
-              <div className={styles.detailMainContent}>
-                <label>Active & Past Work</label>
-                <div className={styles.workList}>
-                  {selectedClient.projects.sort((a: any, b: any) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime()).map((project: any) => (
-                    <div key={project.id} className={styles.workCard}>
-                      <div className={styles.workCardHeader}>
-                        <div className={styles.workCardTitle}>
-                          <h3>{project.business_name}</h3>
-                          <span className={`${styles.statusBadge} ${styles[project.status]}`}>{project.status.toUpperCase()}</span>
-                        </div>
-                        <span className={styles.workDate}>{new Date(project.created_at).toLocaleDateString()}</span>
-                      </div>
-
-                      <div className={styles.workGrid}>
-                        <div className={styles.workInfoGroup}>
-                          <label>Infrastructure</label>
-                          <div className={styles.infraLinks}>
-                             {project.staging_url ? (
-                               <div className={styles.linkRow}>
-                                 <span>Staging:</span>
-                                 <a href={project.staging_url} target="_blank">{project.staging_url}</a>
-                               </div>
-                             ) : (
-                               <div className={styles.linkRow}><span>Staging:</span> <em>Not deployed</em></div>
-                             )}
-                             <div className={styles.linkRow}>
-                               <span>Repository:</span>
-                               <a href={`https://github.com/fluxlabs/flux-ai-build-${project.business_name?.toLowerCase().replace(/\s+/g, '-')}`} target="_blank">View Repo ↗</a>
-                             </div>
-                             <div className={styles.linkRow}>
-                               <span>Domain:</span>
-                               {project.status === 'live' ? <strong>{project.business_name.toLowerCase().replace(/\s+/g, '')}.com</strong> : <em>Pending Handover</em>}
-                             </div>
-                          </div>
-                        </div>
-
-                        <div className={styles.workInfoGroup}>
-                          <label>Synthesis Metrics</label>
-                          <div className={styles.metricsList}>
-                            <div className={styles.metricItem}>
-                              <span>Vertical:</span>
-                              <strong>{project.vertical || 'N/A'}</strong>
-                            </div>
-                            <div className={styles.metricItem}>
-                              <span>Layout Style:</span>
-                              <strong>{project.layout || 'N/A'}</strong>
-                            </div>
-                            <div className={styles.metricItem}>
-                              <span>Build Time:</span>
-                              <strong>{project.build_time_ms ? `${(project.build_time_ms / 1000).toFixed(1)}s` : 'N/A'}</strong>
-                            </div>
-                            <div className={styles.metricItem}>
-                              <span>Tokens:</span>
-                              <strong>~24k</strong>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-
-                      <div className={styles.workFooter}>
-                        <div className={styles.inspirationGroup}>
-                          <label>Inspiration Links</label>
-                          <p>{project.links || "None provided"}</p>
-                        </div>
-                        <button className={styles.viewManifestoBtn} onClick={() => setSelectedIntake(project)}>Full Vision Synthesis →</button>
-                      </div>
-                    </div>
+        {currentView === 'analytics' && (
+          <Grid container spacing={4}>
+            <Grid item xs={12} md={3}><Card sx={{ bgcolor: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.05)', borderRadius: '20px', textAlign: 'center', p: 4 }}><Typography variant="overline" sx={{ color: '#444', fontWeight: 800 }}>Avg Build Time</Typography><Typography variant="h3" sx={{ fontWeight: 800 }}>{(avgBuildTime / 1000).toFixed(1)}s</Typography></Card></Grid>
+            <Grid item xs={12} md={3}><Card sx={{ bgcolor: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.05)', borderRadius: '20px', textAlign: 'center', p: 4 }}><Typography variant="overline" sx={{ color: '#444', fontWeight: 800 }}>Live Projects</Typography><Typography variant="h3" sx={{ fontWeight: 800 }}>{intakes.filter(i => i.status === 'live').length}</Typography></Card></Grid>
+            <Grid item xs={12} md={3}><Card sx={{ bgcolor: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.05)', borderRadius: '20px', textAlign: 'center', p: 4 }}><Typography variant="overline" sx={{ color: '#444', fontWeight: 800 }}>Active Pipeline</Typography><Typography variant="h3" sx={{ fontWeight: 800 }}>{intakes.filter(i => i.status !== 'live').length}</Typography></Card></Grid>
+            <Grid item xs={12} md={3}><Card sx={{ bgcolor: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.05)', borderRadius: '20px', textAlign: 'center', p: 4 }}><Typography variant="overline" sx={{ color: '#444', fontWeight: 800 }}>Visionaries</Typography><Typography variant="h3" sx={{ fontWeight: 800 }}>{clientList.length}</Typography></Card></Grid>
+            
+            <Grid item xs={12}>
+              <Typography variant="h5" sx={{ fontWeight: 800, mb: 4 }}>Global System Logs</Typography>
+              <Card sx={{ bgcolor: '#050505', border: '1px solid rgba(255,255,255,0.05)', borderRadius: '16px' }}>
+                <Box sx={{ p: 2, maxHeight: 600, overflowY: 'auto' }}>
+                  {liveLogs.map(log => (
+                    <Stack key={log.id} direction="row" spacing={4} sx={{ py: 1.5, px: 2, borderBottom: '1px solid rgba(255,255,255,0.02)', '&:hover': { bgcolor: 'rgba(255,255,255,0.01)' } }}>
+                      <Typography sx={{ color: '#333', fontSize: '0.75rem', minWidth: 100 }}>{new Date(log.created_at).toLocaleTimeString()}</Typography>
+                      <Typography sx={{ color: log.level === 'ERROR' ? '#ef4444' : '#0070f3', fontSize: '0.75rem', fontWeight: 900, minWidth: 80 }}>{log.category}</Typography>
+                      <Typography sx={{ color: '#888', fontSize: '0.875rem' }}>{log.message}</Typography>
+                    </Stack>
                   ))}
-                </div>
-              </div>
-            </div>
-          </div>
+                </Box>
+              </Card>
+            </Grid>
+          </Grid>
         )}
-      </main>
+      </Container>
 
-      <AnimatePresence>
+      <Drawer anchor="right" open={!!selectedIntake} onClose={() => setSelectedIntake(null)} PaperProps={{ sx: { width: { xs: '100%', md: 600 }, bgcolor: '#0a0a0a', color: '#fff', p: 4, borderLeft: '1px solid rgba(255,255,255,0.05)' } }}>
         {selectedIntake && (
-          <>
-            <motion.div 
-              className={styles.overlay} 
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              onClick={() => setSelectedIntake(null)}
-            />
-            <motion.div 
-              className={styles.drawer}
-              initial={{ x: "100%" }}
-              animate={{ x: 0 }}
-              exit={{ x: "100%" }}
-              transition={{ type: "spring", stiffness: 300, damping: 30 }}
-            >
-              <div className={styles.drawerHeader}>
-                <h2>Visionary Profile</h2>
-                <button onClick={() => setSelectedIntake(null)}>Close</button>
-              </div>
+          <Box>
+            <Stack direction="row" justifyContent="space-between" alignItems="center" sx={{ mb: 6 }}>
+              <Typography variant="h5" sx={{ fontWeight: 800 }}>Visionary Profile</Typography>
+              <IconButton onClick={() => setSelectedIntake(null)} sx={{ color: '#fff' }}><X /></IconButton>
+            </Stack>
+            
+            <Stack spacing={4}>
+              <Box><Typography variant="overline" sx={{ color: '#444', fontWeight: 800 }}>Business</Typography><Typography variant="h4" sx={{ fontWeight: 800 }}>{selectedIntake.business_name}</Typography></Box>
+              <Box><Typography variant="overline" sx={{ color: '#444', fontWeight: 800 }}>Client</Typography><Typography variant="h6">{selectedIntake.name} ({selectedIntake.email})</Typography></Box>
               
-              <div className={styles.drawerContent}>
-                {selectedIntake.status === 'ai_generating' && (
-                  <section className={styles.pipelineSection}>
-                    <label>Live Pipeline Operation</label>
-                    <div className={styles.pipeline}>
-                      {PIPELINE_STEPS.map((step) => (
-                        <div key={step.id} className={`${styles.pipelineStep} ${currentStep >= step.id ? styles.active : ''}`}>
-                          <div className={styles.stepCircle}>
-                            {currentStep > step.id ? "✓" : step.id}
-                          </div>
-                          <div className={styles.stepInfo}>
-                            <h4>{step.name}</h4>
-                            <span>{step.label}</span>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  </section>
-                )}
+              <Divider sx={{ borderColor: 'rgba(255,255,255,0.05)' }} />
+              
+              <Grid container spacing={3}>
+                <Grid item xs={6}><Typography variant="overline" sx={{ color: '#444', fontWeight: 800 }}>Vertical</Typography><Typography sx={{ fontWeight: 700 }}>{selectedIntake.vertical}</Typography></Grid>
+                <Grid item xs={6}><Typography variant="overline" sx={{ color: '#444', fontWeight: 800 }}>Layout</Typography><Typography sx={{ fontWeight: 700 }}>{selectedIntake.layout}</Typography></Grid>
+              </Grid>
 
-                {liveLogs.length > 0 && (
-                  <section>
-                    <label>Synthesis Stream {selectedIntake.status === 'ai_generating' ? '(Live)' : '(Latest)'}</label>
-                    <div className={styles.logViewer}>
-                      {liveLogs.map((log: any) => (
-                        <div key={log.id} className={`${styles.logEntry} ${styles[log.level.toLowerCase()]}`}>
-                          <span className={styles.logTime}>{new Date(log.created_at).toLocaleTimeString()}</span>
-                          <span className={styles.logCategory}>{log.category}</span>
-                          <span className={styles.logMessage}>{log.message}</span>
-                        </div>
-                      ))}
-                    </div>
-                  </section>
-                )}
+              <Box sx={{ p: 3, bgcolor: 'rgba(255,255,255,0.02)', borderRadius: '16px', border: '1px solid rgba(255,255,255,0.05)' }}>
+                <Typography variant="overline" sx={{ color: '#444', fontWeight: 800, mb: 1, display: 'block' }}>The Manifesto</Typography>
+                <Typography sx={{ fontStyle: 'italic', color: '#ccc' }}>"{selectedIntake.hero_message}"</Typography>
+              </Box>
 
-                <section>
-                  <label>Business</label>
-                  <p>{selectedIntake.business_name}</p>
-                </section>
-                
-                <section>
-                  <label>Client</label>
-                  <p>{selectedIntake.name} ({selectedIntake.email})</p>
-                </section>
-
-                <section>
-                  <label>The Synthesis</label>
-                  <p className={styles.manifesto}>"{selectedIntake.hero_message}"</p>
-                </section>
-
-                <div className={styles.drawerGrid}>
-                  <section>
-                    <label>Vertical</label>
-                    <p>{selectedIntake.vertical || "Not specified"}</p>
-                  </section>
-                  <section>
-                    <label>Layout Style</label>
-                    <p>{selectedIntake.layout || "Modern Clean"}</p>
-                  </section>
-                  <section>
-                    <label>Brand Voice</label>
-                    <p>{selectedIntake.brand_voice}</p>
-                  </section>
-                  <section>
-                    <label>Target Audience</label>
-                    <p>{selectedIntake.target_audience}</p>
-                  </section>
-                  <section>
-                    <label>Goal</label>
-                    <p>{selectedIntake.goal}</p>
-                  </section>
-                  <section>
-                    <label>Primary Color</label>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-                      <div className={styles.colorIndicator} style={{ backgroundColor: selectedIntake.colors }} />
-                      <span>{selectedIntake.colors}</span>
-                    </div>
-                  </section>
-                </div>
-
-                <section>
-                  <label>Inspiration Links</label>
-                  <p>{selectedIntake.links || "None provided"}</p>
-                </section>
-
-                <section>
-                  <label>Architecture</label>
-                  <div className={styles.badgeRow}>
-                    {selectedIntake.pages?.map((p: string) => (
-                      <span key={p} className={styles.voiceBadge}>{p}</span>
-                    ))}
-                  </div>
-                </section>
-
-                {selectedIntake.staging_url && (
-                  <section className={styles.drawerAction}>
-                    <label>Staging Operations</label>
-                    <div className={styles.actionGrid}>
-                      <a href={selectedIntake.staging_url} target="_blank" className={styles.primaryAction}>Open Site →</a>
-                      <button className={styles.secondaryAction} onClick={() => triggerSynthesis(selectedIntake.id)}>Rework AI Draft 🔄</button>
-                      {selectedIntake.deploy_hook && (
-                        <button className={styles.secondaryAction} onClick={() => triggerDeployHook(selectedIntake.deploy_hook)}>Quick Re-Deploy ⚡</button>
-                      )}
-                    </div>
-                  </section>
-                )}
-
-                <section className={styles.drawerAction}>
-                  <label>Client Communication</label>
-                  <div className={styles.commsGrid}>
-                    <button className={styles.commsBtn}>Send "Build Started" 📧</button>
-                    <button className={styles.commsBtn}>Send "Review Ready" 📧</button>
-                    <button className={styles.commsBtn}>Send "Final Handover" 📧</button>
-                  </div>
-                </section>
-
-                <section>
-                  <label>Internal Operations Journal</label>
-                  <textarea 
-                    className={styles.notesArea} 
-                    placeholder="Enter build notes, specific AI tweaks, or client requests..."
-                  />
-                </section>
-
-                <section className={styles.historySection}>
-                  <label>Client History (All Work)</label>
-                  <div className={styles.historyList}>
-                    {intakes
-                      .filter(i => i.email === selectedIntake.email)
-                      .sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime())
-                      .map(i => (
-                        <div key={i.id} className={`${styles.historyItem} ${i.id === selectedIntake.id ? styles.currentHistoryItem : ''}`} onClick={() => setSelectedIntake(i)}>
-                          <div className={styles.historyMeta}>
-                            <span className={styles.historyDate}>{new Date(i.created_at).toLocaleDateString()}</span>
-                            <span className={`${styles.historyStatus} ${styles[i.status]}`}>{i.status.toUpperCase()}</span>
-                          </div>
-                          <div className={styles.historyBusiness}>{i.business_name}</div>
-                          {i.staging_url && <div className={styles.historyLink}>View Staging →</div>}
-                        </div>
-                      ))}
-                  </div>
-                </section>
-              </div>
-            </motion.div>
-          </>
+              <Box>
+                <Typography variant="overline" sx={{ color: '#444', fontWeight: 800, mb: 2, display: 'block' }}>Operations</Typography>
+                <Stack direction="row" spacing={2}>
+                  <Button fullWidth variant="contained" onClick={() => triggerSynthesis(selectedIntake.id)} sx={{ bgcolor: '#0070f3', fontWeight: 800, py: 1.5 }}>Rework AI Draft</Button>
+                  <FormControl fullWidth variant="outlined">
+                    <Select value={selectedIntake.status} onChange={(e) => updateStatus(selectedIntake.id, e.target.value)} sx={{ bgcolor: 'rgba(255,255,255,0.02)', color: '#fff' }}>
+                      {STATUSES.map(s => <MenuItem key={s} value={s}>{getStatusLabel(s)}</MenuItem>)}
+                    </Select>
+                  </FormControl>
+                </Stack>
+              </Box>
+            </Stack>
+          </Box>
         )}
-      </AnimatePresence>
-    </div>
+      </Drawer>
+    </Box>
   );
 }
