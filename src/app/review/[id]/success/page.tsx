@@ -78,7 +78,7 @@ export default function LaunchGuidePage() {
                 </div>
                 <div className={styles.dnsCol}>
                   <label>Value</label>
-                  <code>cname.vercel-dns.com</code>
+                  <code>nodes.fluxwebs.net</code>
                 </div>
               </div>
             </div>

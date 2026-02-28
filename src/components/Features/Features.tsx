@@ -6,12 +6,12 @@ import { motion } from "framer-motion";
 const features = [
   {
     title: "Autonomous Agent",
-    description: "Our proprietary AI analyzes your brand, writes copy, and codes a complete Next.js website from scratch.",
+    description: "Our proprietary AI analyzes your brand, writes copy, and generates a bespoke digital architecture from scratch.",
     icon: "🧠"
   },
   {
-    title: "Automated Deployment",
-    description: "Your site is instantly deployed to Vercel's Edge Network for global, blazing-fast performance.",
+    title: "Global Distribution",
+    description: "Your site is instantly deployed to our high-speed global network for record-breaking performance.",
     icon: "🚀"
   },
   {
@@ -20,8 +20,8 @@ const features = [
     icon: "📈"
   },
   {
-    title: "No Vendor Lock-in",
-    description: "You own the code. Get the full Next.js/React repository to host anywhere or modify forever.",
+    title: "Full Ownership",
+    description: "You own the code. Get the full high-performance source code to host anywhere or modify forever.",
     icon: "🔓"
   },
   {
@@ -31,7 +31,7 @@ const features = [
   },
   {
     title: "Custom Aesthetic",
-    description: "Not a generic template. The AI generates unique styling based on your brand palette and vibe.",
+    description: "Not a generic template. The engine generates unique styling based on your brand palette and vibe.",
     icon: "✨"
   }
 ];

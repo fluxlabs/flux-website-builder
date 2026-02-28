@@ -77,7 +77,7 @@ export default function AdminDashboard() {
   const PIPELINE_STEPS = [
     { id: 1, name: "VISION", label: "LLM Manifestation" },
     { id: 2, name: "BUILD", label: "Project Generation" },
-    { id: 3, name: "DEPLOY", label: "Vercel / GitHub" },
+    { id: 3, name: "DEPLOY", label: "Global Cloud" },
     { id: 4, name: "VERIFY", label: "Live Handshake" }
   ];
 
@@ -129,7 +129,7 @@ export default function AdminDashboard() {
     try {
       const res = await fetch(hookUrl, { method: "POST" });
       if (res.ok) {
-        alert("Vercel Deployment Triggered Successfully!");
+        alert("Manifestation Triggered Successfully!");
       } else {
         alert("Failed to trigger deploy hook.");
       }

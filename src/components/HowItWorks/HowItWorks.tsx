@@ -12,7 +12,7 @@ const steps = [
   {
     num: "02",
     title: "AI Manifestation",
-    description: "Our agent researches your niche, writes the copy, and builds a complete Next.js architecture.",
+    description: "Our agent researches your niche, writes the copy, and builds a complete high-performance architecture.",
   },
   {
     num: "03",
