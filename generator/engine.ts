@@ -17,6 +17,8 @@ interface IntakeData {
   employee_count?: string;
   vertical?: string;
   layout?: string;
+  social_links?: string;
+  services_list?: string;
   goal: string;
   brand_voice: string;
   target_audience: string;
@@ -68,9 +70,9 @@ export async function generateSiteData(intakeId: string) {
       - Industry/Vertical: ${typedIntake.industry || typedIntake.vertical || 'General Business'}
       - Macro-Vertical: ${typedIntake.vertical || 'Services'}
       - Location: ${typedIntake.location || 'Global/Online'}
-      - Size: ${typedIntake.employee_count || 'Unknown'} employees
       - Target Audience: ${typedIntake.target_audience}
       - Primary Goal: ${typedIntake.goal}
+      - Services/Products: ${typedIntake.services_list || 'N/A'}
       
       Provide a brief (2-3 paragraphs) deep-dive competitive analysis and content strategy.
       What are the specific pain points of customers in this specific industry and location?
@@ -92,13 +94,15 @@ export async function generateSiteData(intakeId: string) {
     BUSINESS: ${bizName}
     INDUSTRY: ${typedIntake.industry || "N/A"}
     VERTICAL CATEGORY: ${typedIntake.vertical || "N/A"}
-    DESIGN LAYOUT STYLE: ${typedIntake.layout || "Modern Clean"}
+    DESIGN LAYOUT STYLE: ${typedIntake.layout || "Modern & Clean"}
     LOCATION: ${typedIntake.location || "N/A"}
     VISIONARY GOAL: ${typedIntake.goal}
     TARGET AUDIENCE: ${typedIntake.target_audience}
     BRAND PERSONALITY: ${typedIntake.brand_voice}
     THE CORE MANIFESTO: ${typedIntake.hero_message}
     BRAND COLOR: ${typedIntake.colors}
+    SOCIAL MEDIA: ${typedIntake.social_links || "N/A"}
+    SERVICES TO HIGHLIGHT: ${typedIntake.services_list || "N/A"}
 
     --- STRATEGIC RESEARCH CONTEXT ---
     ${researchContext}
@@ -106,10 +110,10 @@ export async function generateSiteData(intakeId: string) {
 
     --- DESIGN DIRECTIVE ---
     The client has explicitly requested a "${typedIntake.layout}" aesthetic.
-    - If "Clean & Corporate": Use high-trust elements, structured grids, and clear hierarchy.
-    - If "Bold & Brutalist": Use oversized typography, raw layouts, high contrast, and unconventional elements.
-    - If "Luxury & Minimal": Use massive whitespace, sophisticated serif/sans-serif pairings, and subtle transitions.
-    - If "Playful & Vibrant": Use rounded shapes, friendly copy, and energetic color applications.
+    - If "Modern & Clean": Use high-trust elements, structured grids, and clear hierarchy. Professional and easy to read.
+    - If "Bold & Loud": Use oversized typography, raw layouts, high contrast, and unconventional elements. Exciting and strong.
+    - If "Soft & Elegant": Use massive whitespace, sophisticated serif/sans-serif pairings, and subtle transitions. High-end and luxury.
+    - If "Fun & Colorful": Use rounded shapes, friendly copy, and energetic color applications. Welcoming and bright.
     
     CRITICAL: Ensure this website is entirely unique. Avoid all clichés. The architecture must feel custom-built for ${bizName}.
     ------------------------
@@ -118,6 +122,7 @@ export async function generateSiteData(intakeId: string) {
 
     Your output must be sophisticated, evocative, and high-conversion. 
     Incorporate local flavor if a location is provided, and speak directly to industry pain points based on the research context.
+    Use the SERVICES list provided to create detailed and compelling service/feature sections.
     Avoid generic SaaS copy. Use punchy, memorable language that "WOWs" the visitor.
 
     Return a JSON object with this exact structure:
@@ -156,7 +161,7 @@ export async function generateSiteData(intakeId: string) {
     Generate content for ALL requested pages: ${requestedPages.join(", ")}.
     The "Home" page should be slug "index".
     "About" page should have sections describing the mission.
-    "Services" should have features/pricing.
+    "Services" should have features/pricing based on the provided SERVICES list.
     "Contact" should have a contact form section.
 
     CRITICAL: ONLY RETURN THE JSON OBJECT. NO MARKDOWN. NO PREAMBLE.

@@ -50,46 +50,45 @@ export default function Navbar() {
           pointerEvents: 'auto'
         }}
       >
-        {['Architectures', 'Technology', 'Blog', 'About'].map((item) => (
-          <Typography 
-            key={item}
-            component={Link} 
-            href={item === 'Architectures' ? '/#portfolio' : `/${item.toLowerCase()}`} 
-            sx={{ 
-              color: 'rgba(255,255,255,0.5)', 
-              textDecoration: 'none', 
-              fontSize: '0.7rem', 
-              fontWeight: 700, 
-              textTransform: 'uppercase',
-              letterSpacing: '0.15rem',
-              transition: 'all 0.3s ease',
-              '&:hover': { color: '#d6c5a5', letterSpacing: '0.25rem' } 
-            }}
-          >
-            {item}
-          </Typography>
-        ))}
-      </Stack>
-
-      <Box sx={{ pointerEvents: 'auto', display: 'flex', alignItems: 'center', gap: 4 }}>
-        <Typography 
-          component={Link} 
-          href="/intake"
-          sx={{ 
-            color: '#fff', 
-            textDecoration: 'none', 
-            fontSize: '0.7rem', 
-            fontWeight: 800, 
-            textTransform: 'uppercase',
-            letterSpacing: '0.1rem',
-            borderBottom: '1px solid #d6c5a5',
-            pb: 0.5,
-            '&:hover': { color: '#d6c5a5' }
-          }}
-        >
-          Start Build
-        </Typography>
-        <IconButton sx={{ color: '#fff', p: 0 }}>
+                {['Our Work', 'Technology', 'Blog', 'About'].map((item) => (
+                  <Typography 
+                    key={item}
+                    component={Link} 
+                    href={item === 'Our Work' ? '/#portfolio' : `/${item.toLowerCase().replace(' ', '-')}`} 
+                    sx={{ 
+                      color: 'rgba(255,255,255,0.5)', 
+                      textDecoration: 'none', 
+                      fontSize: '0.7rem', 
+                      fontWeight: 700, 
+                      textTransform: 'uppercase',
+                      letterSpacing: '0.15rem',
+                      transition: 'all 0.3s ease',
+                      '&:hover': { color: '#d6c5a5', letterSpacing: '0.25rem' } 
+                    }}
+                  >
+                    {item}
+                  </Typography>
+                ))}
+              </Stack>
+        
+              <Box sx={{ pointerEvents: 'auto', display: 'flex', alignItems: 'center', gap: 4 }}>
+                <Typography 
+                  component={Link} 
+                  href="/intake"
+                  sx={{ 
+                    color: '#fff', 
+                    textDecoration: 'none', 
+                    fontSize: '0.7rem', 
+                    fontWeight: 800, 
+                    textTransform: 'uppercase', 
+                    letterSpacing: '0.1rem', 
+                    borderBottom: '1px solid #d6c5a5',
+                    pb: 0.5,
+                    '&:hover': { color: '#d6c5a5' }
+                  }}
+                >
+                  Get Started
+                </Typography>        <IconButton sx={{ color: '#fff', p: 0 }}>
           <Menu size={20} />
         </IconButton>
       </Box>

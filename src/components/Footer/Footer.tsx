@@ -31,7 +31,7 @@ export default function Footer() {
             </Typography>
             <Typography variant="body2" sx={{ color: '#666', maxWidth: 300, lineHeight: 1.6 }}>
               © 2026 Flux Webs. All rights reserved. <br/>
-              Synthesizing the future of digital architecture.
+              High-quality custom websites, built fast.
             </Typography>
           </Grid>
 

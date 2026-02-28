@@ -70,7 +70,7 @@ export default function Hero() {
                   mb: 2
                 }}
               >
-                FUTURE OF SYNTHESIS
+                FAST & PROFESSIONAL
               </Typography>
             </MotionBox>
 
@@ -84,22 +84,21 @@ export default function Hero() {
                 maxWidth: '900px'
               }}
             >
-              Digital <br/> Mastery <br/> 
-              <Box component="span" sx={{ color: 'rgba(255,255,255,0.1)', fontStyle: 'italic' }}>Synthesized.</Box>
+              Professional <br/> Websites, <br/> 
+              <Box component="span" sx={{ color: 'rgba(255,255,255,0.1)', fontStyle: 'italic' }}>Built in 48 Hours.</Box>
             </MotionTypography>
             
-            <MotionBox variants={itemVariants} sx={{ maxWidth: '500px', pt: 4 }}>
+            <MotionBox variants={itemVariants} sx={{ maxWidth: '600px', pt: 4 }}>
               <Typography 
                 sx={{ 
-                  fontSize: '1.125rem',
-                  color: '#666',
-                  lineHeight: 1.8,
+                  fontSize: '1.25rem',
+                  color: '#888',
+                  lineHeight: 1.6,
                   mb: 6,
-                  fontWeight: 300
+                  fontWeight: 400
                 }}
               >
-                We build elite digital experiences for visionaries who refuse to wait. 
-                Your brand, architected and live in 48 hours.
+                Stop waiting weeks for a web agency. We build high-quality, custom websites for small businesses and founders in just two days.
               </Typography>
               
               <Stack direction="row" spacing={4} alignItems="center">
@@ -109,15 +108,16 @@ export default function Hero() {
                     href="/intake" 
                     variant="contained"
                     sx={{ 
-                      backgroundColor: '#d6c5a5', 
+                      backgroundColor: '#fff', 
                       color: '#000', 
                       px: 5,
                       py: 2,
-                      fontSize: '0.8rem',
-                      fontWeight: 900
+                      fontSize: '1rem',
+                      fontWeight: 800,
+                      borderRadius: '50px'
                     }}
                   >
-                    Initiate Build
+                    Get Started
                   </Button>
                 </Magnetic>
                 

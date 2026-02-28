@@ -8,18 +8,18 @@ const MotionBox = motion(Box);
 const steps = [
   {
     num: "01",
-    title: "Submit Your Vision",
-    description: "Fill out our quick intake form. Tell us about your business, target audience, and preferred aesthetic.",
+    title: "Tell Us Your Story",
+    description: "Fill out our easy form. Tell us about your business, who your customers are, and the look you want.",
   },
   {
     num: "02",
-    title: "AI Synthesis",
-    description: "Our agent researches your niche, writes the copy, and builds a complete high-performance architecture.",
+    title: "We Build It For You",
+    description: "Our team and AI get to work immediately. We research your industry, write the text, and design your site.",
   },
   {
     num: "03",
-    title: "Review & Launch",
-    description: "Within 48 hours, you receive a staging link. Approve the build, and we push it live to your domain.",
+    title: "Review & Go Live",
+    description: "In less than 48 hours, you'll see a preview. Once you approve, we'll launch your site on your domain.",
   }
 ];
 
@@ -38,10 +38,10 @@ export default function HowItWorks() {
               color: '#111'
             }}
           >
-            The Process
+            How it Works
           </Typography>
           <Typography variant="body1" sx={{ color: '#555', fontSize: '1.25rem' }}>
-            From concept to code in under 48 hours.
+            Get from idea to live website in under 48 hours.
           </Typography>
         </Box>
 

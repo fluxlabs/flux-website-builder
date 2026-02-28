@@ -6,18 +6,18 @@ import { Box, Container, Typography, Stack, Divider, Grid } from "@mui/material"
 
 const features = [
   {
-    title: "Autonomous Intelligence",
-    description: "Our proprietary AI doesn't just generate code—it understands the soul of your brand architecture.",
+    title: "Built by Experts & AI",
+    description: "We combine the speed of AI with the eye of professional designers to create a site that truly represents your business.",
     icon: <Bot size={20} />
   },
   {
-    title: "Elite Performance",
-    description: "Every build achieves a near-perfect scores on the core vitals, outperforming traditional agency work.",
+    title: "Super Fast Loading",
+    description: "Every site we build is optimized for speed, ensuring your customers never have to wait for a page to load.",
     icon: <Zap size={20} />
   },
   {
-    title: "Absolute Ownership",
-    description: "Your vision, your code. Full GitHub repository handover with no vendor lock-in, forever.",
+    title: "You Own Everything",
+    description: "Your site is yours forever. We give you the full code and files with no monthly fees or vendor lock-in.",
     icon: <Key size={20} />
   }
 ];
@@ -29,14 +29,14 @@ export default function Features() {
         <Grid container spacing={15}>
           <Grid size={{ xs: 12, md: 5 }}>
             <Typography variant="overline" sx={{ color: '#d6c5a5', fontWeight: 800, letterSpacing: '0.3rem' }}>
-              WHY WE WIN
+              THE FLUX ADVANTAGE
             </Typography>
             <Typography variant="h2" sx={{ fontSize: '4rem', mt: 3, mb: 4, lineHeight: 1.1 }}>
-              Rejecting the <br/> 
-              <Box component="span" sx={{ color: 'rgba(255,255,255,0.1)' }}>Ordinary.</Box>
+              Better than <br/> 
+              <Box component="span" sx={{ color: 'rgba(255,255,255,0.1)' }}>an Agency.</Box>
             </Typography>
             <Typography variant="body1" sx={{ color: '#666', fontSize: '1.25rem', lineHeight: 1.8, maxWidth: 400 }}>
-              The traditional agency model is dead. We've replaced it with a synthesis engine that moves at the speed of thought.
+              Skip the long meetings and high costs. We deliver agency-quality websites in a fraction of the time.
             </Typography>
           </Grid>
 

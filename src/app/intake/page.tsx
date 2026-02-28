@@ -45,7 +45,7 @@ function IntakeContent() {
     location: "",
     employeeCount: "1-10",
     vertical: "Professional Services",
-    layout: "Clean & Corporate",
+    layout: "Modern & Clean",
     logo: null as File | null,
     logoPreview: "",
     logoQuality: "pending" as "high" | "low" | "pending",
@@ -53,9 +53,11 @@ function IntakeContent() {
     logoMetrics: { width: 0, height: 0, type: "" },
     extractedColors: [] as string[],
     links: "",
+    socialLinks: "",
+    servicesList: "",
     colors: "#0070f3",
     logoUrl: "",
-    goal: "Generate Leads",
+    goal: "Get More Leads",
     brandVoice: "Modern & Professional",
     targetAudience: "",
     heroMessage: "",
@@ -169,19 +171,19 @@ function IntakeContent() {
   const isStep7Valid = formData.pages.length > 0;
 
   const GOAL_OPTIONS = [
-    { id: "Generate Leads", label: "Lead Generation", icon: <Target size={32} />, desc: "Convert visitors into customers with high-impact landing pages." },
-    { id: "Sell Products", label: "E-Commerce", icon: <ShoppingBag size={32} />, desc: "A premium storefront designed to showcase and sell your inventory." },
-    { id: "Portfolio Showcase", label: "Portfolio", icon: <Layout size={32} />, desc: "A visual-first experience for creatives and professionals." },
-    { id: "Information / Blog", label: "Authority / Blog", icon: <FileText size={32} />, desc: "Establish thought leadership with a content-rich destination." }
+    { id: "Get More Leads", label: "Get More Customers", icon: <Target size={32} />, desc: "Focus on getting visitors to call or email you." },
+    { id: "Sell Products", label: "Sell Online", icon: <ShoppingBag size={32} />, desc: "A beautiful store to sell your products online." },
+    { id: "Showcase Work", label: "Portfolio", icon: <Layout size={32} />, desc: "Show off your previous work and projects." },
+    { id: "Share News", label: "Blog / Articles", icon: <FileText size={32} />, desc: "A site focused on sharing news and expertise." }
   ];
 
-  const VERTICAL_OPTIONS = ["Professional Services", "Creative & Design", "Tech & SaaS", "Health & Wellness", "Home Services", "E-commerce", "Non-profit"];
+  const VERTICAL_OPTIONS = ["Professional Services", "Contractor / Trades", "Tech & SaaS", "Health & Beauty", "Restaurant / Food", "Online Store", "Personal Brand"];
 
   const LAYOUT_OPTIONS = [
-    { id: "Clean & Corporate", label: "Clean & Corporate", desc: "Structured, trustworthy, and precise.", gradient: "linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%)" },
-    { id: "Bold & Brutalist", label: "Bold & Brutalist", desc: "High contrast, big typography.", gradient: "linear-gradient(135deg, #000000 0%, #333333 100%)" },
-    { id: "Luxury & Minimal", label: "Luxury & Minimal", desc: "Spacious, elegant, understated.", gradient: "linear-gradient(135deg, #fafaf9 0%, #d6d3d1 100%)" },
-    { id: "Playful & Vibrant", label: "Playful & Vibrant", desc: "Bright colors, friendly vibes.", gradient: "linear-gradient(135deg, #f472b6 0%, #fb923c 100%)" }
+    { id: "Modern & Clean", label: "Modern & Clean", desc: "Professional, trust-worthy, and easy to read.", gradient: "linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%)" },
+    { id: "Bold & Loud", label: "Bold & Exciting", desc: "Big titles and high contrast for a strong brand.", gradient: "linear-gradient(135deg, #000000 0%, #333333 100%)" },
+    { id: "Soft & Elegant", label: "Elegant & Luxury", desc: "Classic, high-end feel for premium services.", gradient: "linear-gradient(135deg, #fafaf9 0%, #d6d3d1 100%)" },
+    { id: "Fun & Colorful", label: "Playful & Bright", desc: "Friendly colors for a welcoming experience.", gradient: "linear-gradient(135deg, #f472b6 0%, #fb923c 100%)" }
   ];
 
   return (
@@ -195,7 +197,7 @@ function IntakeContent() {
           </Typography>
           <Box sx={{ width: 200 }}>
             <Typography variant="caption" sx={{ color: '#444', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.1rem', mb: 1, display: 'block' }}>
-              Step {step} of {totalSteps}
+              Progress {step} of {totalSteps}
             </Typography>
             <LinearProgress variant="determinate" value={(step / totalSteps) * 100} sx={{ height: 2, bgcolor: 'rgba(255,255,255,0.05)', '& .MuiLinearProgress-bar': { bgcolor: '#fff' } }} />
           </Box>
@@ -205,7 +207,7 @@ function IntakeContent() {
           <AnimatePresence mode="wait">
             {step === 1 && (
               <MotionBox key="step1" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} transition={{ duration: 0.6 }} sx={{ width: '100%' }}>
-                <Typography variant="h2" sx={{ fontWeight: 800, mb: 6, textAlign: 'center', letterSpacing: '-0.15rem' }}>What are we building?</Typography>
+                <Typography variant="h2" sx={{ fontWeight: 800, mb: 6, textAlign: 'center', letterSpacing: '-0.15rem' }}>What is the main goal of your site?</Typography>
                 <Grid container spacing={3}>
                   {GOAL_OPTIONS.map(g => (
                     <Grid size={{ xs: 12, sm: 6 }} key={g.id}>
@@ -223,17 +225,17 @@ function IntakeContent() {
 
             {step === 2 && (
               <MotionBox key="step2" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} sx={{ width: '100%', maxWidth: 800, mx: 'auto' }}>
-                <Typography variant="h2" sx={{ fontWeight: 800, mb: 6, textAlign: 'center' }}>The Foundation</Typography>
+                <Typography variant="h2" sx={{ fontWeight: 800, mb: 6, textAlign: 'center' }}>Let's start with the basics</Typography>
                 <Grid container spacing={4}>
                   <Grid size={{ xs: 12 }}><TextField fullWidth label="Your Name" name="name" value={formData.name} onChange={handleChange} variant="standard" InputLabelProps={{ sx: { color: '#444' } }} inputProps={{ sx: { fontSize: '1.5rem', py: 2, color: '#fff' } }} sx={{ '& .MuiInput-underline:before': { borderBottomColor: 'rgba(255,255,255,0.1)' } }} /></Grid>
                   <Grid size={{ xs: 12, sm: 6 }}><TextField fullWidth label="Email Address" type="email" name="email" value={formData.email} onChange={handleChange} variant="standard" InputLabelProps={{ sx: { color: '#444' } }} inputProps={{ sx: { fontSize: '1.5rem', py: 2, color: '#fff' } }} sx={{ '& .MuiInput-underline:before': { borderBottomColor: 'rgba(255,255,255,0.1)' } }} /></Grid>
                   <Grid size={{ xs: 12, sm: 6 }}><TextField fullWidth label="Phone Number" name="phone" value={formData.phone} onChange={handleChange} variant="standard" InputLabelProps={{ sx: { color: '#444' } }} inputProps={{ sx: { fontSize: '1.5rem', py: 2, color: '#fff' } }} sx={{ '& .MuiInput-underline:before': { borderBottomColor: 'rgba(255,255,255,0.1)' } }} /></Grid>
                 </Grid>
                 <Box sx={{ mt: 8 }}>
-                  <Typography variant="overline" sx={{ color: '#444', fontWeight: 800, mb: 2, display: 'block' }}>Do you currently have a website?</Typography>
+                  <Typography variant="overline" sx={{ color: '#444', fontWeight: 800, mb: 2, display: 'block' }}>Do you already have a website?</Typography>
                   <Stack direction="row" spacing={3}>
-                    <Button fullWidth variant="outlined" onClick={() => setFormData(p => ({ ...p, hasWebsite: true }))} sx={{ py: 3, borderRadius: '20px', border: '1px solid rgba(255,255,255,0.1)', color: formData.hasWebsite === true ? '#000' : '#fff', bgcolor: formData.hasWebsite === true ? '#fff' : 'transparent', '&:hover': { bgcolor: formData.hasWebsite === true ? '#fff' : 'rgba(255,255,255,0.05)' } }}>Yes, rebuild it</Button>
-                    <Button fullWidth variant="outlined" onClick={() => setFormData(p => ({ ...p, hasWebsite: false }))} sx={{ py: 3, borderRadius: '20px', border: '1px solid rgba(255,255,255,0.1)', color: formData.hasWebsite === false ? '#000' : '#fff', bgcolor: formData.hasWebsite === false ? '#fff' : 'transparent', '&:hover': { bgcolor: formData.hasWebsite === false ? '#fff' : 'rgba(255,255,255,0.05)' } }}>No, new build</Button>
+                    <Button fullWidth variant="outlined" onClick={() => setFormData(p => ({ ...p, hasWebsite: true }))} sx={{ py: 3, borderRadius: '20px', border: '1px solid rgba(255,255,255,0.1)', color: formData.hasWebsite === true ? '#000' : '#fff', bgcolor: formData.hasWebsite === true ? '#fff' : 'transparent', '&:hover': { bgcolor: formData.hasWebsite === true ? '#fff' : 'rgba(255,255,255,0.05)' } }}>Yes, update it</Button>
+                    <Button fullWidth variant="outlined" onClick={() => setFormData(p => ({ ...p, hasWebsite: false }))} sx={{ py: 3, borderRadius: '20px', border: '1px solid rgba(255,255,255,0.1)', color: formData.hasWebsite === false ? '#000' : '#fff', bgcolor: formData.hasWebsite === false ? '#fff' : 'transparent', '&:hover': { bgcolor: formData.hasWebsite === false ? '#fff' : 'rgba(255,255,255,0.05)' } }}>No, build a new one</Button>
                   </Stack>
                 </Box>
               </MotionBox>
@@ -241,17 +243,17 @@ function IntakeContent() {
 
             {step === 3 && (
               <MotionBox key="step3" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} sx={{ width: '100%', maxWidth: 800, mx: 'auto' }}>
-                <Typography variant="h2" sx={{ fontWeight: 800, mb: 6, textAlign: 'center' }}>{formData.hasWebsite ? "Current Setup" : "Business Details"}</Typography>
+                <Typography variant="h2" sx={{ fontWeight: 800, mb: 6, textAlign: 'center' }}>{formData.hasWebsite ? "Your Current Website" : "About Your Business"}</Typography>
                 {formData.hasWebsite ? (
                   <Stack spacing={4}>
-                    <TextField fullWidth label="Current URL" name="currentUrl" value={formData.currentUrl} onChange={handleChange} variant="standard" inputProps={{ sx: { fontSize: '1.5rem', py: 2, color: '#fff' } }} />
-                    <TextField fullWidth label="Business Name (Optional)" name="businessName" value={formData.businessName} onChange={handleChange} variant="standard" inputProps={{ sx: { fontSize: '1.5rem', py: 2, color: '#fff' } }} />
+                    <TextField fullWidth label="Website Address (URL)" name="currentUrl" value={formData.currentUrl} onChange={handleChange} variant="standard" inputProps={{ sx: { fontSize: '1.5rem', py: 2, color: '#fff' } }} />
+                    <TextField fullWidth label="Business Name" name="businessName" value={formData.businessName} onChange={handleChange} variant="standard" inputProps={{ sx: { fontSize: '1.5rem', py: 2, color: '#fff' } }} />
                   </Stack>
                 ) : (
                   <Grid container spacing={4}>
                     <Grid size={{ xs: 12 }}><TextField fullWidth label="Business Name" name="businessName" value={formData.businessName} onChange={handleChange} variant="standard" inputProps={{ sx: { fontSize: '1.5rem', py: 2, color: '#fff' } }} /></Grid>
-                    <Grid size={{ xs: 12, sm: 6 }}><TextField fullWidth label="Industry Niche" name="industry" value={formData.industry} onChange={handleChange} variant="standard" inputProps={{ sx: { fontSize: '1.5rem', py: 2, color: '#fff' } }} /></Grid>
-                    <Grid size={{ xs: 12, sm: 6 }}><TextField fullWidth label="Location" name="location" value={formData.location} onChange={handleChange} variant="standard" inputProps={{ sx: { fontSize: '1.5rem', py: 2, color: '#fff' } }} /></Grid>
+                    <Grid size={{ xs: 12, sm: 6 }}><TextField fullWidth label="What kind of business?" name="industry" value={formData.industry} onChange={handleChange} variant="standard" inputProps={{ sx: { fontSize: '1.5rem', py: 2, color: '#fff' } }} /></Grid>
+                    <Grid size={{ xs: 12, sm: 6 }}><TextField fullWidth label="City & State" name="location" value={formData.location} onChange={handleChange} variant="standard" inputProps={{ sx: { fontSize: '1.5rem', py: 2, color: '#fff' } }} /></Grid>
                   </Grid>
                 )}
               </MotionBox>
@@ -259,9 +261,9 @@ function IntakeContent() {
 
             {step === 4 && (
               <MotionBox key="step4" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} sx={{ width: '100%', maxWidth: 900, mx: 'auto' }}>
-                <Typography variant="h2" sx={{ fontWeight: 800, mb: 6, textAlign: 'center' }}>The Blueprint</Typography>
+                <Typography variant="h2" sx={{ fontWeight: 800, mb: 6, textAlign: 'center' }}>Pick a style you love</Typography>
                 <Box sx={{ mb: 6 }}>
-                  <Typography variant="overline" sx={{ color: '#444', fontWeight: 800, mb: 2, display: 'block' }}>Industry Vertical</Typography>
+                  <Typography variant="overline" sx={{ color: '#444', fontWeight: 800, mb: 2, display: 'block' }}>Business Category</Typography>
                   <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 2 }}>
                     {VERTICAL_OPTIONS.map(v => (
                       <Chip key={v} label={v} onClick={() => setFormData(p => ({ ...p, vertical: v }))} sx={{ py: 3, px: 1, borderRadius: '12px', border: '1px solid rgba(255,255,255,0.1)', bgcolor: formData.vertical === v ? '#fff' : 'transparent', color: formData.vertical === v ? '#000' : '#888', fontWeight: 700, '&:hover': { bgcolor: formData.vertical === v ? '#fff' : 'rgba(255,255,255,0.05)' } }} />
@@ -285,14 +287,14 @@ function IntakeContent() {
 
             {step === 5 && (
               <MotionBox key="step5" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} sx={{ width: '100%', maxWidth: 800, mx: 'auto' }}>
-                <Typography variant="h2" sx={{ fontWeight: 800, mb: 6, textAlign: 'center' }}>The Brand</Typography>
+                <Typography variant="h2" sx={{ fontWeight: 800, mb: 6, textAlign: 'center' }}>Do you have a logo?</Typography>
                 <Box onClick={() => fileInputRef.current?.click()} sx={{ height: 300, border: '2px dashed rgba(255,255,255,0.1)', borderRadius: '32px', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', transition: 'all 0.3s', '&:hover': { borderColor: '#fff', bgcolor: 'rgba(255,255,255,0.02)' } }}>
                   <input type="file" ref={fileInputRef} onChange={handleLogoUpload} accept="image/*" style={{ display: 'none' }} />
-                  {formData.logoPreview ? <img src={formData.logoPreview} style={{ height: 120, objectFit: 'contain' }} alt="Logo" /> : <Stack alignItems="center" spacing={2}><Upload size={48} color="#444" /><Typography sx={{ color: '#444', fontWeight: 700 }}>Click to upload brand logo</Typography></Stack>}
+                  {formData.logoPreview ? <img src={formData.logoPreview} style={{ height: 120, objectFit: 'contain' }} alt="Logo" /> : <Stack alignItems="center" spacing={2}><Upload size={48} color="#444" /><Typography sx={{ color: '#444', fontWeight: 700 }}>Click to upload your logo</Typography><Typography variant="caption" sx={{ color: '#333' }}>No logo? We can help you build one later.</Typography></Stack>}
                 </Box>
                 {formData.extractedColors.length > 0 && (
                   <Box sx={{ mt: 6, textAlign: 'center' }}>
-                    <Typography variant="overline" sx={{ color: '#444', fontWeight: 800, mb: 2, display: 'block' }}>Extracted Palette</Typography>
+                    <Typography variant="overline" sx={{ color: '#444', fontWeight: 800, mb: 2, display: 'block' }}>Pick a brand color</Typography>
                     <Stack direction="row" spacing={2} justifyContent="center">
                       {formData.extractedColors.map(c => (
                         <Box key={c} onClick={() => setFormData(p => ({ ...p, colors: c }))} sx={{ width: 40, height: 40, borderRadius: '50%', bgcolor: c, cursor: 'pointer', border: formData.colors === c ? '3px solid #fff' : 'none', transform: formData.colors === c ? 'scale(1.2)' : 'none', transition: 'all 0.2s' }} />
@@ -305,11 +307,12 @@ function IntakeContent() {
 
             {step === 6 && (
               <MotionBox key="step6" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} sx={{ width: '100%', maxWidth: 800, mx: 'auto' }}>
-                <Typography variant="h2" sx={{ fontWeight: 800, mb: 6, textAlign: 'center' }}>The Aesthetic</Typography>
+                <Typography variant="h2" sx={{ fontWeight: 800, mb: 6, textAlign: 'center' }}>Inspiration</Typography>
                 <Stack spacing={6}>
-                  <TextField fullWidth multiline rows={3} label="Inspiration Links" name="links" value={formData.links} onChange={handleChange} variant="standard" placeholder="e.g. apple.com, stripe.com" inputProps={{ sx: { fontSize: '1.25rem', color: '#fff' } }} />
+                  <TextField fullWidth multiline rows={2} label="List 2-3 websites you like" name="links" value={formData.links} onChange={handleChange} variant="standard" placeholder="e.g. apple.com, or a competitor's site" inputProps={{ sx: { fontSize: '1.25rem', color: '#fff' } }} />
+                  <TextField fullWidth label="Your Social Media links" name="socialLinks" value={formData.socialLinks} onChange={handleChange} variant="standard" placeholder="Facebook, Instagram, LinkedIn" inputProps={{ sx: { fontSize: '1.25rem', color: '#fff' } }} />
                   <Box>
-                    <Typography variant="overline" sx={{ color: '#444', fontWeight: 800, mb: 2, display: 'block' }}>Primary Synthesis Color</Typography>
+                    <Typography variant="overline" sx={{ color: '#444', fontWeight: 800, mb: 2, display: 'block' }}>Or pick a color you like</Typography>
                     <Stack direction="row" spacing={4} alignItems="center">
                       <input type="color" name="colors" value={formData.colors} onChange={handleChange} style={{ width: 80, height: 80, border: 'none', background: 'none', cursor: 'pointer' }} />
                       <Typography sx={{ fontSize: '3rem', fontWeight: 900 }}>{formData.colors}</Typography>
@@ -321,57 +324,58 @@ function IntakeContent() {
 
             {step === 7 && (
               <MotionBox key="step7" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} sx={{ width: '100%', maxWidth: 800, mx: 'auto' }}>
-                <Typography variant="h2" sx={{ fontWeight: 800, mb: 6, textAlign: 'center' }}>The Architecture</Typography>
-                <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 2, justifyContent: 'center' }}>
-                  {["Home", "About", "Services", "Pricing", "Portfolio", "Contact", "Blog"].map((p) => (
+                <Typography variant="h2" sx={{ fontWeight: 800, mb: 6, textAlign: 'center' }}>What pages do you need?</Typography>
+                <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 2, justifyContent: 'center', mb: 6 }}>
+                  {["Home", "About Us", "Services", "Pricing", "Contact", "Blog", "FAQ"].map((p) => (
                     <Chip key={p} label={p} onClick={() => handlePageToggle(p)} sx={{ py: 4, px: 2, fontSize: '1.25rem', borderRadius: '20px', border: '1px solid rgba(255,255,255,0.1)', bgcolor: formData.pages.includes(p) ? '#fff' : 'transparent', color: formData.pages.includes(p) ? '#000' : '#888', fontWeight: 800, '&:hover': { bgcolor: formData.pages.includes(p) ? '#fff' : 'rgba(255,255,255,0.05)' } }} />
                   ))}
                 </Box>
+                <TextField fullWidth multiline rows={3} label="List your services or products" name="servicesList" value={formData.servicesList} onChange={handleChange} variant="standard" placeholder="Tell us exactly what you do or sell so we can write the text for you." inputProps={{ sx: { fontSize: '1.25rem', color: '#fff' } }} />
               </MotionBox>
             )}
 
             {step === 8 && (
               <MotionBox key="step8" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} sx={{ width: '100%', maxWidth: 800, mx: 'auto' }}>
-                <Typography variant="h2" sx={{ fontWeight: 800, mb: 6, textAlign: 'center' }}>The Personality</Typography>
+                <Typography variant="h2" sx={{ fontWeight: 800, mb: 6, textAlign: 'center' }}>Voice & Tone</Typography>
                 <Stack spacing={6}>
                   <FormControl fullWidth variant="standard">
-                    <InputLabel sx={{ color: '#444' }}>Brand Voice</InputLabel>
+                    <InputLabel sx={{ color: '#444' }}>How should your site sound?</InputLabel>
                     <Select name="brandVoice" value={formData.brandVoice} onChange={handleChange} sx={{ fontSize: '1.5rem', color: '#fff', py: 1 }}>
                       <MenuItem value="Modern & Professional">Modern & Professional</MenuItem>
-                      <MenuItem value="Bold & Playful">Bold & Playful</MenuItem>
-                      <MenuItem value="Minimalist & Luxury">Minimalist & Luxury</MenuItem>
-                      <MenuItem value="Technical & Precise">Technical & Precise</MenuItem>
+                      <MenuItem value="Friendly & Welcoming">Friendly & Welcoming</MenuItem>
+                      <MenuItem value="High-End & Luxury">High-End & Luxury</MenuItem>
+                      <MenuItem value="Simple & Direct">Simple & Direct</MenuItem>
                     </Select>
                   </FormControl>
-                  <TextField fullWidth label="Target Audience" name="targetAudience" value={formData.targetAudience} onChange={handleChange} variant="standard" placeholder="e.g. Fortune 500 CEOs" inputProps={{ sx: { fontSize: '1.5rem', color: '#fff' } }} />
-                  <TextField fullWidth label="Hero Message" name="heroMessage" value={formData.heroMessage} onChange={handleChange} variant="standard" placeholder="Your brand's core manifesto" inputProps={{ sx: { fontSize: '1.5rem', color: '#fff' } }} />
+                  <TextField fullWidth label="Who are your customers?" name="targetAudience" value={formData.targetAudience} onChange={handleChange} variant="standard" placeholder="e.g. Local homeowners, busy parents, tech startups" inputProps={{ sx: { fontSize: '1.5rem', color: '#fff' } }} />
+                  <TextField fullWidth label="What makes you special?" name="heroMessage" value={formData.heroMessage} onChange={handleChange} variant="standard" placeholder="The one thing people should know about your business." inputProps={{ sx: { fontSize: '1.5rem', color: '#fff' } }} />
                 </Stack>
               </MotionBox>
             )}
 
             {step === 9 && (
               <MotionBox key="step9" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} sx={{ width: '100%', maxWidth: 1000, mx: 'auto' }}>
-                <Typography variant="h2" sx={{ fontWeight: 800, mb: 6, textAlign: 'center' }}>The Vision</Typography>
+                <Typography variant="h2" sx={{ fontWeight: 800, mb: 6, textAlign: 'center' }}>Ready to build?</Typography>
                 <Grid container spacing={4}>
                   <Grid size={{ xs: 12, md: 6 }}>
                     <Box sx={{ p: 4, bgcolor: 'rgba(255,255,255,0.02)', borderRadius: '24px', border: '1px solid rgba(255,255,255,0.05)' }}>
-                      <Typography variant="overline" sx={{ color: '#444' }}>Identity</Typography>
+                      <Typography variant="overline" sx={{ color: '#444' }}>Business</Typography>
                       <Typography variant="h5" sx={{ fontWeight: 800, mb: 1 }}>{formData.businessName || formData.currentUrl}</Typography>
                       <Typography variant="body2" sx={{ color: '#666' }}>{formData.name} • {formData.email}</Typography>
                     </Box>
                   </Grid>
                   <Grid size={{ xs: 12, md: 6 }}>
                     <Box sx={{ p: 4, bgcolor: 'rgba(255,255,255,0.02)', borderRadius: '24px', border: '1px solid rgba(255,255,255,0.05)' }}>
-                      <Typography variant="overline" sx={{ color: '#444' }}>Blueprint</Typography>
+                      <Typography variant="overline" sx={{ color: '#444' }}>Plan</Typography>
                       <Typography variant="h5" sx={{ fontWeight: 800, mb: 1 }}>{formData.vertical}</Typography>
-                      <Typography variant="body2" sx={{ color: '#0070f3', fontWeight: 800 }}>{formData.layout} Layout • {formData.plan} Plan</Typography>
+                      <Typography variant="body2" sx={{ color: '#0070f3', fontWeight: 800 }}>{formData.layout} Style • {formData.plan} Plan</Typography>
                     </Box>
                   </Grid>
                   <Grid size={{ xs: 12 }}>
                     <Box sx={{ p: 4, bgcolor: 'rgba(255,255,255,0.02)', borderRadius: '24px', border: '1px solid rgba(255,255,255,0.05)' }}>
-                      <Typography variant="overline" sx={{ color: '#444' }}>Personality</Typography>
+                      <Typography variant="overline" sx={{ color: '#444' }}>Details</Typography>
                       <Typography variant="h5" sx={{ fontWeight: 800, mb: 1 }}>{formData.brandVoice}</Typography>
-                      <Typography variant="body2" sx={{ color: '#666' }}>Target: {formData.targetAudience}</Typography>
+                      <Typography variant="body2" sx={{ color: '#666' }}>Target Customers: {formData.targetAudience}</Typography>
                     </Box>
                   </Grid>
                 </Grid>
@@ -390,7 +394,7 @@ function IntakeContent() {
               endIcon={step < totalSteps ? <ArrowRight /> : null}
               sx={{ bgcolor: '#fff', color: '#000', px: 6, py: 2, borderRadius: '60px', fontWeight: 800, '&:hover': { bgcolor: '#eee' } }}
             >
-              {step === totalSteps ? (isSubmitting ? "Synthesizing..." : "Launch Build") : "Continue"}
+              {step === totalSteps ? (isSubmitting ? "Building..." : "Launch Website") : "Continue"}
             </Button>
           </Magnetic>
         </Box>

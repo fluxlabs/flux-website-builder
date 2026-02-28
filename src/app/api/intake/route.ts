@@ -9,8 +9,8 @@ export async function POST(req: Request) {
     const body = await req.json();
     const { 
       name, email, phone, hasWebsite, currentUrl, businessName, 
-      industry, location, employeeCount, links, colors, logoUrl, 
-      goal, pages, brandVoice, targetAudience, heroMessage,
+      industry, location, employeeCount, links, socialLinks, servicesList, 
+      colors, logoUrl, goal, pages, brandVoice, targetAudience, heroMessage,
       vertical, layout, extractedColors,
       logoQuality, rebuildLogo
     } = body;
@@ -33,6 +33,8 @@ export async function POST(req: Request) {
             location,
             employee_count: employeeCount,
             links,
+            social_links: socialLinks,
+            services_list: servicesList,
             colors,
             logo_url: logoUrl,
             goal,

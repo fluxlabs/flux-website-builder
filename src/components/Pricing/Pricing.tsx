@@ -7,20 +7,20 @@ import ScrollReveal from "@/components/ui/ScrollReveal";
 export default function Pricing() {
   const plans = [
     {
-      name: "Standard",
+      name: "Starter",
       price: "$1,499",
-      features: ["3-Page Next.js Site", "48-Hour Delivery", "AI Content", "SSL & Hosting Setup"],
+      features: ["3-Page Custom Site", "48-Hour Delivery", "Professional Design", "Free Hosting Setup"],
     },
     {
-      name: "Growth",
+      name: "Business",
       price: "$2,999",
-      features: ["7-Page Custom Site", "72-Hour Promise", "Advanced SEO", "CMS Ready"],
+      features: ["7-Page Custom Site", "72-Hour Promise", "Advanced SEO", "Easy Content Updates"],
       popular: true
     },
     {
-      name: "Elite",
+      name: "Enterprise",
       price: "$4,999",
-      features: ["Custom Page Count", "Full API Integration", "White-Labeling", "VIP Support"],
+      features: ["Unlimited Pages", "Custom Features", "Priority Support", "Full ownership"],
     },
   ];
 
@@ -29,8 +29,8 @@ export default function Pricing() {
       <ScrollReveal>
         <Container maxWidth="lg">
           <Box sx={{ textAlign: 'center', mb: 15 }}>
-            <Typography variant="overline" sx={{ color: '#d6c5a5', fontWeight: 800, letterSpacing: '0.3rem' }}>INVESTMENT</Typography>
-            <Typography variant="h2" sx={{ fontSize: '4rem', mt: 2 }}>Transparent Value.</Typography>
+            <Typography variant="overline" sx={{ color: '#d6c5a5', fontWeight: 800, letterSpacing: '0.3rem' }}>PRICING</Typography>
+            <Typography variant="h2" sx={{ fontSize: '4rem', mt: 2 }}>Simple Plans.</Typography>
           </Box>
 
           <Grid container spacing={0} sx={{ border: '1px solid rgba(214, 197, 165, 0.1)' }}>
