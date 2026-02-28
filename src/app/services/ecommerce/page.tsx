@@ -26,7 +26,7 @@ export default function EcommerceService() {
               letterSpacing: '-0.2rem',
               lineHeight: 1,
               background: 'linear-gradient(to bottom, #fff, rgba(255, 255, 255, 0.5))',
-              WebkitBackgroundClip: text,
+              WebkitBackgroundClip: 'text',
               WebkitTextFillColor: 'transparent'
             }}
           >
