@@ -26,10 +26,10 @@ interface GeneratedSiteData {
 }
 
 export async function buildSite(intakeId: string, siteData: GeneratedSiteData) {
-  const buildDir = path.join(os.tmpdir(), "flux-manifests", intakeId);
+  const buildDir = path.join(os.tmpdir(), "flux-synthesis", intakeId);
   const templateDir = path.join(process.cwd(), "generator", "templates", "seed-nextjs");
 
-  console.log(`Manifesting build for ${siteData.siteTitle} in ${buildDir}...`);
+  console.log(`Synthesizing build for ${siteData.siteTitle} in ${buildDir}...`);
 
   // 1. Clean and Copy template to build directory
   await fs.remove(buildDir);
@@ -82,7 +82,7 @@ export async function buildSite(intakeId: string, siteData: GeneratedSiteData) {
 
     export const metadata: Metadata = {
       title: "${siteData.siteTitle}",
-      description: "Visionary experience manifested by Flux.",
+      description: "Visionary experience synthesized by Flux.",
     };
 
     export default function RootLayout({
@@ -149,6 +149,6 @@ export async function buildSite(intakeId: string, siteData: GeneratedSiteData) {
     await fs.writeFile(path.join(pageDir, "page.tsx"), pageContent);
   }
 
-  console.log(`Build manifested successfully at ${buildDir}`);
+  console.log(`Build synthesized successfully at ${buildDir}`);
   return buildDir;
 }

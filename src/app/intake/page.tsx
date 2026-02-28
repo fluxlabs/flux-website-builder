@@ -445,7 +445,7 @@ export default function IntakePage() {
                     <div className={styles.rebuildOffer}>
                       <div className={styles.offerContent}>
                         <h4>High-Resolution Transformation</h4>
-                        <p>Your logo's resolution is below our manifestation standard. We can rebuild it as a high-fidelity vector for crystal clear display on all screens.</p>
+                        <p>Your logo's resolution is below our synthesis standard. We can rebuild it as a high-fidelity vector for crystal clear display on all screens.</p>
                         <div className={styles.priceTag}>+$149.00</div>
                       </div>
                       <button 
@@ -501,7 +501,7 @@ export default function IntakePage() {
                   </div>
                 </div>
                 <div className={styles.formGroup}>
-                  <label>Primary Manifestation Color</label>
+                  <label>Primary Synthesis Color</label>
                   <div className={styles.inputWrapper}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '2rem' }}>
                       <input type="color" name="colors" value={formData.colors} onChange={handleChange} />
@@ -660,7 +660,7 @@ export default function IntakePage() {
                 onClick={handleSubmit} 
                 disabled={isSubmitting}
               >
-                {isSubmitting ? "Manifesting..." : "Launch Build"}
+                {isSubmitting ? "Synthesizing..." : "Launch Build"}
               </button>
             )}
           </Magnetic>

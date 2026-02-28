@@ -9,13 +9,16 @@ export async function GET(req: Request) {
     const { searchParams } = new URL(req.url);
     const intakeId = searchParams.get("intakeId");
     
-    let logPath = path.join(process.cwd(), "manifest.log");
+    let logPath = path.join(process.cwd(), "synthesis.log");
     if (intakeId) {
-      logPath = path.join(process.cwd(), `manifest-${intakeId}.log`);
+      logPath = path.join(process.cwd(), `synthesis-${intakeId}.log`);
     }
 
     if (!fs.existsSync(logPath)) {
-      return NextResponse.json({ logs: "No logs found yet." });
+      // Fallback check for old logs during transition
+      const oldLogPath = path.join(process.cwd(), "manifest.log");
+      if (fs.existsSync(oldLogPath)) logPath = oldLogPath;
+      else return NextResponse.json({ logs: "No logs found yet." });
     }
 
     const content = fs.readFileSync(logPath, "utf-8");

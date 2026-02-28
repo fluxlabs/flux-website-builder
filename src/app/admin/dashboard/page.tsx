@@ -46,10 +46,10 @@ export default function AdminDashboard() {
       setLiveLogs(data.logs || "");
       
       // Update pipeline step based on log content
-      if (data.logs.includes("MANIFESTATION COMPLETE")) setCurrentStep(4);
+      if (data.logs.includes("SYNTHESIS COMPLETE")) setCurrentStep(4);
       else if (data.logs.includes("STARTING AUTOMATED DEPLOYMENT")) setCurrentStep(3);
       else if (data.logs.includes("Installing dependencies")) setCurrentStep(2);
-      else if (data.logs.includes("Generating vision")) setCurrentStep(1);
+      else if (data.logs.includes("Synthesizing vision")) setCurrentStep(1);
       else setCurrentStep(0);
     } catch (err) {
       console.error(err);
@@ -75,7 +75,7 @@ export default function AdminDashboard() {
   }, [selectedIntake]);
 
   const PIPELINE_STEPS = [
-    { id: 1, name: "VISION", label: "LLM Manifestation" },
+    { id: 1, name: "VISION", label: "LLM Synthesis" },
     { id: 2, name: "BUILD", label: "Project Generation" },
     { id: 3, name: "DEPLOY", label: "Global Cloud" },
     { id: 4, name: "VERIFY", label: "Live Handshake" }
@@ -109,10 +109,10 @@ export default function AdminDashboard() {
     }
   };
 
-  const triggerManifest = async (id: string) => {
+  const triggerSynthesis = async (id: string) => {
     try {
-      alert(`Triggering AI Manifestation for build: ${id}. This will take 60-90 seconds.`);
-      const res = await fetch("/api/admin/manifest", {
+      alert(`Triggering AI Synthesis for build: ${id}. This will take 60-90 seconds.`);
+      const res = await fetch("/api/admin/synthesize", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ intakeId: id }),
@@ -311,7 +311,7 @@ export default function AdminDashboard() {
 
                         {intake.build_time_ms && (
                           <div className={styles.buildMetric}>
-                            Manifested in {(intake.build_time_ms / 1000).toFixed(1)}s
+                            Synthesized in {(intake.build_time_ms / 1000).toFixed(1)}s
                           </div>
                         )}
 
@@ -327,10 +327,10 @@ export default function AdminDashboard() {
                               className={styles.manifestBtn} 
                               onClick={(e) => {
                                 e.stopPropagation();
-                                triggerManifest(intake.id);
+                                triggerSynthesis(intake.id);
                               }}
                             >
-                              Manifest Vision 🚀
+                              Synthesize Vision 🚀
                             </button>
                           )}
                           <div style={{ display: 'flex', gap: '0.5rem', width: '100%' }}>
@@ -499,7 +499,7 @@ export default function AdminDashboard() {
                         </div>
 
                         <div className={styles.workInfoGroup}>
-                          <label>Manifestation Metrics</label>
+                          <label>Synthesis Metrics</label>
                           <div className={styles.metricsList}>
                             <div className={styles.metricItem}>
                               <span>Vertical:</span>
@@ -526,7 +526,7 @@ export default function AdminDashboard() {
                           <label>Inspiration Links</label>
                           <p>{project.links || "None provided"}</p>
                         </div>
-                        <button className={styles.viewManifestoBtn} onClick={() => setSelectedIntake(project)}>Full Vision Blueprint →</button>
+                        <button className={styles.viewManifestoBtn} onClick={() => setSelectedIntake(project)}>Full Vision Synthesis →</button>
                       </div>
                     </div>
                   ))}
@@ -581,7 +581,7 @@ export default function AdminDashboard() {
 
                 {liveLogs && (
                   <section>
-                    <label>Manifestation Stream {selectedIntake.status === 'ai_generating' ? '(Live)' : '(Latest)'}</label>
+                    <label>Synthesis Stream {selectedIntake.status === 'ai_generating' ? '(Live)' : '(Latest)'}</label>
                     <div className={styles.logViewer}>
                       <pre>{liveLogs}</pre>
                     </div>
@@ -599,7 +599,7 @@ export default function AdminDashboard() {
                 </section>
 
                 <section>
-                  <label>The Manifesto</label>
+                  <label>The Synthesis</label>
                   <p className={styles.manifesto}>"{selectedIntake.hero_message}"</p>
                 </section>
 
@@ -652,7 +652,7 @@ export default function AdminDashboard() {
                     <label>Staging Operations</label>
                     <div className={styles.actionGrid}>
                       <a href={selectedIntake.staging_url} target="_blank" className={styles.primaryAction}>Open Site →</a>
-                      <button className={styles.secondaryAction} onClick={() => triggerManifest(selectedIntake.id)}>Rework AI Draft 🔄</button>
+                      <button className={styles.secondaryAction} onClick={() => triggerSynthesis(selectedIntake.id)}>Rework AI Draft 🔄</button>
                       {selectedIntake.deploy_hook && (
                         <button className={styles.secondaryAction} onClick={() => triggerDeployHook(selectedIntake.deploy_hook)}>Quick Re-Deploy ⚡</button>
                       )}

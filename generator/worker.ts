@@ -1,6 +1,6 @@
 
 import { supabase } from "../src/lib/supabase.ts";
-import { manifest } from "./manifest.ts";
+import { synthesize } from "./synthesize.ts";
 
 /**
  * Flux Background Worker
@@ -20,7 +20,7 @@ async function startWorker() {
   if (missedIntakes && missedIntakes.length > 0) {
     console.log(`Found ${missedIntakes.length} pending intakes. Processing...`);
     for (const intake of missedIntakes) {
-      await safeManifest(intake.id);
+      await safeSynthesize(intake.id);
     }
   }
 
@@ -36,7 +36,7 @@ async function startWorker() {
       },
       async (payload) => {
         console.log("New intake received via Realtime:", payload.new.id);
-        await safeManifest(payload.new.id);
+        await safeSynthesize(payload.new.id);
       }
     )
     .on(
@@ -49,7 +49,7 @@ async function startWorker() {
       },
       async (payload) => {
         console.log("Intake reset to 'new' via update:", payload.new.id);
-        await safeManifest(payload.new.id);
+        await safeSynthesize(payload.new.id);
       }
     )
     .subscribe();
@@ -58,7 +58,7 @@ async function startWorker() {
 let isProcessing = false;
 const queue: string[] = [];
 
-async function safeManifest(id: string) {
+async function safeSynthesize(id: string) {
   if (isProcessing) {
     console.log(`Worker busy. Adding ${id} to queue.`);
     queue.push(id);
@@ -67,16 +67,16 @@ async function safeManifest(id: string) {
 
   isProcessing = true;
   try {
-    await manifest(id);
+    await synthesize(id);
   } catch (err) {
-    console.error(`Fatal worker error during manifest for ${id}:`, err);
+    console.error(`Fatal worker error during synthesis for ${id}:`, err);
   } finally {
     isProcessing = false;
     // Process next in queue if any
     const nextId = queue.shift();
     if (nextId) {
       console.log(`Processing next item in queue: ${nextId}`);
-      await safeManifest(nextId);
+      await safeSynthesize(nextId);
     }
   }
 }

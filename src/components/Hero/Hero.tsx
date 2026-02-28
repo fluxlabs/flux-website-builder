@@ -56,7 +56,7 @@ export default function Hero() {
         
         <motion.p variants={itemVariants} className={styles.subtitle}>
           Stop waiting weeks for a developer. Flux transforms your vision into a 
-          high-performance digital reality in just 48 hours.
+          high-performance digital reality through intelligent synthesis in just 48 hours.
         </motion.p>
         
         <motion.div variants={itemVariants} className={styles.ctaWrapper}>

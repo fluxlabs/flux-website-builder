@@ -9,7 +9,7 @@
     "start": "next start",
     "lint": "next lint",
     "worker": "npx ts-node --esm generator/worker.ts",
-    "manifest": "npx ts-node --esm generator/manifest.ts"
+    "synthesize": "npx ts-node --esm generator/synthesize.ts"
   },
   "keywords": [],
   "author": "",

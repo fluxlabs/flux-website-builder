@@ -10,7 +10,7 @@ const PIPELINE_STEPS = [
   { id: 1, name: "QUEUED", label: "Awaiting AI Resources" },
   { id: 2, name: "VISION", label: "LLM Strategic Research" },
   { id: 3, name: "BUILD", label: "Project Architecture" },
-  { id: 4, name: "DEPLOY", label: "Live Manifestation" },
+  { id: 4, name: "DEPLOY", label: "Live Realization" },
   { id: 5, name: "READY", label: "Review Your Site" }
 ];
 
@@ -34,7 +34,7 @@ export default function BuildStatusPage() {
         setLogs(logData.logs || "");
         
         // Update steps based on logs
-        if (logData.logs.includes("MANIFESTATION COMPLETE")) setCurrentStep(5);
+        if (logData.logs.includes("SYNTHESIS COMPLETE")) setCurrentStep(5);
         else if (logData.logs.includes("STARTING AUTOMATED DEPLOYMENT")) setCurrentStep(4);
         else if (logData.logs.includes("Installing dependencies")) setCurrentStep(3);
         else if (logData.logs.includes("Initiating AI research")) setCurrentStep(2);
@@ -69,7 +69,7 @@ export default function BuildStatusPage() {
       <main className={styles.main}>
         <div className={styles.statusCard}>
           <div className={styles.headerInfo}>
-            <h1>Manifesting: {intake.business_name || intake.current_url}</h1>
+            <h1>Synthesizing: {intake.business_name || intake.current_url}</h1>
             <p>Your visionary digital experience is being brought to life.</p>
           </div>
 
@@ -96,7 +96,7 @@ export default function BuildStatusPage() {
               >
                 <div className={styles.logHeader}>
                   <div className={styles.pulse} />
-                  <span>LIVE MANIFESTATION STREAM</span>
+                  <span>LIVE SYNTHESIS STREAM</span>
                 </div>
                 <div className={styles.logBox}>
                   <pre>{logs || "Initializing build process..."}</pre>
@@ -109,7 +109,7 @@ export default function BuildStatusPage() {
                 className={styles.readySection}
               >
                 <div className={styles.readyIcon}>🚀</div>
-                <h2>Your Vision is Manifested!</h2>
+                <h2>Your Vision is Realized!</h2>
                 <p>The AI has completed your site. It is now live on our staging environment for your review.</p>
                 <div className={styles.actionRow}>
                   <a href={intake.staging_url} target="_blank" className={styles.primaryBtn}>Review Staging Site →</a>

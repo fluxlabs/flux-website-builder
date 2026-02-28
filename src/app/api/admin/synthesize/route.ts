@@ -29,8 +29,8 @@ export async function POST(req: Request) {
 
     // 2. Local fallback: Run the background process locally (useful for dev)
     console.log(`Local environment detected. Spawning background process for: ${intakeId}`);
-    const scriptPath = path.join(process.cwd(), "generator", "manifest.ts");
-    const logPath = path.join(process.cwd(), "manifest.log");
+    const scriptPath = path.join(process.cwd(), "generator", "synthesize.ts");
+    const logPath = path.join(process.cwd(), "synthesis.log");
     
     const child = spawn("npx", ["ts-node", "--esm", scriptPath, intakeId], {
       detached: true,
@@ -40,9 +40,9 @@ export async function POST(req: Request) {
 
     child.unref();
 
-    return NextResponse.json({ success: true, message: "Local manifestation started." });
+    return NextResponse.json({ success: true, message: "Local synthesis started." });
   } catch (error) {
-    console.error("Manifest API Error:", error);
+    console.error("Synthesis API Error:", error);
     return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
   }
 }

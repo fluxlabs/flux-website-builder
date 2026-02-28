@@ -87,7 +87,7 @@ export async function generateSiteData(intakeId: string) {
   // 3. Construct the Prompt for the LLM
   const prompt = `
     You are an elite, award-winning web designer and creative strategist. 
-    Your mission is to manifest a visionary digital experience for:
+    Your mission is to synthesize a visionary digital experience for:
     
     BUSINESS: ${bizName}
     INDUSTRY: ${typedIntake.industry || "N/A"}
@@ -190,7 +190,7 @@ export async function generateSiteData(intakeId: string) {
             data: [
               { title: "Precision Crafted", description: `Built specifically to achieve your goal of ${typedIntake.goal}.` },
               { title: "Visionary Design", description: `A ${typedIntake.brand_voice} aesthetic that resonates with ${typedIntake.target_audience}.` },
-              { title: "Rapid Manifestation", description: "Your digital presence brought to life in record time." }
+              { title: "Rapid Synthesis", description: "Your digital presence brought to life in record time." }
             ]
           }
         ]

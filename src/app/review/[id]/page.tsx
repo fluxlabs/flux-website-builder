@@ -46,8 +46,8 @@ export default function ReviewPage() {
     }
   };
 
-  if (loading) return <div className={styles.loading}>Manifesting Review...</div>;
-  if (!intake || !intake.staging_url) return <div className={styles.error}>Vision not found or not yet manifested.</div>;
+  if (loading) return <div className={styles.loading}>Synthesizing Review...</div>;
+  if (!intake || !intake.staging_url) return <div className={styles.error}>Vision not found or not yet synthesized.</div>;
 
   return (
     <div className={styles.container}>
@@ -83,7 +83,7 @@ export default function ReviewPage() {
           <div className={styles.sidebarContent}>
             <h2>Final Review</h2>
             <p className={styles.desc}>
-              Your vision has been manifested. Review your high-performance 
+              Your vision has been synthesized. Review your high-performance 
               website. If everything looks perfect, click below to initiate the launch sequence.
             </p>
 

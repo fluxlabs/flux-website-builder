@@ -7,7 +7,7 @@ import { createGitHubRepo, pushToGitHub, deployToVercel, slugify } from "./deplo
 import fs from "fs";
 import path from "path";
 
-async function manifest(intakeId: string) {
+async function synthesize(intakeId: string) {
   const startTime = Date.now();
   
   // Fetch intake details early for notifications
@@ -23,7 +23,7 @@ async function manifest(intakeId: string) {
   }
 
   try {
-    console.log(`--- [MANIFESTING VISION: ${intakeId}] ---`);
+    console.log(`--- [SYNTHESIZING VISION: ${intakeId}] ---`);
     console.log(`Client: ${intake.name} (${intake.email})`);
     
     // Clean up local builds folder
@@ -79,7 +79,7 @@ async function manifest(intakeId: string) {
         from: "Flux System <system@fluxwebs.net>",
         to: ["admin@flux.com"],
         subject: `Build FAILED: ${intake.business_name || intake.email}`,
-        html: `<p>Dry-run build failed for intake ${intakeId}. Check manifest.log for details.</p>`
+        html: `<p>Dry-run build failed for intake ${intakeId}. Check synthesis.log for details.</p>`
       });
       return;
     }
@@ -97,7 +97,7 @@ async function manifest(intakeId: string) {
     const buildTime = Date.now() - startTime;
 
     // 5. Finalize CRM Status
-    console.log("--- [MANIFESTATION COMPLETE] ---");
+    console.log("--- [SYNTHESIS COMPLETE] ---");
     await supabase.from("intakes").update({ 
       status: "client_review", 
       staging_url: stagingUrl,
@@ -105,7 +105,7 @@ async function manifest(intakeId: string) {
       build_time_ms: buildTime
     }).eq("id", intakeId);
 
-    console.log(`LIVE AT: ${stagingUrl} (Manifested in ${buildTime}ms)`);
+    console.log(`LIVE AT: ${stagingUrl} (Synthesized in ${buildTime}ms)`);
 
     // 6. Notify Client & Admin
     try {
@@ -115,7 +115,7 @@ async function manifest(intakeId: string) {
         subject: "Your Flux Vision is Live! 🚀",
         html: `
           <h1>Great news ${intake.name}!</h1>
-          <p>Your visionary website for <strong>${siteData.siteTitle}</strong> has been manifested and is ready for review.</p>
+          <p>Your visionary website for <strong>${siteData.siteTitle}</strong> has been synthesized and is ready for review.</p>
           <p style="font-size: 1.25rem; margin: 2rem 0;">
             <a href="${stagingUrl}" style="background: #000; color: #fff; padding: 1rem 2rem; border-radius: 8px; text-decoration: none;">View Your Staging Site →</a>
           </p>
@@ -132,7 +132,7 @@ async function manifest(intakeId: string) {
     }
 
   } catch (error) {
-    console.error("Manifest Error:", error);
+    console.error("Synthesis Error:", error);
     await supabase.from("intakes").update({ status: "new" }).eq("id", intakeId);
   }
 }
@@ -140,7 +140,7 @@ async function manifest(intakeId: string) {
 // CLI entry point
 const intakeId = process.argv[2];
 if (intakeId) {
-  manifest(intakeId);
+  synthesize(intakeId);
 }
 
-export { manifest };
+export { synthesize };
