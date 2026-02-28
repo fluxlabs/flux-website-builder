@@ -24,6 +24,8 @@ import {
   FormControl,
   InputLabel
 } from "@mui/material";
+import { useRouter } from "next/navigation";
+import { supabase } from "@/lib/supabase";
 import { 
   Rocket, 
   Search, 
@@ -35,7 +37,8 @@ import {
   X,
   Plus,
   Activity,
-  ArrowLeft
+  ArrowLeft,
+  LogOut
 } from "lucide-react";
 
 const MotionCard = motion(Card);
@@ -44,13 +47,32 @@ const STATUSES = ["new", "ai_generating", "staging_ready", "client_review", "app
 type View = 'pipeline' | 'clients' | 'analytics' | 'client-detail';
 
 export default function AdminDashboard() {
+  const router = useRouter();
   const [intakes, setIntakes] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
+  const [user, setUser] = useState<any>(null);
   const [selectedIntake, setSelectedIntake] = useState<any>(null);
   const [selectedClientEmail, setSelectedClientEmail] = useState<string | null>(null);
   const [liveLogs, setLiveLogs] = useState<any[]>([]);
   const [currentView, setCurrentView] = useState<View>('pipeline');
   const [tabValue, setTabValue] = useState(0);
+
+  useEffect(() => {
+    const checkUser = async () => {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) {
+        router.push("/admin/login");
+        return;
+      }
+      setUser(user);
+    };
+    checkUser();
+  }, [router]);
+
+  const handleLogout = async () => {
+    await supabase.auth.signOut();
+    router.push("/admin/login");
+  };
 
   const fetchIntakes = async () => {
     try {
@@ -76,10 +98,13 @@ export default function AdminDashboard() {
   };
 
   useEffect(() => {
-    fetchIntakes();
-    const interval = setInterval(fetchIntakes, 10000);
+    let interval: any;
+    if (user) {
+      fetchIntakes();
+      interval = setInterval(fetchIntakes, 10000);
+    }
     return () => clearInterval(interval);
-  }, []);
+  }, [user]);
 
   useEffect(() => {
     let logInterval: any;
@@ -174,14 +199,10 @@ export default function AdminDashboard() {
                 <Tab label="Analytics" sx={{ fontWeight: 700 }} />
               </Tabs>
             </Stack>
-            <Button 
-              variant="contained" 
-              onClick={triggerSeed} 
-              disabled={loading}
-              sx={{ bgcolor: '#fff', color: '#000', fontWeight: 800, borderRadius: '8px', '&:hover': { bgcolor: '#eee' } }}
-            >
-              + Seed Vision
-            </Button>
+            <Stack direction="row" spacing={2} alignItems="center">
+              <Button variant="contained" onClick={triggerSeed} disabled={loading} sx={{ bgcolor: '#fff', color: '#000', fontWeight: 800, borderRadius: '8px', '&:hover': { bgcolor: '#eee' } }}>+ Seed Vision</Button>
+              <IconButton onClick={handleLogout} sx={{ color: 'rgba(255,255,255,0.4)', '&:hover': { color: '#ef4444' } }}><LogOut size={20} /></IconButton>
+            </Stack>
           </Stack>
         </Container>
       </Box>
