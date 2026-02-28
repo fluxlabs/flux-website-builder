@@ -17,10 +17,24 @@ export default function RestaurantTemplate() {
       </nav>
 
       <main>
-        <section className={styles.hero}>
+        <section className={styles.hero} style={{ backgroundImage: 'linear-gradient(to bottom, rgba(0,0,0,0.3), #0a0a0a), url(https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?auto=format&fit=crop&w=1950&q=80)' }}>
+          <label className={styles.label}>MICHELIN RECOMMENDED</label>
           <h1>Dining, <br/> Redefined.</h1>
           <p>An immersive culinary journey through seasonal ingredients and artisanal craftsmanship.</p>
           <Link href="/intake" className={styles.cta}>The Experience</Link>
+        </section>
+
+        <section className={styles.instagramSection}>
+          <div className={styles.instaHeader}>
+            <label>Follow the Journey</label>
+            <h3>@AURADINING</h3>
+          </div>
+          <div className={styles.instaGrid}>
+            <div className={styles.instaItem} style={{ backgroundImage: 'url(https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=400&q=80)' }} />
+            <div className={styles.instaItem} style={{ backgroundImage: 'url(https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=400&q=80)' }} />
+            <div className={styles.instaItem} style={{ backgroundImage: 'url(https://images.unsplash.com/photo-1559339352-11d035aa65de?auto=format&fit=crop&w=400&q=80)' }} />
+            <div className={styles.instaItem} style={{ backgroundImage: 'url(https://images.unsplash.com/photo-1550966842-2862ba996344?auto=format&fit=crop&w=400&q=80)' }} />
+          </div>
         </section>
 
         <section className={styles.menu}>

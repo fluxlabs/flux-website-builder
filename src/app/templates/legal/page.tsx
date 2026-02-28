@@ -17,10 +17,25 @@ export default function LegalTemplate() {
       </nav>
 
       <main>
-        <section className={styles.hero}>
+        <section className={styles.hero} style={{ backgroundImage: 'linear-gradient(to right, #111 40%, transparent 100%), url(https://images.unsplash.com/photo-1505664194779-8beaceb93744?auto=format&fit=crop&w=1950&q=80)' }}>
           <h1>Unwavering Defense. <br/> Exceptional Results.</h1>
           <p>We provide high-stakes legal representation for complex corporate and personal matters. Our legacy is built on precision and power.</p>
           <Link href="/intake" className={styles.cta}>Meet Our Partners</Link>
+        </section>
+
+        <section className={styles.results}>
+          <div className={styles.resultItem}>
+            <strong>$140M</strong>
+            <span>Settlement for Tech IP Case</span>
+          </div>
+          <div className={styles.resultItem}>
+            <strong>98%</strong>
+            <span>Success Rate in Litigation</span>
+          </div>
+          <div className={styles.resultItem}>
+            <strong>40+</strong>
+            <span>Fortune 500 Clients</span>
+          </div>
         </section>
 
         <section className={styles.practiceAreas}>

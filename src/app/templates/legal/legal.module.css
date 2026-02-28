@@ -42,6 +42,33 @@
   font-family: 'Inter', sans-serif;
 }
 
+.results {
+  display: flex;
+  justify-content: space-between;
+  padding: 5rem 5%;
+  background: #000;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.resultItem {
+  display: flex;
+  flex-direction: column;
+}
+
+.resultItem strong {
+  font-size: 3.5rem;
+  font-weight: 700;
+}
+
+.resultItem span {
+  font-family: 'Inter', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 0.1rem;
+  font-size: 0.75rem;
+  opacity: 0.4;
+  margin-top: 0.5rem;
+}
+
 .cta {
   background: transparent;
   color: #fff;

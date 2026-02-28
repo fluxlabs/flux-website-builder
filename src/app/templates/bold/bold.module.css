@@ -31,6 +31,21 @@
   margin-bottom: 4rem;
 }
 
+.certs {
+  display: flex;
+  justify-content: space-between;
+  padding: 3rem 5%;
+  background: #111;
+  border-bottom: 1px solid #ffcc00;
+}
+
+.certItem {
+  font-size: 0.75rem;
+  font-weight: 900;
+  letter-spacing: 0.2rem;
+  color: #444;
+}
+
 .highlight {
   color: #ffcc00;
 }

@@ -13,27 +13,45 @@ export default function LuxuryTemplate() {
       <main>
         <section className={styles.hero}>
           <div className={styles.heroContent}>
+            <label className={styles.label}>EST. 1994</label>
             <h1>Architecture <br/> of Silence.</h1>
             <p>We believe in spaces that breathe. Our curated portfolio of luxury estates focuses on the intersection of modern minimalism and natural harmony.</p>
             <Link href="/intake" className={styles.cta}>View Collection</Link>
           </div>
-          <div className={styles.imagePlaceholder} />
+          <div className={styles.heroImage} style={{ backgroundImage: 'url(https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1600&q=80)' }} />
         </section>
 
-        <section style={{ padding: '10rem 10%', textAlign: 'center' }}>
-          <h2 style={{ fontSize: '2.5rem', fontWeight: 300, marginBottom: '2rem' }}>The Philosophy</h2>
-          <p style={{ maxWidth: '800px', margin: '0 auto', lineHeight: 2, color: '#57534e' }}>
-            Every stone, every shadow, and every line is considered. Valente is not just about real estate; it's about the art of living in deliberate, beautiful environments.
-          </p>
+        <section className={styles.services}>
+          <div className={styles.serviceItem}>
+            <h3>01</h3>
+            <h4>Curated Search</h4>
+            <p>Bespoke acquisition strategies for the world's most discerning collectors.</p>
+          </div>
+          <div className={styles.serviceItem}>
+            <h3>02</h3>
+            <h4>Architectural Review</h4>
+            <p>Expert analysis of structural integrity and aesthetic longevity.</p>
+          </div>
+          <div className={styles.serviceItem}>
+            <h3>03</h3>
+            <h4>Global Concierge</h4>
+            <p>Seamless relocation and lifestyle management across six continents.</p>
+          </div>
         </section>
 
         <section className={styles.gallery}>
           <div className={styles.galleryGrid}>
-            <div className={styles.galleryItem} style={{ backgroundImage: 'url(https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=80)' }}>
-              <div className={styles.itemLabel}>THE VILLA, MALIBU</div>
-            </div>
             <div className={styles.galleryItem} style={{ backgroundImage: 'url(https://images.unsplash.com/photo-1600607687940-4e2a09695d51?auto=format&fit=crop&w=1200&q=80)' }}>
               <div className={styles.itemLabel}>MODERNIST PENTHOUSE, NYC</div>
+            </div>
+            <div className={styles.galleryItem} style={{ backgroundImage: 'url(https://images.unsplash.com/photo-1600566753190-17f0bb2a6c3e?auto=format&fit=crop&w=1200&q=80)' }}>
+              <div className={styles.itemLabel}>DESERT MIRROR, ARIZONA</div>
+            </div>
+            <div className={styles.galleryItem} style={{ backgroundImage: 'url(https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=1200&q=80)' }}>
+              <div className={styles.itemLabel}>CLIFFSIDE RETREAT, AMALFI</div>
+            </div>
+            <div className={styles.galleryItem} style={{ backgroundImage: 'url(https://images.unsplash.com/photo-1600573472591-ee6b68d14c68?auto=format&fit=crop&w=1200&q=80)' }}>
+              <div className={styles.itemLabel}>THE GLASS HOUSE, KYOTO</div>
             </div>
           </div>
         </section>

@@ -20,16 +20,64 @@
 }
 
 .hero {
-  height: 90vh;
+  height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   text-align: center;
   padding: 0 10%;
-  background: linear-gradient(to bottom, rgba(0,0,0,0.5), #0a0a0a), url('https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80');
   background-size: cover;
   background-position: center;
+}
+
+.label {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.3rem;
+  color: #eab308;
+  margin-bottom: 2rem;
+}
+
+.instagramSection {
+  padding: 10rem 0;
+  background: #050505;
+}
+
+.instaHeader {
+  text-align: center;
+  margin-bottom: 5rem;
+}
+
+.instaHeader label {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.7rem;
+  letter-spacing: 0.2rem;
+  color: #444;
+  text-transform: uppercase;
+}
+
+.instaHeader h3 {
+  font-size: 2rem;
+  margin-top: 1rem;
+}
+
+.instaGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1px;
+}
+
+.instaItem {
+  aspect-ratio: 1;
+  background-size: cover;
+  background-position: center;
+  transition: opacity 0.3s;
+}
+
+.instaItem:hover {
+  opacity: 0.7;
 }
 
 .hero h1 {

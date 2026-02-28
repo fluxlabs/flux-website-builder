@@ -19,7 +19,22 @@ export default function SaaSTemplate() {
         <section className={styles.hero}>
           <h1>Ship your vision <br/> at the speed of light.</h1>
           <p>The ultimate engine for modern startups. Scale your infrastructure without the overhead of a traditional dev team.</p>
-          <Link href="/intake" className={styles.cta}>Deploy Now</Link>
+          <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', marginBottom: '5rem' }}>
+            <Link href="/intake" className={styles.cta}>Deploy Now</Link>
+            <Link href="#demo" className={styles.ctaSecondary}>Watch Demo</Link>
+          </div>
+          <div className={styles.dashboardPreview} style={{ backgroundImage: 'url(https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1600&q=80)' }} />
+        </section>
+
+        <section className={styles.marquee}>
+          <div className={styles.marqueeContent}>
+            <span>TRUSTED BY INNOVATORS AT:</span>
+            <strong>QUANTUM</strong>
+            <strong>VERTEX</strong>
+            <strong>NEXUS</strong>
+            <strong>ORBIT</strong>
+            <strong>PULSE</strong>
+          </div>
         </section>
 
         <section className={styles.features}>

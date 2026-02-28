@@ -28,7 +28,26 @@ export default function MedicalTemplate() {
             <p>Experience healthcare redefined. We combine cutting-edge medical technology with a patient-first approach to ensure your well-being.</p>
             <Link href="/intake" className={styles.cta}>Start Your Journey</Link>
           </div>
-          <div className={styles.imagePlaceholder} />
+          <div className={styles.imagePlaceholder} style={{ backgroundImage: 'url(https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&w=1200&q=80)', backgroundSize: 'cover', backgroundPosition: 'center' }} />
+        </section>
+
+        <section className={styles.stats}>
+          <div className={styles.stat}>
+            <strong>15k+</strong>
+            <span>Patients Served</span>
+          </div>
+          <div className={styles.stat}>
+            <strong>450+</strong>
+            <span>Expert Doctors</span>
+          </div>
+          <div className={styles.stat}>
+            <strong>12</strong>
+            <span>Specialty Clinics</span>
+          </div>
+          <div className={styles.stat}>
+            <strong>98%</strong>
+            <span>Patient Satisfaction</span>
+          </div>
         </section>
 
         <section className={styles.services}>

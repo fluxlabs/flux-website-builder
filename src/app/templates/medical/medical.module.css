@@ -73,6 +73,34 @@
   position: relative;
 }
 
+.stats {
+  padding: 5rem 5%;
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid #eee;
+}
+
+.stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.stat strong {
+  font-size: 3rem;
+  color: #0070f3;
+  font-weight: 800;
+}
+
+.stat span {
+  font-size: 0.875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1rem;
+  color: #888;
+  margin-top: 0.5rem;
+}
+
 .services {
   padding: 8rem 5%;
 }

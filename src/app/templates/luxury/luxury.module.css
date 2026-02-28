@@ -20,30 +20,80 @@
 }
 
 .hero {
-  padding: 10rem 10%;
+  height: 100vh;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 5rem;
+  gap: 0;
   align-items: center;
+  padding: 0;
 }
 
-.heroContent h1 {
-  font-size: 4.5rem;
+.heroContent {
+  padding: 0 15%;
+}
+
+.label {
+  font-size: 0.75rem;
+  letter-spacing: 0.3rem;
+  color: #a8a29e;
+  margin-bottom: 2rem;
+  display: block;
+}
+
+.heroImage {
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+}
+
+.services {
+  padding: 10rem 5%;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 5rem;
+  border-bottom: 1px solid #e7e5e4;
+}
+
+.serviceItem h3 {
+  font-size: 0.75rem;
+  color: #a8a29e;
+  margin-bottom: 1.5rem;
+}
+
+.serviceItem h4 {
+  font-size: 1.5rem;
   font-weight: 300;
-  line-height: 1.1;
-  margin-bottom: 2.5rem;
+  margin-bottom: 1.5rem;
 }
 
-.heroContent p {
-  font-size: 1.25rem;
+.serviceItem p {
   line-height: 1.8;
   color: #57534e;
-  margin-bottom: 3rem;
+}
+
+.gallery {
+  padding: 10rem 5%;
+}
+
+.galleryGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+}
+
+.galleryItem {
+  height: 800px;
+  background-size: cover;
+  background-position: center;
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  padding: 4rem;
 }
 
 .cta {
   display: inline-block;
-  padding: 1rem 3rem;
+  padding: 1.25rem 4rem;
   border: 1px solid #1c1917;
   text-decoration: none;
   color: #1c1917;
@@ -51,49 +101,13 @@
   letter-spacing: 0.2rem;
   font-size: 0.75rem;
   font-weight: 700;
-  transition: all 0.4s;
+  transition: all 0.4s cubic-bezier(0.19, 1, 0.22, 1);
 }
 
 .cta:hover {
   background: #1c1917;
   color: #fff;
-}
-
-.imagePlaceholder {
-  aspect-ratio: 4/5;
-  background: #e7e5e4;
-  position: relative;
-}
-
-.imagePlaceholder::after {
-  content: "CURATED SPACE";
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  font-size: 0.75rem;
-  letter-spacing: 0.3rem;
-  color: #a8a29e;
-}
-
-.gallery {
-  padding: 5rem;
-}
-
-.galleryGrid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 5rem;
-}
-
-.galleryItem {
-  height: 600px;
-  background-size: cover;
-  background-position: center;
-  position: relative;
-  display: flex;
-  align-items: flex-end;
-  padding: 3rem;
+  transform: translateY(-4px);
 }
 
 .itemLabel {

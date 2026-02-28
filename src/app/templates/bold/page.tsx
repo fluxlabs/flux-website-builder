@@ -12,12 +12,19 @@ export default function BoldTemplate() {
       </nav>
 
       <main>
-        <section className={styles.hero}>
+        <section className={styles.hero} style={{ backgroundImage: 'linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url(https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=1600&q=80)', backgroundSize: 'cover', backgroundPosition: 'center' }}>
           <h1>WE BUILD <br/> THE <span className={styles.highlight}>FUTURE</span> <br/> OF STEEL.</h1>
           <p style={{ fontSize: '1.5rem', maxWidth: '600px', marginBottom: '4rem', fontFamily: 'sans-serif' }}>
             Heavy industrial solutions for a world that never stops. We move the earth, we shape the metal, we power the grid.
           </p>
           <Link href="/intake" className={styles.cta}>GET A QUOTE</Link>
+        </section>
+
+        <section className={styles.certs}>
+          <div className={styles.certItem}>ISO 9001:2015</div>
+          <div className={styles.certItem}>ASME CERTIFIED</div>
+          <div className={styles.certItem}>OSHA DIAMOND</div>
+          <div className={styles.certItem}>LEED PLATINUM</div>
         </section>
 
         <section className={styles.stats}>

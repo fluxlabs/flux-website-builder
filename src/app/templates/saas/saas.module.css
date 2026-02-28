@@ -38,6 +38,56 @@
   margin: 0 auto 3rem;
 }
 
+.ctaSecondary {
+  padding: 1rem 2.5rem;
+  border-radius: 8px;
+  font-weight: 700;
+  text-decoration: none;
+  font-size: 1.125rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #fff;
+}
+
+.dashboardPreview {
+  width: 100%;
+  max-width: 1200px;
+  height: 600px;
+  margin: 0 auto;
+  background-size: cover;
+  background-position: top;
+  border-radius: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 50px 100px rgba(0, 0, 0, 0.5);
+}
+
+.marquee {
+  padding: 4rem 0;
+  background: rgba(255, 255, 255, 0.02);
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  overflow: hidden;
+}
+
+.marqueeContent {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 4rem;
+}
+
+.marqueeContent span {
+  font-size: 0.75rem;
+  font-weight: 800;
+  color: #444;
+  letter-spacing: 0.2rem;
+}
+
+.marqueeContent strong {
+  font-size: 1.5rem;
+  letter-spacing: 0.5rem;
+  color: #222;
+}
+
 .cta {
   background: #0070f3;
   color: #fff;
