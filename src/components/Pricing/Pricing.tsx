@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { Box, Container, Typography, Stack, Button, Divider } from "@mui/material";
+import { Box, Container, Typography, Stack, Button, Divider, Grid } from "@mui/material";
 import ScrollReveal from "@/components/ui/ScrollReveal";
 
 export default function Pricing() {
@@ -77,5 +77,3 @@ export default function Pricing() {
     </Box>
   );
 }
-
-import { Grid2 as Grid } from "@mui/material";

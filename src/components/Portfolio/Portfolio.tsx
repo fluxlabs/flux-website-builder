@@ -1,6 +1,6 @@
 "use client";
 
-import { Box, Container, Typography, Link as MuiLink } from "@mui/material";
+import { Box, Container, Typography, Link as MuiLink, Grid } from "@mui/material";
 import ScrollReveal from "@/components/ui/ScrollReveal";
 import Link from "next/link";
 
@@ -75,5 +75,3 @@ export default function Portfolio() {
     </Box>
   );
 }
-
-import { Grid2 as Grid } from "@mui/material";

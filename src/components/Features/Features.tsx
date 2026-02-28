@@ -1,8 +1,8 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Bot, Zap, BarChart3, Key, MonitorSmartphone, Palette } from "lucide-react";
-import { Box, Container, Typography, Stack, Divider } from "@mui/material";
+import { Bot, Zap, Key } from "lucide-react";
+import { Box, Container, Typography, Stack, Divider, Grid } from "@mui/material";
 
 const features = [
   {
@@ -67,5 +67,3 @@ export default function Features() {
     </Box>
   );
 }
-
-import { Grid2 as Grid } from "@mui/material";

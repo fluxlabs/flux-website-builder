@@ -1,6 +1,6 @@
 "use client";
 
-import { Box, Container, Typography, Avatar, Stack } from "@mui/material";
+import { Box, Container, Typography, Avatar, Stack, Grid } from "@mui/material";
 import ScrollReveal from "@/components/ui/ScrollReveal";
 
 export default function Testimonials() {
@@ -44,7 +44,7 @@ export default function Testimonials() {
                   <Typography 
                     variant="body1" 
                     sx={{ 
-                      fontSize: '1.25rem', 
+                      fontSize: '1.125rem', 
                       lineHeight: 1.8, 
                       color: '#ccc', 
                       fontStyle: 'italic',
@@ -80,5 +80,3 @@ export default function Testimonials() {
     </Box>
   );
 }
-
-import { Grid2 as Grid } from "@mui/material";
