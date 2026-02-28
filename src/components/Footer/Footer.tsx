@@ -15,9 +15,9 @@ export default function Footer() {
           <div className={styles.column}>
             <h4>Services</h4>
             <ul>
-              <li><Link href="/intake">Landing Pages</Link></li>
-              <li><Link href="/intake">E-commerce</Link></li>
-              <li><Link href="/intake">SaaS</Link></li>
+              <li><Link href="/services/landing-pages">Landing Pages</Link></li>
+              <li><Link href="/services/ecommerce">E-commerce</Link></li>
+              <li><Link href="/services/saas">SaaS</Link></li>
             </ul>
           </div>
           <div className={styles.column}>

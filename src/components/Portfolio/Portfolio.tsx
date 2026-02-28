@@ -11,7 +11,8 @@ export default function Portfolio() {
       style: "Clean & Trustworthy", 
       time: "48 Hours",
       link: "/templates/medical",
-      color: "#0070f3"
+      color: "#0070f3",
+      image: "https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&w=800&q=80"
     },
     { 
       name: "Valente Luxury", 
@@ -19,7 +20,8 @@ export default function Portfolio() {
       style: "Luxury & Minimal", 
       time: "41 Hours",
       link: "/templates/luxury",
-      color: "#1c1917"
+      color: "#1c1917",
+      image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80"
     },
     { 
       name: "Forge Industrial", 
@@ -27,7 +29,8 @@ export default function Portfolio() {
       style: "Bold & Brutalist", 
       time: "45 Hours",
       link: "/templates/bold",
-      color: "#ffcc00"
+      color: "#ffcc00",
+      image: "https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=800&q=80"
     },
     { 
       name: "Nova SaaS", 
@@ -35,7 +38,8 @@ export default function Portfolio() {
       style: "Clean & Professional", 
       time: "38 Hours",
       link: "/templates/saas",
-      color: "#0070f3"
+      color: "#0070f3",
+      image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800&q=80"
     },
     { 
       name: "Aura Dining", 
@@ -43,7 +47,8 @@ export default function Portfolio() {
       style: "Moody & Visual", 
       time: "44 Hours",
       link: "/templates/restaurant",
-      color: "#eab308"
+      color: "#eab308",
+      image: "https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?auto=format&fit=crop&w=800&q=80"
     },
     { 
       name: "Justice & Co", 
@@ -51,7 +56,8 @@ export default function Portfolio() {
       style: "Authoritative", 
       time: "50 Hours",
       link: "/templates/legal",
-      color: "#1e293b"
+      color: "#1e293b",
+      image: "https://images.unsplash.com/photo-1589829545856-d10d557cf95f?auto=format&fit=crop&w=800&q=80"
     },
   ];
 
@@ -66,9 +72,11 @@ export default function Portfolio() {
           {items.map((item) => (
             <SpotlightCard key={item.name} className={styles.cardWrapper}>
               <Link href={item.link} className={styles.cardLink}>
-                <div className={styles.placeholder} style={{ background: `linear-gradient(135deg, ${item.color}22, ${item.color}44)` }}>
-                  <div className={styles.placeholderLogo} style={{ backgroundColor: item.color }}>{item.name.charAt(0)}</div>
-                  <span style={{ color: '#fff' }}>View Live Demo →</span>
+                <div className={styles.placeholder} style={{ backgroundImage: `url(${item.image})`, backgroundSize: 'cover', backgroundPosition: 'center' }}>
+                  <div className={styles.overlay}>
+                    <div className={styles.placeholderLogo} style={{ backgroundColor: item.color }}>{item.name.charAt(0)}</div>
+                    <span style={{ color: '#fff', fontWeight: 800 }}>View Live Demo →</span>
+                  </div>
                 </div>
                 <div className={styles.info}>
                   <div className={styles.infoHeader}>
