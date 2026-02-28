@@ -1,6 +1,6 @@
 "use client";
 
-import { Box, Container, Typography, Grid, Link as MuiLink } from "@mui/material";
+import { Box, Container, Typography, Grid2 as Grid, Link as MuiLink } from "@mui/material";
 import SpotlightCard from "@/components/ui/SpotlightCard";
 import ScrollReveal from "@/components/ui/ScrollReveal";
 import Link from "next/link";
@@ -89,7 +89,7 @@ export default function Portfolio() {
           
           <Grid container spacing={6}>
             {items.map((item) => (
-              <Grid item xs={12} sm={6} md={4} key={item.name}>
+              <Grid size={{ xs: 12, sm: 6, md: 4 }} key={item.name}>
                 <SpotlightCard sx={{ borderRadius: '20px', overflow: 'hidden' }}>
                   <MuiLink 
                     component={Link} 

@@ -1,6 +1,6 @@
 "use client";
 
-import { Box, Container, Typography, Grid, Avatar, Stack } from "@mui/material";
+import { Box, Container, Typography, Grid2 as Grid, Avatar, Stack } from "@mui/material";
 import ScrollReveal from "@/components/ui/ScrollReveal";
 import SpotlightCard from "@/components/ui/SpotlightCard";
 
@@ -52,7 +52,7 @@ export default function Testimonials() {
 
           <Grid container spacing={4}>
             {reviews.map((review) => (
-              <Grid item xs={12} md={4} key={review.name}>
+              <Grid size={{ xs: 12, md: 4 }} key={review.name}>
                 <SpotlightCard sx={{ height: '100%' }}>
                   <Box sx={{ p: 4, height: '100%', display: 'flex', flexDirection: 'column' }}>
                     <Typography sx={{ color: '#eab308', fontSize: '0.75rem', letterSpacing: '0.2rem', mb: 3 }}>

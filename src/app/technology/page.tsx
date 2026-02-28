@@ -2,7 +2,7 @@
 
 import Navbar from "@/components/Navbar/Navbar";
 import Footer from "@/components/Footer/Footer";
-import { Box, Container, Typography, Grid, Stack, Paper } from "@mui/material";
+import { Box, Container, Typography, Grid2 as Grid, Stack, Paper } from "@mui/material";
 import { motion } from "framer-motion";
 import { Cpu, Layers, GitBranch, Shield } from "lucide-react";
 
@@ -96,7 +96,7 @@ export default function TechnologyPage() {
           <Typography variant="h3" sx={{ fontWeight: 800, mb: 8 }}>Built on the Edge</Typography>
           <Grid container spacing={3}>
             {["Next.js 15", "TypeScript", "Tailwind CSS", "Supabase", "Vercel", "Octokit"].map((item) => (
-              <Grid item xs={12} sm={4} key={item}>
+              <Grid size={{ xs: 12, sm: 4 }} key={item}>
                 <Paper sx={{ p: 3, background: 'rgba(255, 255, 255, 0.02)', border: '1px solid rgba(255, 255, 255, 0.05)', borderRadius: '16px', fontSize: '1.25rem', fontWeight: 700, color: '#444', transition: 'all 0.3s', '&:hover': { color: '#fff', borderColor: 'rgba(255, 255, 255, 0.2)', background: 'rgba(255, 255, 255, 0.05)' } }}>
                   {item}
                 </Paper>

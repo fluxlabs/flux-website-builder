@@ -2,7 +2,7 @@
 
 import Navbar from "@/components/Navbar/Navbar";
 import Footer from "@/components/Footer/Footer";
-import { Box, Container, Typography, Grid, Avatar, Stack } from "@mui/material";
+import { Box, Container, Typography, Grid2 as Grid, Avatar, Stack } from "@mui/material";
 import { motion } from "framer-motion";
 
 const MotionTypography = motion(Typography);
@@ -52,7 +52,7 @@ export default function AboutPage() {
               { title: "Full Ownership", desc: "We believe in an open web. You own your code, your repository, and your destiny. No vendor lock-in." },
               { title: "AI-First, Human-Refined", desc: "Our engine handles the heavy lifting, allowing our team to focus on the unique creative flourishes that make your brand stand out." }
             ].map((v, i) => (
-              <Grid item xs={12} md={4} key={i}>
+              <Grid size={{ xs: 12, md: 4 }} key={i}>
                 <Box sx={{ p: 5, background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.05)', borderRadius: '32px', height: '100%' }}>
                   <Typography variant="h5" sx={{ fontWeight: 700, mb: 2 }}>{v.title}</Typography>
                   <Typography sx={{ color: '#666', lineHeight: 1.7 }}>{v.desc}</Typography>

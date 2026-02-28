@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Box, Container, Typography, Grid, Divider } from "@mui/material";
+import { Box, Container, Typography, Grid2 as Grid } from "@mui/material";
 
 const MotionBox = motion(Box);
 
@@ -46,7 +46,7 @@ export default function HowItWorks() {
 
         <Grid container spacing={6} sx={{ position: 'relative' }}>
           {steps.map((step, i) => (
-            <Grid item xs={12} md={4} key={i}>
+            <Grid size={{ xs: 12, md: 4 }} key={i}>
               <MotionBox 
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}

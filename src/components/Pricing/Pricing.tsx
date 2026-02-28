@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { Box, Container, Typography, Grid, Button, Stack } from "@mui/material";
+import { Box, Container, Typography, Grid2 as Grid, Button, Stack } from "@mui/material";
 import SpotlightCard from "@/components/ui/SpotlightCard";
 import ScrollReveal from "@/components/ui/ScrollReveal";
 import Magnetic from "@/components/ui/Magnetic";
@@ -75,7 +75,7 @@ export default function Pricing() {
           
           <Grid container spacing={4}>
             {plans.map((plan) => (
-              <Grid item xs={12} md={4} key={plan.name}>
+              <Grid size={{ xs: 12, md: 4 }} key={plan.name}>
                 <SpotlightCard sx={{ 
                   height: '100%', 
                   border: plan.isPopular ? '1px solid #0070f3' : '1px solid rgba(255,255,255,0.05)',

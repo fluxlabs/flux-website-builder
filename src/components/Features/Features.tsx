@@ -2,9 +2,8 @@
 
 import { motion } from "framer-motion";
 import { Bot, Zap, BarChart3, Key, MonitorSmartphone, Palette } from "lucide-react";
-import { Box, Container, Typography, Grid, Card, CardContent } from "@mui/material";
+import { Box, Container, Typography, Grid2 as Grid, Card, CardContent } from "@mui/material";
 
-const MotionBox = motion(Box);
 const MotionCard = motion(Card);
 
 const features = [
@@ -74,7 +73,7 @@ export default function Features() {
         
         <Grid container spacing={4}>
           {features.map((feature, i) => (
-            <Grid item xs={12} sm={6} md={4} key={i}>
+            <Grid size={{ xs: 12, sm: 6, md: 4 }} key={i}>
               <MotionCard 
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}

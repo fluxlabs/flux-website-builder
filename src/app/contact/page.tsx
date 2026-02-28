@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Navbar from "@/components/Navbar/Navbar";
 import Footer from "@/components/Footer/Footer";
-import { Box, Container, Typography, Grid, TextField, Button, MenuItem, Stack } from "@mui/material";
+import { Box, Container, Typography, Grid2 as Grid, TextField, Button, MenuItem, Stack } from "@mui/material";
 import { motion } from "framer-motion";
 import Magnetic from "@/components/ui/Magnetic";
 
@@ -27,7 +27,7 @@ export default function ContactPage() {
       <Navbar />
       <Container maxWidth="lg" sx={{ py: { xs: 10, md: 20 } }}>
         <Grid container spacing={10}>
-          <Grid item xs={12} md={6}>
+          <Grid size={{ xs: 12, md: 6 }}>
             <Box component="header" sx={{ mb: 8 }}>
               <MotionTypography 
                 initial={{ opacity: 0, y: 20 }}
@@ -64,7 +64,7 @@ export default function ContactPage() {
             </Stack>
           </Grid>
 
-          <Grid item xs={12} md={6}>
+          <Grid size={{ xs: 12, md: 6 }}>
             <Box sx={{ 
               background: 'rgba(255,255,255,0.02)', 
               border: '1px solid rgba(255,255,255,0.05)', 

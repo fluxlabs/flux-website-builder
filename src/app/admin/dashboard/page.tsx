@@ -7,7 +7,7 @@ import {
   Box, 
   Container, 
   Typography, 
-  Grid, 
+  Grid2 as Grid, 
   Card, 
   CardContent, 
   Button, 
@@ -193,7 +193,7 @@ export default function AdminDashboard() {
         {currentView === 'clients' && (
           <Grid container spacing={3}>
             {clientList.map((client: any) => (
-              <Grid item xs={12} md={4} key={client.email}>
+              <Grid size={{ xs: 12, md: 4 }} key={client.email}>
                 <Card sx={{ bgcolor: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.05)', borderRadius: '24px' }}>
                   <CardContent sx={{ p: 4 }}>
                     <Stack direction="row" spacing={3} alignItems="center" sx={{ mb: 3 }}>
@@ -223,12 +223,12 @@ export default function AdminDashboard() {
 
         {currentView === 'analytics' && (
           <Grid container spacing={4}>
-            <Grid item xs={12} md={3}><Card sx={{ bgcolor: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.05)', borderRadius: '20px', textAlign: 'center', p: 4 }}><Typography variant="overline" sx={{ color: '#444', fontWeight: 800 }}>Avg Build Time</Typography><Typography variant="h3" sx={{ fontWeight: 800 }}>{(avgBuildTime / 1000).toFixed(1)}s</Typography></Card></Grid>
-            <Grid item xs={12} md={3}><Card sx={{ bgcolor: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.05)', borderRadius: '20px', textAlign: 'center', p: 4 }}><Typography variant="overline" sx={{ color: '#444', fontWeight: 800 }}>Live Projects</Typography><Typography variant="h3" sx={{ fontWeight: 800 }}>{intakes.filter(i => i.status === 'live').length}</Typography></Card></Grid>
-            <Grid item xs={12} md={3}><Card sx={{ bgcolor: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.05)', borderRadius: '20px', textAlign: 'center', p: 4 }}><Typography variant="overline" sx={{ color: '#444', fontWeight: 800 }}>Active Pipeline</Typography><Typography variant="h3" sx={{ fontWeight: 800 }}>{intakes.filter(i => i.status !== 'live').length}</Typography></Card></Grid>
-            <Grid item xs={12} md={3}><Card sx={{ bgcolor: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.05)', borderRadius: '20px', textAlign: 'center', p: 4 }}><Typography variant="overline" sx={{ color: '#444', fontWeight: 800 }}>Visionaries</Typography><Typography variant="h3" sx={{ fontWeight: 800 }}>{clientList.length}</Typography></Card></Grid>
+            <Grid size={{ xs: 12, md: 3 }}><Card sx={{ bgcolor: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.05)', borderRadius: '20px', textAlign: 'center', p: 4 }}><Typography variant="overline" sx={{ color: '#444', fontWeight: 800 }}>Avg Build Time</Typography><Typography variant="h3" sx={{ fontWeight: 800 }}>{(avgBuildTime / 1000).toFixed(1)}s</Typography></Card></Grid>
+            <Grid size={{ xs: 12, md: 3 }}><Card sx={{ bgcolor: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.05)', borderRadius: '20px', textAlign: 'center', p: 4 }}><Typography variant="overline" sx={{ color: '#444', fontWeight: 800 }}>Live Projects</Typography><Typography variant="h3" sx={{ fontWeight: 800 }}>{intakes.filter(i => i.status === 'live').length}</Typography></Card></Grid>
+            <Grid size={{ xs: 12, md: 3 }}><Card sx={{ bgcolor: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.05)', borderRadius: '20px', textAlign: 'center', p: 4 }}><Typography variant="overline" sx={{ color: '#444', fontWeight: 800 }}>Active Pipeline</Typography><Typography variant="h3" sx={{ fontWeight: 800 }}>{intakes.filter(i => i.status !== 'live').length}</Typography></Card></Grid>
+            <Grid size={{ xs: 12, md: 3 }}><Card sx={{ bgcolor: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.05)', borderRadius: '20px', textAlign: 'center', p: 4 }}><Typography variant="overline" sx={{ color: '#444', fontWeight: 800 }}>Visionaries</Typography><Typography variant="h3" sx={{ fontWeight: 800 }}>{clientList.length}</Typography></Card></Grid>
             
-            <Grid item xs={12}>
+            <Grid size={{ xs: 12 }}>
               <Typography variant="h5" sx={{ fontWeight: 800, mb: 4 }}>Global System Logs</Typography>
               <Card sx={{ bgcolor: '#050505', border: '1px solid rgba(255,255,255,0.05)', borderRadius: '16px' }}>
                 <Box sx={{ p: 2, maxHeight: 600, overflowY: 'auto' }}>
@@ -261,8 +261,8 @@ export default function AdminDashboard() {
               <Divider sx={{ borderColor: 'rgba(255,255,255,0.05)' }} />
               
               <Grid container spacing={3}>
-                <Grid item xs={6}><Typography variant="overline" sx={{ color: '#444', fontWeight: 800 }}>Vertical</Typography><Typography sx={{ fontWeight: 700 }}>{selectedIntake.vertical}</Typography></Grid>
-                <Grid item xs={6}><Typography variant="overline" sx={{ color: '#444', fontWeight: 800 }}>Layout</Typography><Typography sx={{ fontWeight: 700 }}>{selectedIntake.layout}</Typography></Grid>
+                <Grid size={{ xs: 6 }}><Typography variant="overline" sx={{ color: '#444', fontWeight: 800 }}>Vertical</Typography><Typography sx={{ fontWeight: 700 }}>{selectedIntake.vertical}</Typography></Grid>
+                <Grid size={{ xs: 6 }}><Typography variant="overline" sx={{ color: '#444', fontWeight: 800 }}>Layout</Typography><Typography sx={{ fontWeight: 700 }}>{selectedIntake.layout}</Typography></Grid>
               </Grid>
 
               <Box sx={{ p: 3, bgcolor: 'rgba(255,255,255,0.02)', borderRadius: '16px', border: '1px solid rgba(255,255,255,0.05)' }}>

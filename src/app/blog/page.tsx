@@ -2,7 +2,7 @@
 
 import Navbar from "@/components/Navbar/Navbar";
 import Footer from "@/components/Footer/Footer";
-import { Box, Container, Typography, Grid, Card, CardContent, CardMedia, Link as MuiLink } from "@mui/material";
+import { Box, Container, Typography, Grid2 as Grid, Card, CardContent, CardMedia, Link as MuiLink } from "@mui/material";
 import { motion } from "framer-motion";
 import Link from "next/link";
 
@@ -59,7 +59,7 @@ export default function BlogPage() {
 
         <Grid container spacing={4}>
           {posts.map((post, i) => (
-            <Grid item xs={12} md={4} key={i}>
+            <Grid size={{ xs: 12, md: 4 }} key={i}>
               <motion.div 
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
