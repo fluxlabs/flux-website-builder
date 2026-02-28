@@ -62,7 +62,7 @@ export default function Portfolio() {
                     <Typography className="title" sx={{ color: '#fff', fontSize: '1.5rem', fontWeight: 300, textTransform: 'uppercase', letterSpacing: '0.1rem', transition: 'all 0.4s ease', fontFamily: 'serif' }}>
                       {item.name}
                     </Typography>
-                    <Typography sx={{ color: 'rgba(255,255,255,0.4)', fontSize: '0.7rem', fontWeight: 800, mt: 1, letterSpacing: '0.1rem' }}>
+                    <Typography sx={{ color: 'rgba(255,255,255,0.6)', fontSize: '0.7rem', fontWeight: 800, mt: 1, letterSpacing: '0.1rem' }}>
                       VIEW ARCHITECTURE →
                     </Typography>
                   </Box>

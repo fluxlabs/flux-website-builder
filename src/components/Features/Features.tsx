@@ -33,9 +33,9 @@ export default function Features() {
             </Typography>
             <Typography variant="h2" sx={{ fontSize: '4rem', mt: 3, mb: 4, lineHeight: 1.1 }}>
               Better than <br/> 
-              <Box component="span" sx={{ color: 'rgba(255,255,255,0.1)' }}>an Agency.</Box>
+              <Box component="span" sx={{ color: 'rgba(255,255,255,0.3)' }}>an Agency.</Box>
             </Typography>
-            <Typography variant="body1" sx={{ color: '#666', fontSize: '1.25rem', lineHeight: 1.8, maxWidth: 400 }}>
+            <Typography variant="body1" sx={{ color: '#888', fontSize: '1.25rem', lineHeight: 1.8, maxWidth: 400 }}>
               Skip the long meetings and high costs. We deliver agency-quality websites in a fraction of the time.
             </Typography>
           </Grid>
@@ -50,7 +50,7 @@ export default function Features() {
                       <Typography variant="h4" sx={{ mb: 2, fontSize: '1.75rem', fontWeight: 400 }}>
                         {feature.title}
                       </Typography>
-                      <Typography variant="body1" sx={{ color: '#555', lineHeight: 1.7, maxWidth: 500 }}>
+                      <Typography variant="body1" sx={{ color: '#777', lineHeight: 1.7, maxWidth: 500 }}>
                         {feature.description}
                       </Typography>
                     </Box>

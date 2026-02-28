@@ -85,14 +85,14 @@ export default function Hero() {
               }}
             >
               Professional <br/> Websites, <br/> 
-              <Box component="span" sx={{ color: 'rgba(255,255,255,0.1)', fontStyle: 'italic' }}>Built in 48 Hours.</Box>
+              <Box component="span" sx={{ color: 'rgba(255,255,255,0.3)', fontStyle: 'italic' }}>Built in 48 Hours.</Box>
             </MotionTypography>
             
             <MotionBox variants={itemVariants} sx={{ maxWidth: '600px', pt: 4 }}>
               <Typography 
                 sx={{ 
                   fontSize: '1.25rem',
-                  color: '#888',
+                  color: '#aaa',
                   lineHeight: 1.6,
                   mb: 6,
                   fontWeight: 400
@@ -123,7 +123,7 @@ export default function Hero() {
                 
                 <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
                   <Box sx={{ width: 40, height: 1, bgcolor: 'rgba(214, 197, 165, 0.3)' }} />
-                  <Typography variant="caption" sx={{ color: '#444', fontWeight: 800, letterSpacing: '0.1rem' }}>
+                  <Typography variant="caption" sx={{ color: '#666', fontWeight: 800, letterSpacing: '0.1rem' }}>
                     EST. 2026
                   </Typography>
                 </Box>

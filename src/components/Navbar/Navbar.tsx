@@ -56,7 +56,7 @@ export default function Navbar() {
                     component={Link} 
                     href={item === 'Our Work' ? '/#portfolio' : `/${item.toLowerCase().replace(' ', '-')}`} 
                     sx={{ 
-                      color: 'rgba(255,255,255,0.5)', 
+                      color: 'rgba(255,255,255,0.7)', 
                       textDecoration: 'none', 
                       fontSize: '0.7rem', 
                       fontWeight: 700, 

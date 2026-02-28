@@ -48,7 +48,7 @@ export default function Pricing() {
                 
                 <Stack spacing={2} sx={{ mb: 8 }}>
                   {plan.features.map(f => (
-                    <Typography key={f} variant="body2" sx={{ color: '#666', fontSize: '0.9rem' }}>{f}</Typography>
+                    <Typography key={f} variant="body2" sx={{ color: '#888', fontSize: '0.9rem' }}>{f}</Typography>
                   ))}
                 </Stack>
 
