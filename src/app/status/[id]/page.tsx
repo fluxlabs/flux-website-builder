@@ -28,16 +28,28 @@ export default function BuildStatusPage() {
       const data = await res.json();
       setIntake(data);
       
-      if (data.status === 'ai_generating') {
+      if (data.status === 'ai_generating' || data.status === 'new') {
         const logRes = await fetch(`/api/admin/logs?intakeId=${id}`);
         const logData = await logRes.json();
-        setLogs(logData.logs || "");
+        const logsArray = Array.isArray(logData.logs) ? logData.logs : [];
         
-        // Update steps based on logs
-        if (logData.logs.includes("SYNTHESIS COMPLETE")) setCurrentStep(5);
-        else if (logData.logs.includes("STARTING AUTOMATED DEPLOYMENT")) setCurrentStep(4);
-        else if (logData.logs.includes("Installing dependencies")) setCurrentStep(3);
-        else if (logData.logs.includes("Initiating AI research")) setCurrentStep(2);
+        // Convert logs array to a displayable string
+        const logText = logsArray
+          .slice()
+          .reverse()
+          .map((log: any) => `[${new Date(log.created_at).toLocaleTimeString()}] ${log.message}`)
+          .join('\n');
+          
+        setLogs(logText);
+        
+        // Update steps based on logs (check most recent logs first)
+        const messages = logsArray.map((log: any) => log.message);
+        const hasLog = (text: string) => messages.some(m => m.includes(text));
+
+        if (hasLog("SYNTHESIS COMPLETE")) setCurrentStep(5);
+        else if (hasLog("STARTING AUTOMATED DEPLOYMENT") || hasLog("Triggering Vercel deployment")) setCurrentStep(4);
+        else if (hasLog("Installing dependencies") || hasLog("scaffolding built")) setCurrentStep(3);
+        else if (hasLog("Initiating AI research") || hasLog("Starting synthesis")) setCurrentStep(2);
         else setCurrentStep(1);
       } else if (data.status === 'client_review' || data.status === 'approved' || data.status === 'live') {
         setCurrentStep(5);
