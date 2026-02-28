@@ -54,7 +54,7 @@ export async function POST(req: Request) {
 
         if (supabaseError) {
             console.error("Supabase Error:", supabaseError);
-            return NextResponse.json({ error: "Failed to save to database" }, { status: 500 });
+            return NextResponse.json({ error: "Failed to save to database", details: supabaseError }, { status: 500 });
         }
 
         const intakeId = supabaseData[0].id;
@@ -96,9 +96,9 @@ export async function POST(req: Request) {
     } else {
         return NextResponse.json({ success: true });
     }
-  } catch (error) {
+  } catch (error: any) {
     console.error("Internal Server Error:", error);
-    return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
+    return NextResponse.json({ error: "Internal Server Error", details: error.message }, { status: 500 });
   }
 }
 

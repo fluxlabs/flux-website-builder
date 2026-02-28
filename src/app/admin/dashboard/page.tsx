@@ -34,7 +34,8 @@ import {
   Calendar,
   X,
   Plus,
-  Activity
+  Activity,
+  ArrowLeft
 } from "lucide-react";
 
 const MotionCard = motion(Card);
@@ -179,7 +180,7 @@ export default function AdminDashboard() {
                         </Stack>
                         <Stack direction="row" justifyContent="space-between" alignItems="center">
                           <Typography variant="caption" sx={{ color: '#333' }}>{new Date(intake.created_at).toLocaleDateString()}</Typography>
-                          <IconButton size="small" onClick={(e) => { e.stopPropagation(); deleteIntake(intake.id); }} sx={{ color: '#222', '&:hover': { color: '#ef4444' } }}><Trash2 size={16} /></IconButton>
+                          <IconButton size="small" onClick={(e) => { e.stopPropagation(); deleteIntake(intake.id); }} sx={{ color: 'rgba(255,255,255,0.2)', '&:hover': { color: '#ef4444' } }}><Trash2 size={16} /></IconButton>
                         </Stack>
                       </CardContent>
                     </MotionCard>
@@ -194,7 +195,17 @@ export default function AdminDashboard() {
           <Grid container spacing={3}>
             {clientList.map((client: any) => (
               <Grid size={{ xs: 12, md: 4 }} key={client.email}>
-                <Card sx={{ bgcolor: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.05)', borderRadius: '24px' }}>
+                <Card 
+                  onClick={() => { setSelectedClientEmail(client.email); setCurrentView('client-detail'); }}
+                  sx={{ 
+                    bgcolor: 'rgba(255,255,255,0.02)', 
+                    border: '1px solid rgba(255,255,255,0.05)', 
+                    borderRadius: '24px',
+                    cursor: 'pointer',
+                    transition: 'all 0.3s ease',
+                    '&:hover': { bgcolor: 'rgba(255,255,255,0.04)', borderColor: 'rgba(255,255,255,0.1)' }
+                  }}
+                >
                   <CardContent sx={{ p: 4 }}>
                     <Stack direction="row" spacing={3} alignItems="center" sx={{ mb: 3 }}>
                       <Avatar sx={{ bgcolor: '#0070f3', fontWeight: 800 }}>{client.name?.charAt(0)}</Avatar>
@@ -219,6 +230,87 @@ export default function AdminDashboard() {
               </Grid>
             ))}
           </Grid>
+        )}
+
+        {currentView === 'client-detail' && selectedClientEmail && (
+          <Box>
+            <Button 
+              startIcon={<ArrowLeft size={16} />} 
+              onClick={() => { setCurrentView('clients'); setTabValue(1); }}
+              sx={{ mb: 4, color: '#666', '&:hover': { color: '#fff' } }}
+            >
+              Back to Clients
+            </Button>
+            
+            <Box sx={{ mb: 6 }}>
+              <Typography variant="h3" sx={{ fontWeight: 800, mb: 1 }}>{clients[selectedClientEmail].name}</Typography>
+              <Typography sx={{ color: '#666' }}>{selectedClientEmail}</Typography>
+            </Box>
+
+            <Typography variant="h5" sx={{ fontWeight: 800, mb: 4 }}>Projects</Typography>
+            <Grid container spacing={3}>
+              {clients[selectedClientEmail].projects.map((project: any) => (
+                <Grid size={{ xs: 12, md: 6 }} key={project.id}>
+                  <Card sx={{ bgcolor: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.05)', borderRadius: '20px' }}>
+                    <CardContent sx={{ p: 4 }}>
+                      <Stack direction="row" justifyContent="space-between" alignItems="flex-start" sx={{ mb: 3 }}>
+                        <Box>
+                          <Typography variant="h5" sx={{ fontWeight: 800, mb: 1 }}>{project.business_name}</Typography>
+                          <Typography variant="body2" sx={{ color: '#666' }}>Created {new Date(project.created_at).toLocaleDateString()}</Typography>
+                        </Box>
+                        <Chip 
+                          label={getStatusLabel(project.status)} 
+                          size="small" 
+                          sx={{ 
+                            fontWeight: 800, 
+                            bgcolor: project.status === 'live' ? 'rgba(0,255,65,0.1)' : 'rgba(255,255,255,0.05)',
+                            color: project.status === 'live' ? '#00ff41' : '#fff'
+                          }} 
+                        />
+                      </Stack>
+                      
+                      <Stack direction="row" spacing={2} sx={{ mb: 4 }}>
+                        <Chip label={project.goal} variant="outlined" sx={{ color: '#888', borderColor: 'rgba(255,255,255,0.1)' }} />
+                        <Chip label={project.vertical} variant="outlined" sx={{ color: '#888', borderColor: 'rgba(255,255,255,0.1)' }} />
+                      </Stack>
+
+                      <Divider sx={{ borderColor: 'rgba(255,255,255,0.05)', mb: 3 }} />
+
+                      <Stack direction="row" spacing={2} justifyContent="space-between" alignItems="center">
+                        <Stack direction="row" spacing={1}>
+                          <Button 
+                            variant="outlined" 
+                            size="small"
+                            onClick={() => setSelectedIntake(project)}
+                            sx={{ borderColor: 'rgba(255,255,255,0.1)', color: '#fff' }}
+                          >
+                            Manage
+                          </Button>
+                          {project.staging_url && (
+                            <IconButton 
+                              component="a" 
+                              href={project.staging_url} 
+                              target="_blank"
+                              size="small"
+                              sx={{ color: '#d6c5a5' }}
+                            >
+                              <ExternalLink size={18} />
+                            </IconButton>
+                          )}
+                        </Stack>
+                        <IconButton 
+                          onClick={() => deleteIntake(project.id)}
+                          sx={{ color: 'rgba(255,255,255,0.2)', '&:hover': { color: '#ef4444' } }}
+                        >
+                          <Trash2 size={20} />
+                        </IconButton>
+                      </Stack>
+                    </CardContent>
+                  </Card>
+                </Grid>
+              ))}
+            </Grid>
+          </Box>
         )}
 
         {currentView === 'analytics' && (
