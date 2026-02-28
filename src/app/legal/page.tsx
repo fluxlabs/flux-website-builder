@@ -3,77 +3,105 @@
 import { useState } from "react";
 import Navbar from "@/components/Navbar/Navbar";
 import Footer from "@/components/Footer/Footer";
-import styles from "./legal.module.css";
+import { Box, Container, Typography, Tabs, Tab } from "@mui/material";
 
-type Tab = 'privacy' | 'terms';
+type TabValue = 0 | 1;
 
 export default function LegalPage() {
-  const [activeTab, setActiveTab] = useState<Tab>('privacy');
+  const [value, setValue] = useState<TabValue>(0);
+
+  const handleChange = (event: React.SyntheticEvent, newValue: TabValue) => {
+    setValue(newValue);
+  };
 
   return (
-    <div className={styles.page}>
+    <Box sx={{ background: '#000', color: '#fff', minHeight: '100vh' }}>
       <Navbar />
-      <main className={styles.main}>
-        <div className={styles.tabs}>
-          <button 
-            className={`${styles.tabBtn} ${activeTab === 'privacy' ? styles.active : ''}`}
-            onClick={() => setActiveTab('privacy')}
+      <Container maxWidth="md" sx={{ py: 15 }}>
+        <Box sx={{ borderBottom: 1, borderColor: 'rgba(255,255,255,0.05)', mb: 8 }}>
+          <Tabs 
+            value={value} 
+            onChange={handleChange} 
+            textColor="inherit"
+            TabIndicatorProps={{ sx: { bgcolor: '#fff' } }}
+            sx={{ 
+              '& .MuiTab-root': { 
+                fontSize: '1.25rem', 
+                fontWeight: 800, 
+                textTransform: 'none',
+                color: '#444',
+                '&.Mui-selected': { color: '#fff' }
+              } 
+            }}
           >
-            Privacy Policy
-          </button>
-          <button 
-            className={`${styles.tabBtn} ${activeTab === 'terms' ? styles.active : ''}`}
-            onClick={() => setActiveTab('terms')}
-          >
-            Terms of Service
-          </button>
-        </div>
+            <Tab label="Privacy Policy" />
+            <Tab label="Terms of Service" />
+          </Tabs>
+        </Box>
 
-        <article className={styles.content}>
-          {activeTab === 'privacy' ? (
-            <div className={styles.section}>
-              <h1>Privacy Policy</h1>
-              <p className={styles.lastUpdated}>Last Updated: February 27, 2026</p>
+        <Box component="article" sx={{ minHeight: 400 }}>
+          {value === 0 ? (
+            <Box>
+              <Typography variant="h2" sx={{ fontWeight: 800, mb: 1 }}>Privacy Policy</Typography>
+              <Typography variant="body2" sx={{ color: '#444', mb: 6 }}>Last Updated: February 27, 2026</Typography>
               
-              <section>
-                <h2>1. Information We Collect</h2>
-                <p>We collect information you provide directly to us via our intake form, including your name, email address, phone number, and business details. This data is used solely to synthesize and deploy your website.</p>
-              </section>
+              <Stack spacing={6}>
+                <Box component="section">
+                  <Typography variant="h5" sx={{ fontWeight: 700, mb: 2 }}>1. Information We Collect</Typography>
+                  <Typography sx={{ color: '#888', lineHeight: 1.8, fontSize: '1.125rem' }}>
+                    We collect information you provide directly to us via our intake form, including your name, email address, phone number, and business details. This data is used solely to synthesize and deploy your website.
+                  </Typography>
+                </Box>
 
-              <section>
-                <h2>2. How We Use Your Data</h2>
-                <p>Your data is processed by our AI synthesis engine to generate source code and assets for your project. We do not sell your personal information to third parties.</p>
-              </section>
+                <Box component="section">
+                  <Typography variant="h5" sx={{ fontWeight: 700, mb: 2 }}>2. How We Use Your Data</Typography>
+                  <Typography sx={{ color: '#888', lineHeight: 1.8, fontSize: '1.125rem' }}>
+                    Your data is processed by our AI synthesis engine to generate source code and assets for your project. We do not sell your personal information to third parties.
+                  </Typography>
+                </Box>
 
-              <section>
-                <h2>3. Cookies & Tracking</h2>
-                <p>We use essential cookies to maintain your session and improve our intake experience. We do not use invasive tracking pixels for advertising.</p>
-              </section>
-            </div>
+                <Box component="section">
+                  <Typography variant="h5" sx={{ fontWeight: 700, mb: 2 }}>3. Cookies & Tracking</Typography>
+                  <Typography sx={{ color: '#888', lineHeight: 1.8, fontSize: '1.125rem' }}>
+                    We use essential cookies to maintain your session and improve our intake experience. We do not use invasive tracking pixels for advertising.
+                  </Typography>
+                </Box>
+              </Stack>
+            </Box>
           ) : (
-            <div className={styles.section}>
-              <h1>Terms of Service</h1>
-              <p className={styles.lastUpdated}>Last Updated: February 27, 2026</p>
+            <Box>
+              <Typography variant="h2" sx={{ fontWeight: 800, mb: 1 }}>Terms of Service</Typography>
+              <Typography variant="body2" sx={{ color: '#444', mb: 6 }}>Last Updated: February 27, 2026</Typography>
 
-              <section>
-                <h2>1. Service Delivery</h2>
-                <p>Flux provides an AI-driven website generation service. The 48-72 hour delivery guarantee applies to the initial staging link after a successful intake submission.</p>
-              </section>
+              <Stack spacing={6}>
+                <Box component="section">
+                  <Typography variant="h5" sx={{ fontWeight: 700, mb: 2 }}>1. Service Delivery</Typography>
+                  <Typography sx={{ color: '#888', lineHeight: 1.8, fontSize: '1.125rem' }}>
+                    Flux provides an AI-driven website generation service. The 48-72 hour delivery guarantee applies to the initial staging link after a successful intake submission.
+                  </Typography>
+                </Box>
 
-              <section>
-                <h2>2. Intellectual Property</h2>
-                <p>Upon final approval and delivery, you own the generated code for your specific instance. Flux retains ownership of its underlying AI models, internal tooling, and template logic.</p>
-              </section>
+                <Box component="section">
+                  <Typography variant="h5" sx={{ fontWeight: 700, mb: 2 }}>2. Intellectual Property</Typography>
+                  <Typography sx={{ color: '#888', lineHeight: 1.8, fontSize: '1.125rem' }}>
+                    Upon final approval and delivery, you own the generated code for your specific instance. Flux retains ownership of its underlying AI models, internal tooling, and template logic.
+                  </Typography>
+                </Box>
 
-              <section>
-                <h2>3. Hosting & DNS</h2>
-                <p>While we provide a Launch Guide, the responsibility for pointing DNS records and maintaining domain ownership lies with the client.</p>
-              </section>
-            </div>
+                <Box component="section">
+                  <Typography variant="h5" sx={{ fontWeight: 700, mb: 2 }}>3. Hosting & DNS</Typography>
+                  <Typography sx={{ color: '#888', lineHeight: 1.8, fontSize: '1.125rem' }}>
+                    While we provide a Launch Guide, the responsibility for pointing DNS records and maintaining domain ownership lies with the client.
+                  </Typography>
+                </Box>
+              </Stack>
+            </Box>
           )}
-        </article>
-      </main>
+        </Box>
+      </Container>
       <Footer />
-    </div>
+    </Box>
   );
 }
+
+import { Stack } from "@mui/material";

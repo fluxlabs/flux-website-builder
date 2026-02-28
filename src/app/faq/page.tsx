@@ -3,8 +3,11 @@
 import { useState } from "react";
 import Navbar from "@/components/Navbar/Navbar";
 import Footer from "@/components/Footer/Footer";
-import styles from "./faq.module.css";
-import { motion, AnimatePresence } from "framer-motion";
+import { Box, Container, Typography, Accordion, AccordionSummary, AccordionDetails } from "@mui/material";
+import { motion } from "framer-motion";
+import { Plus } from "lucide-react";
+
+const MotionTypography = motion(Typography);
 
 const faqs = [
   {
@@ -30,45 +33,73 @@ const faqs = [
 ];
 
 export default function FAQPage() {
-  const [activeIndex, setActiveIndex] = useState<number | null>(null);
+  const [expanded, setExpanded] = useState<string | false>(false);
+
+  const handleChange = (panel: string) => (event: React.SyntheticEvent, isExpanded: boolean) => {
+    setExpanded(isExpanded ? panel : false);
+  };
 
   return (
-    <div className={styles.page}>
+    <Box sx={{ background: '#000', color: '#fff', minHeight: '100vh' }}>
       <Navbar />
-      <main className={styles.main}>
-        <header className={styles.header}>
-          <h1>Frequently Asked Questions</h1>
-          <p>Everything you need to know about the future of web building.</p>
-        </header>
+      <Container maxWidth="sm" sx={{ py: 15 }}>
+        <Box component="header" sx={{ textAlign: 'center', mb: 10 }}>
+          <MotionTypography 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            variant="h1" 
+            sx={{ 
+              fontSize: { xs: '3rem', md: '3.5rem' }, 
+              fontWeight: 800, 
+              mb: 3,
+              letterSpacing: '-0.1rem',
+              background: 'linear-gradient(to bottom, #fff, rgba(255, 255, 255, 0.5))',
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent'
+            }}
+          >
+            Frequently Asked Questions
+          </MotionTypography>
+          <Typography variant="h6" sx={{ color: '#666', fontWeight: 400 }}>
+            Everything you need to know about the future of web building.
+          </Typography>
+        </Box>
 
-        <div className={styles.faqList}>
+        <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
           {faqs.map((faq, index) => (
-            <div 
-              key={index} 
-              className={`${styles.faqItem} ${activeIndex === index ? styles.active : ""}`}
-              onClick={() => setActiveIndex(activeIndex === index ? null : index)}
+            <Accordion 
+              key={index}
+              expanded={expanded === `panel${index}`}
+              onChange={handleChange(`panel${index}`)}
+              sx={{ 
+                background: 'rgba(255,255,255,0.02)', 
+                color: '#fff',
+                border: '1px solid rgba(255,255,255,0.05)',
+                borderRadius: '16px !important',
+                overflow: 'hidden',
+                '&:before': { display: 'none' },
+                '&.Mui-expanded': {
+                  background: 'rgba(255,255,255,0.03)',
+                  borderColor: 'rgba(255,255,255,0.2)'
+                }
+              }}
             >
-              <div className={styles.question}>
-                <h3>{faq.question}</h3>
-                <span className={styles.icon}>{activeIndex === index ? "−" : "+"}</span>
-              </div>
-              <AnimatePresence>
-                {activeIndex === index && (
-                  <motion.div 
-                    initial={{ height: 0, opacity: 0 }}
-                    animate={{ height: "auto", opacity: 1 }}
-                    exit={{ height: 0, opacity: 0 }}
-                    className={styles.answer}
-                  >
-                    <p>{faq.answer}</p>
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </div>
+              <AccordionSummary
+                expandIcon={<Plus size={20} color={expanded === `panel${index}` ? '#fff' : '#444'} />}
+                sx={{ p: 3, '& .MuiAccordionSummary-content': { m: 0 } }}
+              >
+                <Typography sx={{ fontSize: '1.125rem', fontWeight: 700 }}>{faq.question}</Typography>
+              </AccordionSummary>
+              <AccordionDetails sx={{ px: 3, pb: 3, pt: 0 }}>
+                <Typography sx={{ color: '#888', lineHeight: 1.6, fontSize: '1.125rem' }}>
+                  {faq.answer}
+                </Typography>
+              </AccordionDetails>
+            </Accordion>
           ))}
-        </div>
-      </main>
+        </Box>
+      </Container>
       <Footer />
-    </div>
+    </Box>
   );
 }

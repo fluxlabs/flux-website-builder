@@ -2,9 +2,11 @@
 
 import Navbar from "@/components/Navbar/Navbar";
 import Footer from "@/components/Footer/Footer";
-import styles from "./blog.module.css";
+import { Box, Container, Typography, Grid, Card, CardContent, CardMedia, Link as MuiLink } from "@mui/material";
 import { motion } from "framer-motion";
 import Link from "next/link";
+
+const MotionTypography = motion(Typography);
 
 const posts = [
   {
@@ -29,43 +31,73 @@ const posts = [
 
 export default function BlogPage() {
   return (
-    <div className={styles.page}>
+    <Box sx={{ background: '#000', color: '#fff', minHeight: '100vh' }}>
       <Navbar />
-      <main className={styles.main}>
-        <header className={styles.hero}>
-          <motion.h1 
+      <Container maxWidth="lg" sx={{ py: 15 }}>
+        <Box component="header" sx={{ textAlign: 'center', mb: 10 }}>
+          <MotionTypography 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className={styles.title}
+            variant="h1" 
+            sx={{ 
+              fontSize: { xs: '3rem', md: '5rem' }, 
+              fontWeight: 800, 
+              mb: 3,
+              letterSpacing: '-0.2rem',
+              lineHeight: 1,
+              background: 'linear-gradient(to bottom, #fff, rgba(255, 255, 255, 0.5))',
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent'
+            }}
           >
             Insights.
-          </motion.h1>
-          <p className={styles.subtitle}>Thought leadership at the intersection of AI and digital architecture.</p>
-        </header>
+          </MotionTypography>
+          <Typography variant="h5" sx={{ color: '#666', maxWidth: 700, mx: 'auto', lineHeight: 1.6 }}>
+            Thought leadership at the intersection of AI and digital architecture.
+          </Typography>
+        </Box>
 
-        <section className={styles.postGrid}>
+        <Grid container spacing={4}>
           {posts.map((post, i) => (
-            <motion.div 
-              key={i}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ delay: i * 0.1 }}
-              className={styles.postCard}
-            >
-              <div className={styles.postImage} style={{ backgroundImage: `url(${post.image})` }} />
-              <div className={styles.postInfo}>
-                <div className={styles.postMeta}>
-                  <span>{post.category}</span>
-                  <span>{post.date}</span>
-                </div>
-                <h3>{post.title}</h3>
-                <Link href="#" className={styles.readMore}>Read Article →</Link>
-              </div>
-            </motion.div>
+            <Grid item xs={12} md={4} key={i}>
+              <motion.div 
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ delay: i * 0.1 }}
+              >
+                <Card sx={{ 
+                  background: 'rgba(255,255,255,0.02)', 
+                  border: '1px solid rgba(255,255,255,0.05)', 
+                  borderRadius: '24px',
+                  overflow: 'hidden',
+                  transition: 'all 0.3s ease',
+                  '&:hover': {
+                    background: 'rgba(255,255,255,0.04)',
+                    borderColor: 'rgba(255,255,255,0.1)',
+                    transform: 'translateY(-10px)'
+                  }
+                }}>
+                  <CardMedia
+                    component="div"
+                    sx={{ height: 250, backgroundImage: `url(${post.image})`, backgroundSize: 'cover', backgroundPosition: 'center' }}
+                  />
+                  <CardContent sx={{ p: 4 }}>
+                    <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 2 }}>
+                      <Typography sx={{ fontSize: '0.7rem', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.1rem', color: '#444' }}>{post.category}</Typography>
+                      <Typography sx={{ fontSize: '0.7rem', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.1rem', color: '#444' }}>{post.date}</Typography>
+                    </Box>
+                    <Typography variant="h5" sx={{ fontWeight: 700, mb: 3, color: '#fff', lineHeight: 1.4 }}>{post.title}</Typography>
+                    <MuiLink component={Link} href="#" sx={{ color: '#0070f3', textDecoration: 'none', fontWeight: 700, fontSize: '0.875rem', '&:hover': { textDecoration: 'underline' } }}>
+                      Read Article →
+                    </MuiLink>
+                  </CardContent>
+                </Card>
+              </motion.div>
+            </Grid>
           ))}
-        </section>
-      </main>
+        </Grid>
+      </Container>
       <Footer />
-    </div>
+    </Box>
   );
 }
