@@ -1,88 +1,97 @@
 "use client";
 
 import Link from "next/link";
-import { Box, Typography, Button, Stack } from "@mui/material";
+import { Box, Typography, Stack, IconButton } from "@mui/material";
+import { motion } from "framer-motion";
+import { Menu } from "lucide-react";
 
 export default function Navbar() {
   return (
     <Box 
+      component="nav"
       sx={{ 
         position: 'fixed', 
-        top: { xs: 0, md: 24 }, 
+        top: 0, 
         left: 0, 
         right: 0, 
         zIndex: 1000,
+        px: { xs: 3, md: 6 },
+        py: 4,
         display: 'flex',
-        justifyContent: 'center',
-        px: 2
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        background: 'linear-gradient(to bottom, rgba(0,0,0,0.8) 0%, transparent 100%)',
+        pointerEvents: 'none'
       }}
     >
-      <Box 
-        sx={{
-          background: 'rgba(255, 255, 255, 0.85)',
-          backdropFilter: 'blur(24px)',
-          border: '1px solid rgba(0, 0, 0, 0.06)',
-          borderRadius: { xs: 0, md: '50px' },
-          width: '100%',
-          maxWidth: 1000,
-          px: { xs: 2, md: 3 },
-          py: 1.5,
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          boxShadow: '0 10px 40px rgba(0,0,0,0.03)'
+      <Typography 
+        variant="h6" 
+        component={Link} 
+        href="/" 
+        sx={{ 
+          fontWeight: 900, 
+          color: '#fff', 
+          textDecoration: 'none',
+          letterSpacing: '0.2rem',
+          textTransform: 'uppercase',
+          fontSize: '1rem',
+          pointerEvents: 'auto'
         }}
       >
+        Flux<Box component="span" sx={{ color: '#d6c5a5' }}>.</Box>
+      </Typography>
+
+      <Stack 
+        direction="row" 
+        spacing={6} 
+        alignItems="center"
+        sx={{ 
+          display: { xs: 'none', md: 'flex' },
+          pointerEvents: 'auto'
+        }}
+      >
+        {['Architectures', 'Technology', 'Blog', 'About'].map((item) => (
+          <Typography 
+            key={item}
+            component={Link} 
+            href={item === 'Architectures' ? '/#portfolio' : `/${item.toLowerCase()}`} 
+            sx={{ 
+              color: 'rgba(255,255,255,0.5)', 
+              textDecoration: 'none', 
+              fontSize: '0.7rem', 
+              fontWeight: 700, 
+              textTransform: 'uppercase',
+              letterSpacing: '0.15rem',
+              transition: 'all 0.3s ease',
+              '&:hover': { color: '#d6c5a5', letterSpacing: '0.25rem' } 
+            }}
+          >
+            {item}
+          </Typography>
+        ))}
+      </Stack>
+
+      <Box sx={{ pointerEvents: 'auto', display: 'flex', alignItems: 'center', gap: 4 }}>
         <Typography 
-          variant="h6" 
           component={Link} 
-          href="/" 
+          href="/intake"
           sx={{ 
-            fontWeight: 900, 
-            color: '#111', 
-            textDecoration: 'none',
-            letterSpacing: '-0.05rem',
-            display: 'flex',
-            alignItems: 'center'
-          }}
-        >
-          Flux<Box component="span" sx={{ 
-            color: '#888',
-            ml: '2px'
-          }}>Webs</Box>
-        </Typography>
-
-        <Stack 
-          direction="row" 
-          spacing={4} 
-          alignItems="center"
-          sx={{ display: { xs: 'none', md: 'flex' } }}
-        >
-          <Typography component={Link} href="/#pricing" sx={{ color: '#555', textDecoration: 'none', fontSize: '0.875rem', fontWeight: 600, transition: 'color 0.2s', '&:hover': { color: '#0055ff' } }}>Pricing</Typography>
-          <Typography component={Link} href="/#portfolio" sx={{ color: '#555', textDecoration: 'none', fontSize: '0.875rem', fontWeight: 600, transition: 'color 0.2s', '&:hover': { color: '#0055ff' } }}>Architectures</Typography>
-          <Typography component={Link} href="/technology" sx={{ color: '#555', textDecoration: 'none', fontSize: '0.875rem', fontWeight: 600, transition: 'color 0.2s', '&:hover': { color: '#0055ff' } }}>Engine</Typography>
-          <Typography component={Link} href="/about" sx={{ color: '#555', textDecoration: 'none', fontSize: '0.875rem', fontWeight: 600, transition: 'color 0.2s', '&:hover': { color: '#0055ff' } }}>About</Typography>
-        </Stack>
-
-        <Button 
-          component={Link} 
-          href="/intake" 
-          variant="contained" 
-          disableElevation
-          sx={{ 
-            backgroundColor: '#111', 
             color: '#fff', 
-            borderRadius: '50px', 
-            px: 3,
-            py: 1,
-            fontSize: '0.875rem',
-            fontWeight: 700,
-            textTransform: 'none',
-            '&:hover': { backgroundColor: '#333' }
+            textDecoration: 'none', 
+            fontSize: '0.7rem', 
+            fontWeight: 800, 
+            textTransform: 'uppercase',
+            letterSpacing: '0.1rem',
+            borderBottom: '1px solid #d6c5a5',
+            pb: 0.5,
+            '&:hover': { color: '#d6c5a5' }
           }}
         >
-          Start Your Build
-        </Button>
+          Start Build
+        </Typography>
+        <IconButton sx={{ color: '#fff', p: 0 }}>
+          <Menu size={20} />
+        </IconButton>
       </Box>
     </Box>
   );

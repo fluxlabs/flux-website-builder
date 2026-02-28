@@ -1,11 +1,9 @@
 :root {
-  --background: #fafafa;
-  --foreground: #111111;
-  --accent: #0055ff;
-  --accent-secondary: #555555;
-  --border: rgba(0, 0, 0, 0.08);
-  --glass: rgba(255, 255, 255, 0.8);
-  --text-muted: #555555;
+  --background: #000000;
+  --foreground: #ffffff;
+  --accent: #d6c5a5;
+  --border: rgba(214, 197, 165, 0.1);
+  --text-muted: #666666;
 }
 
 body {
@@ -23,13 +21,12 @@ body {
   box-sizing: border-box;
 }
 
-/* Soft Float */
-@keyframes soft-float {
-  0%, 100% { transform: translateY(0) scale(1); }
-  50% { transform: translateY(-10px) scale(1.01); }
+/* Cinematic Fade */
+@keyframes cinematicFade {
+  from { opacity: 0; transform: translateY(20px); filter: blur(10px); }
+  to { opacity: 1; transform: translateY(0); filter: blur(0px); }
 }
 
-.floating {
-  animation: soft-float 6s ease-in-out infinite;
+.reveal {
+  animation: cinematicFade 1.2s cubic-bezier(0.19, 1, 0.22, 1) forwards;
 }
-

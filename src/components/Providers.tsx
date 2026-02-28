@@ -3,56 +3,71 @@
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v15-appRouter';
-import { Inter } from "next/font/google";
+import { Inter, Playfair_Display } from "next/font/google";
 
 const inter = Inter({ subsets: ["latin"] });
+const playfair = Playfair_Display({ subsets: ["latin"] });
 
-const lightTheme = createTheme({
+const elegantDarkTheme = createTheme({
   palette: {
-    mode: 'light',
+    mode: 'dark',
     primary: {
-      main: '#0055ff', // Vibrant Electric Blue
+      main: '#d6c5a5', // Refined Champagne Gold
     },
     secondary: {
-      main: '#ff4500', // Crisp Coral/Orange
+      main: '#ffffff',
     },
     background: {
-      default: '#fafafa', // Soft Off-White
-      paper: '#ffffff',
+      default: '#000000', // Absolute Black
+      paper: '#050505',   // Deep Charcoal
     },
     text: {
-      primary: '#111111',
-      secondary: '#555555',
+      primary: '#ffffff',
+      secondary: '#888888',
     },
-    divider: 'rgba(0,0,0,0.08)',
+    divider: 'rgba(214, 197, 165, 0.1)',
   },
   typography: {
     fontFamily: inter.style.fontFamily,
-    h1: { letterSpacing: '-0.04em', fontWeight: 800 },
-    h2: { letterSpacing: '-0.03em', fontWeight: 700 },
-    h3: { letterSpacing: '-0.02em', fontWeight: 700 },
-    button: { textTransform: 'none', fontWeight: 600 },
+    h1: { 
+      fontFamily: playfair.style.fontFamily,
+      letterSpacing: '-0.02em', 
+      fontWeight: 400,
+      fontSize: '5rem'
+    },
+    h2: { 
+      fontFamily: playfair.style.fontFamily,
+      letterSpacing: '-0.01em', 
+      fontWeight: 400 
+    },
+    h3: { 
+      fontFamily: playfair.style.fontFamily,
+      letterSpacing: '-0.01em', 
+      fontWeight: 400 
+    },
+    button: { 
+      textTransform: 'uppercase', 
+      fontWeight: 700,
+      letterSpacing: '0.1rem',
+      fontSize: '0.75rem'
+    },
   },
   shape: {
-    borderRadius: 12,
+    borderRadius: 0, // Shifting to sharp, elegant edges
   },
   components: {
     MuiButton: {
       styleOverrides: {
         root: {
-          borderRadius: '50px',
+          borderRadius: 0,
+          padding: '12px 32px',
+          transition: 'all 0.4s cubic-bezier(0.19, 1, 0.22, 1)',
+        },
+        contained: {
           boxShadow: 'none',
           '&:hover': {
-            boxShadow: '0 4px 14px rgba(0,0,0,0.1)',
+            boxShadow: '0 0 30px rgba(214, 197, 165, 0.2)',
           }
-        },
-      }
-    },
-    MuiCard: {
-      styleOverrides: {
-        root: {
-          boxShadow: '0 4px 24px rgba(0,0,0,0.03)',
-          border: '1px solid rgba(0,0,0,0.04)',
         }
       }
     }
@@ -62,7 +77,7 @@ const lightTheme = createTheme({
 export function Providers({ children }: { children: React.ReactNode }) {
   return (
     <AppRouterCacheProvider>
-      <ThemeProvider theme={lightTheme}>
+      <ThemeProvider theme={elegantDarkTheme}>
         <CssBaseline />
         {children}
       </ThemeProvider>
