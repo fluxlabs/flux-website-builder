@@ -124,6 +124,24 @@ export default function AdminDashboard() {
     } catch (err) { console.error(err); }
   };
 
+  const triggerSeed = async () => {
+    try {
+      setLoading(true);
+      const res = await fetch("/api/admin/seed", { method: "POST" });
+      if (res.ok) {
+        await fetchIntakes();
+      } else {
+        const err = await res.json();
+        alert(`Seed failed: ${err.error || "Unknown error"}`);
+      }
+    } catch (err) {
+      console.error(err);
+      alert("Failed to trigger seed.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const getStatusLabel = (s: string) => s.replace("_", " ").toUpperCase();
 
   const clients = intakes.reduce((acc, intake) => {
@@ -155,7 +173,14 @@ export default function AdminDashboard() {
                 <Tab label="Analytics" sx={{ fontWeight: 700 }} />
               </Tabs>
             </Stack>
-            <Button variant="contained" onClick={() => {}} sx={{ bgcolor: '#fff', color: '#000', fontWeight: 800, borderRadius: '8px', '&:hover': { bgcolor: '#eee' } }}>+ Seed Vision</Button>
+            <Button 
+              variant="contained" 
+              onClick={triggerSeed} 
+              disabled={loading}
+              sx={{ bgcolor: '#fff', color: '#000', fontWeight: 800, borderRadius: '8px', '&:hover': { bgcolor: '#eee' } }}
+            >
+              + Seed Vision
+            </Button>
           </Stack>
         </Container>
       </Box>
