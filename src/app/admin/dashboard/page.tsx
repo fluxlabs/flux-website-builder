@@ -14,7 +14,7 @@ export default function AdminDashboard() {
   const [loading, setLoading] = useState(true);
   const [selectedIntake, setSelectedIntake] = useState<any>(null);
   const [selectedClientEmail, setSelectedClientEmail] = useState<string | null>(null);
-  const [liveLogs, setLiveLogs] = useState<string>("");
+  const [liveLogs, setLiveLogs] = useState<any[]>([]);
   const [currentView, setCurrentView] = useState<View>('pipeline');
 
   const fetchIntakes = async () => {
@@ -39,18 +39,21 @@ export default function AdminDashboard() {
   const [currentStep, setCurrentStep] = useState<number>(0);
 
   const fetchLogs = async () => {
-    if (!selectedIntake) return;
+    const intakeId = currentView === 'analytics' ? '' : (selectedIntake?.id || '');
     try {
-      const res = await fetch(`/api/admin/logs?intakeId=${selectedIntake.id}`);
+      const res = await fetch(`/api/admin/logs?intakeId=${intakeId}&limit=100`);
       const data = await res.json();
-      setLiveLogs(data.logs || "");
+      const logs = data.logs || [];
+      setLiveLogs(logs);
       
-      // Update pipeline step based on log content
-      if (data.logs.includes("SYNTHESIS COMPLETE")) setCurrentStep(4);
-      else if (data.logs.includes("STARTING AUTOMATED DEPLOYMENT")) setCurrentStep(3);
-      else if (data.logs.includes("Installing dependencies")) setCurrentStep(2);
-      else if (data.logs.includes("Synthesizing vision")) setCurrentStep(1);
-      else setCurrentStep(0);
+      if (selectedIntake) {
+        // Update pipeline step based on log messages
+        if (logs.some((l: any) => l.message.includes("Synthesis complete"))) setCurrentStep(4);
+        else if (logs.some((l: any) => l.message.includes("Triggering Vercel"))) setCurrentStep(3);
+        else if (logs.some((l: any) => l.message.includes("Installing dependencies"))) setCurrentStep(2);
+        else if (logs.some((l: any) => l.message.includes("Vision Generated"))) setCurrentStep(1);
+        else setCurrentStep(0);
+      }
     } catch (err) {
       console.error(err);
     }
@@ -64,15 +67,15 @@ export default function AdminDashboard() {
 
   useEffect(() => {
     let logInterval: any;
-    if (selectedIntake && selectedIntake.status === 'ai_generating') {
+    if (selectedIntake || currentView === 'analytics') {
       fetchLogs();
-      logInterval = setInterval(fetchLogs, 2000);
+      logInterval = setInterval(fetchLogs, 3000);
     } else {
-      setLiveLogs("");
+      setLiveLogs([]);
       setCurrentStep(0);
     }
     return () => clearInterval(logInterval);
-  }, [selectedIntake]);
+  }, [selectedIntake, currentView]);
 
   const PIPELINE_STEPS = [
     { id: 1, name: "VISION", label: "LLM Synthesis" },
@@ -246,25 +249,51 @@ export default function AdminDashboard() {
 
       <main className={styles.main}>
         {currentView === 'analytics' && (
-          <div className={styles.analyticsRow}>
-            {/* ... same analytics cards ... */}
-            <div className={styles.statCard}>
-              <label>Average Build Time</label>
-              <div className={styles.statValue}>{(avgBuildTime / 1000).toFixed(1)}s</div>
+          <>
+            <div className={styles.analyticsRow}>
+              <div className={styles.statCard}>
+                <label>Average Build Time</label>
+                <div className={styles.statValue}>{(avgBuildTime / 1000).toFixed(1)}s</div>
+              </div>
+              <div className={styles.statCard}>
+                <label>Live Projects</label>
+                <div className={styles.statValue}>{liveCount}</div>
+              </div>
+              <div className={styles.statCard}>
+                <label>Active Pipeline</label>
+                <div className={styles.statValue}>{activeCount}</div>
+              </div>
+              <div className={styles.statCard}>
+                <label>Total Visionaries</label>
+                <div className={styles.statValue}>{clientList.length}</div>
+              </div>
             </div>
-            <div className={styles.statCard}>
-              <label>Live Projects</label>
-              <div className={styles.statValue}>{liveCount}</div>
+
+            <div className={styles.systemSection}>
+              <div className={styles.sectionHeader}>
+                <h2>Global System Logs</h2>
+                <button className={styles.refreshBtn} onClick={fetchLogs}>Refresh Logs</button>
+              </div>
+              <div className={styles.globalLogViewer}>
+                <div className={styles.logHeader}>
+                  <span>Time</span>
+                  <span>Category</span>
+                  <span>Level</span>
+                  <span>Message</span>
+                  <span>Client ID</span>
+                </div>
+                {liveLogs.map((log: any) => (
+                  <div key={log.id} className={`${styles.globalLogEntry} ${styles[log.level.toLowerCase()]}`}>
+                    <span className={styles.logTime}>{new Date(log.created_at).toLocaleString()}</span>
+                    <span className={styles.logCategory}>{log.category}</span>
+                    <span className={styles.logLevel}>{log.level}</span>
+                    <span className={styles.logMessage}>{log.message}</span>
+                    <span className={styles.logIntakeId}>{log.intake_id?.slice(0, 8) || 'SYSTEM'}</span>
+                  </div>
+                ))}
+              </div>
             </div>
-            <div className={styles.statCard}>
-              <label>Active Pipeline</label>
-              <div className={styles.statValue}>{activeCount}</div>
-            </div>
-            <div className={styles.statCard}>
-              <label>Total Visionaries</label>
-              <div className={styles.statValue}>{clientList.length}</div>
-            </div>
-          </div>
+          </>
         )}
 
         {currentView === 'pipeline' && (
@@ -579,11 +608,17 @@ export default function AdminDashboard() {
                   </section>
                 )}
 
-                {liveLogs && (
+                {liveLogs.length > 0 && (
                   <section>
                     <label>Synthesis Stream {selectedIntake.status === 'ai_generating' ? '(Live)' : '(Latest)'}</label>
                     <div className={styles.logViewer}>
-                      <pre>{liveLogs}</pre>
+                      {liveLogs.map((log: any) => (
+                        <div key={log.id} className={`${styles.logEntry} ${styles[log.level.toLowerCase()]}`}>
+                          <span className={styles.logTime}>{new Date(log.created_at).toLocaleTimeString()}</span>
+                          <span className={styles.logCategory}>{log.category}</span>
+                          <span className={styles.logMessage}>{log.message}</span>
+                        </div>
+                      ))}
                     </div>
                   </section>
                 )}

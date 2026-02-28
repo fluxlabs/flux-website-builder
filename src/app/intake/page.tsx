@@ -147,17 +147,25 @@ export default function IntakePage() {
     }
   };
 
-  const isStep1Valid = formData.name && formData.email && formData.phone && formData.hasWebsite !== null;
-  const isStep2Valid = formData.hasWebsite 
+  const isStep1Valid = !!formData.goal;
+  const isStep2Valid = formData.name && formData.email && formData.phone && formData.hasWebsite !== null;
+  const isStep3Valid = formData.hasWebsite 
     ? formData.currentUrl 
     : (formData.businessName && formData.industry && formData.location);
-  const isStep3Valid = !!formData.vertical && !!formData.layout;
-  const isStep4Valid = true; // Logo is optional
-  const isStep5Valid = !!formData.colors;
-  const isStep6Valid = formData.pages.length > 0;
-  const isStep7Valid = formData.brandVoice && formData.targetAudience;
+  const isStep4Valid = !!formData.vertical && !!formData.layout;
+  const isStep5Valid = true; // Logo is optional
+  const isStep6Valid = !!formData.colors;
+  const isStep7Valid = formData.pages.length > 0;
+  const isStep8Valid = formData.brandVoice && formData.targetAudience;
 
-  const totalSteps = 8;
+  const totalSteps = 9;
+
+  const GOAL_OPTIONS = [
+    { id: "Generate Leads", label: "Lead Generation", icon: "🎯", desc: "Convert visitors into customers with high-impact landing pages." },
+    { id: "Sell Products", label: "E-Commerce", icon: "🛍️", desc: "A premium storefront designed to showcase and sell your inventory." },
+    { id: "Portfolio Showcase", label: "Portfolio", icon: "🎨", desc: "A visual-first experience for creatives and professionals." },
+    { id: "Information / Blog", label: "Authority / Blog", icon: "✍️", desc: "Establish thought leadership with a content-rich destination." }
+  ];
 
   const VERTICAL_OPTIONS = [
     "Professional Services",
@@ -212,11 +220,75 @@ export default function IntakePage() {
         </div>
       </header>
 
+      {/* Floating Vision Preview */}
+      <AnimatePresence>
+        {step > 1 && step < totalSteps && (
+          <motion.div 
+            className={styles.visionPreview}
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+          >
+            <div className={styles.previewHeader}>
+              <div className={styles.previewLogo}>
+                {formData.logoPreview ? (
+                  <img src={formData.logoPreview} alt="Logo" />
+                ) : (
+                  <span>{formData.businessName || "Your Vision"}</span>
+                )}
+              </div>
+              <nav className={styles.previewNav}>
+                {formData.pages.length > 0 ? (
+                  formData.pages.slice(0, 3).map(p => <span key={p}>{p}</span>)
+                ) : (
+                  <><span>Home</span><span>About</span><span>Contact</span></>
+                )}
+              </nav>
+              <div className={styles.previewCTA} style={{ background: formData.colors }}>
+                Get Started
+              </div>
+            </div>
+            <div className={styles.previewLabel}>Real-time Synthesis Preview</div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       <main className={styles.main}>
         <AnimatePresence mode="wait">
           {step === 1 && (
             <motion.div 
               key="step1" 
+              className={styles.step}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.6, ease: [0.19, 1, 0.22, 1] }}
+            >
+              <h2>What are we building?</h2>
+              <div className={styles.goalGrid}>
+                {GOAL_OPTIONS.map(g => (
+                  <div 
+                    key={g.id}
+                    className={`${styles.goalCard} ${formData.goal === g.id ? styles.goalActive : ""}`}
+                    onClick={() => {
+                      setFormData(prev => ({ ...prev, goal: g.id }));
+                      setTimeout(nextStep, 400);
+                    }}
+                  >
+                    <div className={styles.goalIcon}>{g.icon}</div>
+                    <div className={styles.goalInfo}>
+                      <h3>{g.label}</h3>
+                      <p>{g.desc}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </motion.div>
+          )}
+
+          {step === 2 && (
+            <motion.div 
+              key="step2" 
               className={styles.step}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -265,9 +337,9 @@ export default function IntakePage() {
             </motion.div>
           )}
 
-          {step === 2 && formData.hasWebsite === true && (
+          {step === 3 && formData.hasWebsite === true && (
             <motion.div 
-              key="step2-has" 
+              key="step3-has" 
               className={styles.step}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -290,9 +362,9 @@ export default function IntakePage() {
             </motion.div>
           )}
 
-          {step === 2 && formData.hasWebsite === false && (
+          {step === 3 && formData.hasWebsite === false && (
             <motion.div 
-              key="step2-needs" 
+              key="step3-needs" 
               className={styles.step}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -335,9 +407,9 @@ export default function IntakePage() {
             </motion.div>
           )}
 
-          {step === 3 && (
+          {step === 4 && (
             <motion.div 
-              key="step3" 
+              key="step4" 
               className={styles.step}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -382,9 +454,9 @@ export default function IntakePage() {
             </motion.div>
           )}
 
-          {step === 4 && (
+          {step === 5 && (
             <motion.div 
-              key="step4" 
+              key="step5" 
               className={styles.step}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -483,9 +555,9 @@ export default function IntakePage() {
             </motion.div>
           )}
 
-          {step === 5 && (
+          {step === 6 && (
             <motion.div 
-              key="step5" 
+              key="step6" 
               className={styles.step}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -513,9 +585,9 @@ export default function IntakePage() {
             </motion.div>
           )}
 
-          {step === 6 && (
+          {step === 7 && (
             <motion.div 
-              key="step6" 
+              key="step7" 
               className={styles.step}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -523,18 +595,7 @@ export default function IntakePage() {
               transition={{ duration: 0.6, ease: [0.19, 1, 0.22, 1] }}
             >
               <h2>The Architecture</h2>
-              <div className={styles.formGroup}>
-                <label>Primary Business Goal</label>
-                <div className={styles.inputWrapper}>
-                  <select name="goal" value={formData.goal} onChange={handleChange} className={styles.select}>
-                    <option value="Generate Leads">Generate Leads</option>
-                    <option value="Sell Products">Sell Products</option>
-                    <option value="Portfolio Showcase">Portfolio Showcase</option>
-                    <option value="Information / Blog">Information / Blog</option>
-                  </select>
-                </div>
-              </div>
-              <div className={styles.formGroup} style={{ marginTop: '4rem' }}>
+              <div className={styles.formGroup} style={{ marginTop: '0' }}>
                 <label>Desired Pages</label>
                 <div className={styles.checkboxGrid}>
                   {["Home", "About", "Services", "Pricing", "Portfolio", "Contact", "Blog"].map((page) => (
@@ -551,9 +612,9 @@ export default function IntakePage() {
             </motion.div>
           )}
 
-          {step === 7 && (
+          {step === 8 && (
             <motion.div 
-              key="step7" 
+              key="step8" 
               className={styles.step}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -589,9 +650,9 @@ export default function IntakePage() {
             </motion.div>
           )}
 
-          {step === 8 && (
+          {step === 9 && (
             <motion.div 
-              key="step8" 
+              key="step9" 
               className={styles.step}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -645,11 +706,11 @@ export default function IntakePage() {
                 className={styles.nextBtn} 
                 onClick={nextStep} 
                 disabled={
-                  (step === 1 && !isStep1Valid) || 
                   (step === 2 && !isStep2Valid) || 
-                  (step === 3 && !isStep3Valid) ||
-                  (step === 5 && !isStep5Valid) || 
-                  (step === 6 && !isStep6Valid)
+                  (step === 3 && !isStep3Valid) || 
+                  (step === 4 && !isStep4Valid) ||
+                  (step === 6 && !isStep6Valid) || 
+                  (step === 7 && !isStep7Valid)
                 }
               >
                 Continue

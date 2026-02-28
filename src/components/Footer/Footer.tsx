@@ -1,4 +1,5 @@
 import styles from "./Footer.module.css";
+import Link from "next/link";
 
 export default function Footer() {
   return (
@@ -14,17 +15,24 @@ export default function Footer() {
           <div className={styles.column}>
             <h4>Services</h4>
             <ul>
-              <li>Landing Pages</li>
-              <li>E-commerce</li>
-              <li>SaaS</li>
+              <li><Link href="/intake">Landing Pages</Link></li>
+              <li><Link href="/intake">E-commerce</Link></li>
+              <li><Link href="/intake">SaaS</Link></li>
             </ul>
           </div>
           <div className={styles.column}>
-            <h4>Company</h4>
+            <h4>Support</h4>
             <ul>
-              <li>Privacy Policy</li>
-              <li>Terms of Service</li>
-              <li>Contact Us</li>
+              <li><Link href="/faq">FAQ</Link></li>
+              <li><Link href="/contact">Contact Us</Link></li>
+              <li><Link href="/legal">Legal</Link></li>
+            </ul>
+          </div>
+          <div className={styles.column}>
+            <h4>Legal</h4>
+            <ul>
+              <li><Link href="/legal">Privacy Policy</Link></li>
+              <li><Link href="/legal">Terms of Service</Link></li>
             </ul>
           </div>
         </div>

@@ -1,0 +1,105 @@
+.container {
+  min-height: 100vh;
+  background: #fff;
+  color: #1a1a1a;
+  font-family: 'Inter', sans-serif;
+}
+
+.topBar {
+  background: #0070f3;
+  color: #fff;
+  padding: 0.5rem 5%;
+  font-size: 0.875rem;
+  display: flex;
+  justify-content: space-between;
+}
+
+.nav {
+  padding: 1.5rem 5%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+}
+
+.logo {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #0070f3;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.hero {
+  padding: 8rem 5%;
+  background: linear-gradient(135deg, #f0f7ff 0%, #ffffff 100%);
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 4rem;
+  align-items: center;
+}
+
+.heroContent h1 {
+  font-size: 4rem;
+  line-height: 1.2;
+  font-weight: 800;
+  color: #003366;
+  margin-bottom: 2rem;
+}
+
+.heroContent p {
+  font-size: 1.25rem;
+  color: #666;
+  margin-bottom: 3rem;
+  line-height: 1.6;
+}
+
+.cta {
+  background: #0070f3;
+  color: #fff;
+  padding: 1rem 2.5rem;
+  border-radius: 50px;
+  font-weight: 700;
+  text-decoration: none;
+  display: inline-block;
+  box-shadow: 0 10px 20px rgba(0, 112, 243, 0.2);
+}
+
+.imagePlaceholder {
+  height: 500px;
+  background: #e1efff;
+  border-radius: 40px;
+  position: relative;
+}
+
+.services {
+  padding: 8rem 5%;
+}
+
+.serviceGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2rem;
+}
+
+.serviceCard {
+  padding: 3rem;
+  background: #fff;
+  border: 1px solid #eee;
+  border-radius: 24px;
+  transition: all 0.3s;
+}
+
+.serviceCard:hover {
+  transform: translateY(-10px);
+  border-color: #0070f3;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.05);
+}
+
+.footer {
+  padding: 5rem 5%;
+  background: #001a33;
+  color: #fff;
+  text-align: center;
+}

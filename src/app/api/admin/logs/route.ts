@@ -1,6 +1,5 @@
 import { NextResponse } from "next/server";
-import fs from "fs";
-import path from "path";
+import { supabase } from "@/lib/supabase";
 
 export const dynamic = "force-dynamic";
 
@@ -8,25 +7,25 @@ export async function GET(req: Request) {
   try {
     const { searchParams } = new URL(req.url);
     const intakeId = searchParams.get("intakeId");
+    const limit = parseInt(searchParams.get("limit") || "100");
     
-    let logPath = path.join(process.cwd(), "synthesis.log");
+    let query = supabase
+      .from("system_logs")
+      .select("*")
+      .order("created_at", { ascending: false })
+      .limit(limit);
+
     if (intakeId) {
-      logPath = path.join(process.cwd(), `synthesis-${intakeId}.log`);
+      query = query.eq("intake_id", intakeId);
     }
 
-    if (!fs.existsSync(logPath)) {
-      // Fallback check for old logs during transition
-      const oldLogPath = path.join(process.cwd(), "manifest.log");
-      if (fs.existsSync(oldLogPath)) logPath = oldLogPath;
-      else return NextResponse.json({ logs: "No logs found yet." });
-    }
+    const { data: logs, error } = await query;
 
-    const content = fs.readFileSync(logPath, "utf-8");
-    // Get last 100 lines for more context
-    const lines = content.split("\n").slice(-100).join("\n");
+    if (error) throw error;
 
-    return NextResponse.json({ logs: lines });
+    return NextResponse.json({ logs });
   } catch (error) {
-    return NextResponse.json({ error: "Failed to read logs" }, { status: 500 });
+    console.error("Failed to fetch logs:", error);
+    return NextResponse.json({ error: "Failed to fetch logs" }, { status: 500 });
   }
 }

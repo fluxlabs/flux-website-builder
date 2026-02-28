@@ -1,0 +1,94 @@
+.container {
+  min-height: 100vh;
+  background: #111;
+  color: #fff;
+  font-family: 'Times New Roman', serif;
+}
+
+.nav {
+  padding: 2rem 5%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.logo {
+  font-size: 1.5rem;
+  letter-spacing: 0.2rem;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
+.hero {
+  padding: 12rem 5%;
+  background: linear-gradient(to right, #111 40%, transparent 100%), url('https://images.unsplash.com/photo-1589829545856-d10d557cf95f?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80');
+  background-size: cover;
+  background-position: center;
+}
+
+.hero h1 {
+  font-size: 5rem;
+  font-weight: 700;
+  margin-bottom: 2rem;
+  max-width: 800px;
+}
+
+.hero p {
+  font-size: 1.5rem;
+  max-width: 600px;
+  opacity: 0.6;
+  margin-bottom: 4rem;
+  font-family: 'Inter', sans-serif;
+}
+
+.cta {
+  background: transparent;
+  color: #fff;
+  border: 1px solid #fff;
+  padding: 1.25rem 3rem;
+  font-family: 'Inter', sans-serif;
+  text-transform: uppercase;
+  font-weight: 700;
+  letter-spacing: 0.1rem;
+  text-decoration: none;
+  transition: all 0.3s;
+}
+
+.cta:hover {
+  background: #fff;
+  color: #000;
+}
+
+.practiceAreas {
+  padding: 10rem 5%;
+  background: #0a0a0a;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 3rem;
+}
+
+.areaCard {
+  padding: 4rem;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  transition: all 0.3s;
+}
+
+.areaCard:hover {
+  background: rgba(255, 255, 255, 0.02);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.areaCard h3 {
+  font-size: 1.75rem;
+  margin-bottom: 1.5rem;
+}
+
+.areaCard p {
+  opacity: 0.5;
+  line-height: 1.7;
+  font-family: 'Inter', sans-serif;
+}

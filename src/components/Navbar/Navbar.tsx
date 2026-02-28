@@ -11,6 +11,8 @@ export default function Navbar() {
         <div className={styles.links}>
           <Link href="#pricing">Pricing</Link>
           <Link href="#portfolio">Portfolio</Link>
+          <Link href="/faq">FAQ</Link>
+          <Link href="/contact">Contact</Link>
           <Link href="/intake" className={styles.stickyCta}>Start Your Build</Link>
         </div>
       </div>

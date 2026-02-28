@@ -1,0 +1,77 @@
+.container {
+  min-height: 100vh;
+  background: #fafaf9;
+  color: #1c1917;
+  font-family: serif;
+}
+
+.nav {
+  display: flex;
+  justify-content: center;
+  padding: 3rem;
+  border-bottom: 1px solid #e7e5e4;
+}
+
+.logo {
+  font-size: 2rem;
+  letter-spacing: 0.5rem;
+  text-transform: uppercase;
+  font-weight: 300;
+}
+
+.hero {
+  padding: 10rem 10%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 5rem;
+  align-items: center;
+}
+
+.heroContent h1 {
+  font-size: 4.5rem;
+  font-weight: 300;
+  line-height: 1.1;
+  margin-bottom: 2.5rem;
+}
+
+.heroContent p {
+  font-size: 1.25rem;
+  line-height: 1.8;
+  color: #57534e;
+  margin-bottom: 3rem;
+}
+
+.cta {
+  display: inline-block;
+  padding: 1rem 3rem;
+  border: 1px solid #1c1917;
+  text-decoration: none;
+  color: #1c1917;
+  text-transform: uppercase;
+  letter-spacing: 0.2rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  transition: all 0.4s;
+}
+
+.cta:hover {
+  background: #1c1917;
+  color: #fff;
+}
+
+.imagePlaceholder {
+  aspect-ratio: 4/5;
+  background: #e7e5e4;
+  position: relative;
+}
+
+.imagePlaceholder::after {
+  content: "CURATED SPACE";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 0.75rem;
+  letter-spacing: 0.3rem;
+  color: #a8a29e;
+}

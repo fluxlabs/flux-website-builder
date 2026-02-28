@@ -10,20 +10,43 @@ export default function Pricing() {
       name: "Starter",
       description: "Perfect for single landing pages.",
       price: "$1,499",
-      features: ["3-Page Website", "48-Hour Delivery", "Responsive Design", "Basic SEO Optimization"],
+      features: [
+        "3-Page Next.js Site", 
+        "48-Hour Rapid Delivery", 
+        "AI Content Synthesis", 
+        "Interactive Launch Guide",
+        "SSL & Hosting Setup",
+        "Responsive Mobile Design"
+      ],
     },
     {
       name: "Growth",
       description: "Scale your business with speed.",
       price: "$2,999",
-      features: ["7-Page Website", "72-Hour Delivery", "Advanced SEO Pack", "Content Management System", "Custom Contact Flows"],
+      features: [
+        "7-Page Custom Site", 
+        "72-Hour Delivery Promise", 
+        "Advanced SEO Strategy", 
+        "Analytics Dashboard", 
+        "Custom Contact Flows",
+        "Priority AI Build Track",
+        "CMS Integration Ready"
+      ],
       isPopular: true,
     },
     {
       name: "Pro",
       description: "Custom solutions for innovators.",
       price: "$4,999",
-      features: ["Unlimited Pages", "Priority Build Track", "Custom Web Apps", "E-commerce Integration", "Premium Designs"],
+      features: [
+        "Custom Page Count", 
+        "Full API Integrations", 
+        "E-commerce Readiness", 
+        "White-Labeling Options",
+        "Premium Asset Generation",
+        "VIP Implementation Support",
+        "Custom Domain Management"
+      ],
     },
   ];
 

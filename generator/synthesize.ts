@@ -1,7 +1,7 @@
 import { generateSiteData } from "./engine.ts";
 import { buildSite } from "./build.ts";
 import { execSync } from "child_process";
-import { supabase } from "../src/lib/supabase.ts";
+import { supabase, logEvent } from "../src/lib/supabase.ts";
 import { resend } from "../src/lib/resend.ts";
 import { createGitHubRepo, pushToGitHub, deployToVercel, slugify } from "./deploy.ts";
 import fs from "fs";
@@ -24,7 +24,11 @@ async function synthesize(intakeId: string) {
 
   try {
     console.log(`--- [SYNTHESIZING VISION: ${intakeId}] ---`);
-    console.log(`Client: ${intake.name} (${intake.email})`);
+    await logEvent({
+      intakeId,
+      category: 'AI_GEN',
+      message: `Starting synthesis for ${intake.business_name || 'unknown'}`
+    });
     
     // Clean up local builds folder
     try {
@@ -40,10 +44,19 @@ async function synthesize(intakeId: string) {
 
     // 1. Generate Site Data (LLM logic)
     let siteData = await generateSiteData(intakeId);
-    console.log("Vision Generated:", siteData.pages?.[0]?.hero?.headline || siteData.siteTitle);
+    await logEvent({
+      intakeId,
+      category: 'AI_GEN',
+      message: `Vision Generated: ${siteData.siteTitle}`
+    });
 
     // 2. Build the Next.js Project locally
     let buildDir = await buildSite(intakeId, siteData);
+    await logEvent({
+      intakeId,
+      category: 'AI_GEN',
+      message: `Project scaffolding built in ${buildDir}`
+    });
     
     // Force isolation to prevent parent node_modules/lockfile interference
     await supabase.from("intakes").update({ status: "ai_generating" }).eq("id", intakeId);
@@ -51,6 +64,7 @@ async function synthesize(intakeId: string) {
 
     // 3. Dry-Run Compilation Check
     console.log("Installing dependencies in build directory...");
+    await logEvent({ intakeId, category: 'AI_GEN', message: 'Installing dependencies...' });
     try {
       execSync(`npm install --no-package-lock --legacy-peer-deps`, { 
         cwd: buildDir, 
@@ -58,6 +72,7 @@ async function synthesize(intakeId: string) {
       });
       
       console.log("Compilation Check...");
+      await logEvent({ intakeId, category: 'AI_GEN', message: 'Running dry-run build check...' });
       execSync(`npm run build`, { 
         cwd: buildDir, 
         stdio: "inherit",
@@ -70,8 +85,16 @@ async function synthesize(intakeId: string) {
           NODE_OPTIONS: ""
         }
       });
+      await logEvent({ intakeId, category: 'AI_GEN', message: 'Compilation check passed.' });
     } catch (error: any) {
       console.error("Dry-run build failed. Aborting deployment.");
+      await logEvent({ 
+        intakeId, 
+        level: 'ERROR', 
+        category: 'AI_GEN', 
+        message: 'Dry-run build failed',
+        metadata: { error: error.message }
+      });
       await supabase.from("intakes").update({ status: "new" }).eq("id", intakeId);
       
       // Notify Admin of failure
@@ -86,18 +109,27 @@ async function synthesize(intakeId: string) {
 
     // 4. Automated Deployment
     console.log("--- [STARTING AUTOMATED DEPLOYMENT] ---");
+    await logEvent({ intakeId, category: 'DEPLOY', message: 'Provisioning GitHub repository...' });
     const businessSlug = slugify(siteData.siteTitle);
     const repoName = `flux-ai-build-${businessSlug}`;
     const { url: repoUrl, id: repoId } = await createGitHubRepo(repoName);
     
+    await logEvent({ intakeId, category: 'DEPLOY', message: `Pushing code to ${repoUrl}` });
     await pushToGitHub(buildDir, repoUrl);
     
+    await logEvent({ intakeId, category: 'DEPLOY', message: 'Triggering Vercel deployment...' });
     const { url: stagingUrl, deployHook } = await deployToVercel(repoName, siteData.siteTitle, repoId);
 
     const buildTime = Date.now() - startTime;
 
     // 5. Finalize CRM Status
     console.log("--- [SYNTHESIS COMPLETE] ---");
+    await logEvent({ 
+      intakeId, 
+      category: 'DEPLOY', 
+      message: `Synthesis complete and live at ${stagingUrl}`,
+      metadata: { buildTimeMs: buildTime }
+    });
     await supabase.from("intakes").update({ 
       status: "client_review", 
       staging_url: stagingUrl,
@@ -131,8 +163,15 @@ async function synthesize(intakeId: string) {
       console.error("Failed to send success email:", emailErr);
     }
 
-  } catch (error) {
+  } catch (error: any) {
     console.error("Synthesis Error:", error);
+    await logEvent({
+      intakeId,
+      level: 'ERROR',
+      category: 'AI_GEN',
+      message: 'Unexpected synthesis error',
+      metadata: { error: error.message || String(error) }
+    });
     await supabase.from("intakes").update({ status: "new" }).eq("id", intakeId);
   }
 }

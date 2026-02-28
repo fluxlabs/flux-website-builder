@@ -1,0 +1,97 @@
+.container {
+  min-height: 100vh;
+  background: #0a0a0a;
+  color: #fff;
+  font-family: 'Playfair Display', serif;
+}
+
+.nav {
+  padding: 3rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.logo {
+  font-size: 2.5rem;
+  letter-spacing: 0.3rem;
+  text-transform: uppercase;
+}
+
+.hero {
+  height: 90vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 0 10%;
+  background: linear-gradient(to bottom, rgba(0,0,0,0.5), #0a0a0a), url('https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80');
+  background-size: cover;
+  background-position: center;
+}
+
+.hero h1 {
+  font-size: 6rem;
+  margin-bottom: 2rem;
+  line-height: 1;
+}
+
+.hero p {
+  font-size: 1.5rem;
+  max-width: 700px;
+  font-family: 'Inter', sans-serif;
+  opacity: 0.7;
+  margin-bottom: 3rem;
+}
+
+.cta {
+  border: 1px solid #eab308;
+  color: #eab308;
+  padding: 1rem 3rem;
+  text-decoration: none;
+  font-family: 'Inter', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 0.2rem;
+  font-weight: 700;
+  transition: all 0.3s;
+}
+
+.cta:hover {
+  background: #eab308;
+  color: #000;
+}
+
+.menu {
+  padding: 10rem 10%;
+}
+
+.menuGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+}
+
+.menuItem {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  padding-bottom: 1.5rem;
+}
+
+.itemInfo h3 {
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.itemInfo p {
+  font-family: 'Inter', sans-serif;
+  opacity: 0.5;
+  font-size: 0.875rem;
+}
+
+.price {
+  font-size: 1.5rem;
+  color: #eab308;
+}

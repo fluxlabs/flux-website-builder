@@ -1,0 +1,61 @@
+.page {
+  min-height: 100vh;
+  background: #000;
+  color: #fff;
+}
+
+.main {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 10rem 2rem;
+}
+
+.tabs {
+  display: flex;
+  gap: 2rem;
+  margin-bottom: 6rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  padding-bottom: 1rem;
+}
+
+.tabBtn {
+  background: transparent;
+  border: none;
+  color: #444;
+  font-size: 1.25rem;
+  font-weight: 800;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.tabBtn.active {
+  color: #fff;
+}
+
+.content h1 {
+  font-size: 3.5rem;
+  font-weight: 800;
+  margin-bottom: 1rem;
+}
+
+.lastUpdated {
+  color: #444;
+  font-size: 0.875rem;
+  margin-bottom: 4rem;
+}
+
+.section section {
+  margin-bottom: 4rem;
+}
+
+.section h2 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+}
+
+.section p {
+  color: #888;
+  line-height: 1.8;
+  font-size: 1.125rem;
+}

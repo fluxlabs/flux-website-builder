@@ -1,0 +1,154 @@
+.page {
+  min-height: 100vh;
+  background: #000;
+  color: #fff;
+}
+
+.main {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 12rem 2rem;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8rem;
+  align-items: flex-start;
+}
+
+.header h1 {
+  font-size: 5rem;
+  font-weight: 800;
+  letter-spacing: -0.2rem;
+  line-height: 1;
+  margin-bottom: 2.5rem;
+  background: linear-gradient(to bottom, #fff, rgba(255, 255, 255, 0.5));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.header p {
+  font-size: 1.5rem;
+  color: #666;
+  line-height: 1.6;
+  max-width: 500px;
+}
+
+.info {
+  margin-top: 6rem;
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+}
+
+.infoItem label {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  color: #444;
+  letter-spacing: 0.1rem;
+  margin-bottom: 1rem;
+}
+
+.infoItem p {
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin: 0 0 0.5rem 0;
+}
+
+.formSection {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  padding: 4rem;
+  border-radius: 32px;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+}
+
+.formGroup label {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 800;
+  color: #666;
+  text-transform: uppercase;
+  letter-spacing: 0.1rem;
+  margin-bottom: 1rem;
+}
+
+.formGroup input,
+.formGroup select,
+.formGroup textarea {
+  width: 100%;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 1rem 0;
+  font-size: 1.25rem;
+  color: #fff;
+  outline: none;
+  transition: all 0.3s;
+}
+
+.formGroup input:focus,
+.formGroup select:focus,
+.formGroup textarea:focus {
+  border-bottom-color: #fff;
+}
+
+.formGroup textarea {
+  height: 120px;
+  resize: none;
+}
+
+.submitBtn {
+  width: 100%;
+  background: #fff;
+  color: #000;
+  border: none;
+  padding: 1.25rem;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.submitBtn:disabled {
+  opacity: 0.5;
+}
+
+.success {
+  text-align: center;
+  padding: 4rem 0;
+}
+
+.success h2 {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+}
+
+.success p {
+  color: #666;
+  margin-bottom: 2rem;
+}
+
+.resetBtn {
+  background: transparent;
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+@media (max-width: 1024px) {
+  .grid { grid-template-columns: 1fr; gap: 4rem; }
+  .header h1 { font-size: 3.5rem; }
+  .main { padding-top: 8rem; }
+}

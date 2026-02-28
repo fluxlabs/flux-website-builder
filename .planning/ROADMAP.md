@@ -1,62 +1,47 @@
-# Roadmap: Flux Website Builder
+# Roadmap: Milestone 2 - Scaling & Refinement
 
 ## Phases
 
-- [ ] **Phase 1: Foundation & Intake** - Project setup, marketing landing page, and multi-step client intake form.
-- [ ] **Phase 2: AI Generation Pipeline** - Core AI Builder Agent capable of generating valid Next.js code from intake data.
-- [ ] **Phase 3: Vercel Automation** - Programmatic repo creation and automated Vercel deployment to staging URLs.
-- [ ] **Phase 4: Approval & Handover** - Client approval workflow and automated launch guide with DNS instructions.
+- [ ] **Phase 5: Admin Observability** - Building the logs and client management tools.
+- [ ] **Phase 6: Onboarding Overhaul** - Transforming the intake form into a high-conversion wizard.
+- [ ] **Phase 7: Marketing Polish** - Expanding the landing page with pricing, social proof, and SEO.
 
 ## Phase Details
 
-### Phase 1: Foundation & Intake
-**Goal**: Establish the project base and build the intake system for data collection.
-**Depends on**: Nothing
-**Requirements**: SETUP-01, SETUP-02, MKT-01, MKT-02, MKT-03, MKT-04, INTAKE-01, INTAKE-02, INTAKE-03, INTAKE-04, INTAKE-05
+### Phase 5: Admin Observability
+**Goal**: Provide internal visibility into the AI pipeline and client status.
+**Depends on**: Milestone 1
+**Requirements**: ADM-01, ADM-02, ADM-03, ADM-04
 **Success Criteria**:
-  1. Marketing landing page clearly conveys the value proposition.
-  2. Users can complete the multi-step intake form with all required details.
-  3. Form submissions are successfully stored in the database.
-  4. Users receive a confirmation message after submission.
+  1. Admins can view a live log of AI generation steps.
+  2. A "Client List" view exists with filtering and status tracking.
+  3. Admins can manually trigger a rebuild if a generation fails.
 **Plans**: TBD
 
-### Phase 2: AI Generation Pipeline
-**Goal**: Develop the AI Agent that generates professional-grade website code.
-**Depends on**: Phase 1
-**Requirements**: AI-01, AI-02, AI-03, AI-04
+### Phase 6: Onboarding Overhaul
+**Goal**: Create a premium first impression and improve completion rates.
+**Depends on**: Milestone 1
+**Requirements**: WIZ-01, WIZ-02, WIZ-03, WIZ-04
 **Success Criteria**:
-  1. AI Agent generates a functional Next.js project based on a stored intake record.
-  2. AI output passes a local build/compilation check (no syntax/Tailwind errors).
-  3. Generated site layout and styles reflect user preferences (colors, goals).
+  1. Users experience a smooth, animated multi-step wizard.
+  2. Style selection is visual and intuitive.
+  3. Real-time feedback (e.g., name preview) keeps users engaged.
 **Plans**: TBD
 
-### Phase 3: Vercel Automation
-**Goal**: Scale the delivery process by automating repository creation and deployments.
-**Depends on**: Phase 2
-**Requirements**: AUTO-01, AUTO-02, AUTO-03, AUTO-04, HAND-01
+### Phase 7: Marketing Polish
+**Goal**: Increase trust and conversion through better content and SEO.
+**Depends on**: Milestone 1
+**Requirements**: MKT-05, MKT-06, MKT-07, MKT-08
 **Success Criteria**:
-  1. System automatically provisions a new GitHub repository for each intake submission.
-  2. Generated code is automatically pushed to the client repository.
-  3. Vercel deployment is triggered programmatically via API.
-  4. Staging URL is visible in the internal status dashboard.
-**Plans**: TBD
-
-### Phase 4: Approval & Handover
-**Goal**: Finalize the client experience with approval workflows and launch instructions.
-**Depends on**: Phase 3
-**Requirements**: HAND-02, HAND-03, HAND-04, HAND-05
-**Success Criteria**:
-  1. Client can view the staging site and approve the build via a button.
-  2. Approval triggers the generation of an interactive Launch Guide.
-  3. Instructions for DNS pointing (A/CNAME) are clear and visual.
-  4. Client site is successfully live on a custom domain with SSL.
+  1. Pricing page clearly differentiates tiers.
+  2. Testimonials section looks professional and adds social proof.
+  3. Page ranks better/is optimized for relevant keywords.
 **Plans**: TBD
 
 ## Progress Table
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Foundation & Intake | 3/3 | Completed | Feb 26, 2026 |
-| 2. AI Generation Pipeline | 3/3 | Completed | Feb 26, 2026 |
-| 3. Vercel Automation | 3/3 | Completed | Feb 26, 2026 |
-| 4. Approval & Handover | 3/3 | Completed | Feb 26, 2026 |
+| 5. Admin Observability | 0/1 | Not Started | - |
+| 6. Onboarding Overhaul | 0/1 | Not Started | - |
+| 7. Marketing Polish | 0/1 | Not Started | - |
