@@ -91,6 +91,40 @@
   line-height: 1.7;
 }
 
+.extended {
+  padding: 15rem 0;
+  text-align: center;
+}
+
+.extended h2 {
+  font-size: 3.5rem;
+  margin-bottom: 6rem;
+  letter-spacing: -0.1rem;
+}
+
+.featureRow {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 4rem;
+  text-align: left;
+}
+
+.featureBox {
+  border-left: 1px solid rgba(255, 255, 255, 0.1);
+  padding-left: 2rem;
+}
+
+.featureBox h4 {
+  font-size: 1.25rem;
+  margin-bottom: 1rem;
+  color: #0070f3;
+}
+
+.featureBox p {
+  color: #666;
+  line-height: 1.6;
+}
+
 @media (max-width: 1024px) {
   .grid { grid-template-columns: 1fr; }
   .title { font-size: 3rem; }

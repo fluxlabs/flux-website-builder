@@ -43,6 +43,24 @@ export default function EcommerceService() {
             </div>
           </div>
         </section>
+
+        <section className={styles.extended}>
+          <h2>The Commerce Engine.</h2>
+          <div className={styles.featureRow}>
+            <div className={styles.featureBox}>
+              <h4>Inventory Sync</h4>
+              <p>Connect your existing POS or ERP and let Flux handle the data architecture automatically.</p>
+            </div>
+            <div className={styles.featureBox}>
+              <h4>Global Payments</h4>
+              <p>Support for 135+ currencies and local payment methods via automated Stripe/Adyen integration.</p>
+            </div>
+            <div className={styles.featureBox}>
+              <h4>SEO for Products</h4>
+              <p>Structured data and rich snippets synthesized into every product page for maximum visibility.</p>
+            </div>
+          </div>
+        </section>
       </main>
       <Footer />
     </div>

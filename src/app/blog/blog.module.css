@@ -1,0 +1,95 @@
+.page {
+  min-height: 100vh;
+  background: #000;
+  color: #fff;
+}
+
+.main {
+  padding: 10rem 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.hero {
+  text-align: center;
+  margin-bottom: 10rem;
+}
+
+.title {
+  font-size: 5rem;
+  font-weight: 800;
+  letter-spacing: -0.2rem;
+  line-height: 1;
+  margin-bottom: 2.5rem;
+  background: linear-gradient(to bottom, #fff, rgba(255, 255, 255, 0.5));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.subtitle {
+  font-size: 1.5rem;
+  color: #666;
+  max-width: 700px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+.postGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 3rem;
+}
+
+.postCard {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 24px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.postCard:hover {
+  background: rgba(255, 255, 255, 0.04);
+  border-color: rgba(255, 255, 255, 0.1);
+  transform: translateY(-10px);
+}
+
+.postImage {
+  height: 250px;
+  background-size: cover;
+  background-position: center;
+}
+
+.postInfo {
+  padding: 3rem;
+}
+
+.postMeta {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.7rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.1rem;
+  color: #444;
+  margin-bottom: 1.5rem;
+}
+
+.postInfo h3 {
+  font-size: 1.5rem;
+  line-height: 1.4;
+  margin-bottom: 2rem;
+  color: #fff;
+}
+
+.readMore {
+  color: #0070f3;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 0.875rem;
+}
+
+@media (max-width: 1024px) {
+  .postGrid { grid-template-columns: 1fr; }
+  .title { font-size: 3rem; }
+}

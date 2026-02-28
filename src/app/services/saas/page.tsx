@@ -43,6 +43,24 @@ export default function SaasService() {
             </div>
           </div>
         </section>
+
+        <section className={styles.extended}>
+          <h2>Synthesize Your Scale.</h2>
+          <div className={styles.featureRow}>
+            <div className={styles.featureBox}>
+              <h4>Auth Architect</h4>
+              <p>Automated setup of complex RBAC and multi-tenant authentication systems.</p>
+            </div>
+            <div className={styles.featureBox}>
+              <h4>Database Schema</h4>
+              <p>Optimized PostgreSQL migrations and types generated from your business requirements.</p>
+            </div>
+            <div className={styles.featureBox}>
+              <h4>API Synthesis</h4>
+              <p>REST or GraphQL architectures synthesized with full documentation and testing suites.</p>
+            </div>
+          </div>
+        </section>
       </main>
       <Footer />
     </div>

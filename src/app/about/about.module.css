@@ -1,0 +1,135 @@
+.page {
+  min-height: 100vh;
+  background: #000;
+  color: #fff;
+}
+
+.main {
+  padding: 10rem 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.hero {
+  text-align: center;
+  margin-bottom: 10rem;
+}
+
+.title {
+  font-size: 5rem;
+  font-weight: 800;
+  letter-spacing: -0.2rem;
+  line-height: 1;
+  margin-bottom: 2.5rem;
+  background: linear-gradient(to bottom, #fff, rgba(255, 255, 255, 0.5));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.subtitle {
+  font-size: 1.5rem;
+  color: #666;
+  max-width: 700px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+.content {
+  margin-bottom: 15rem;
+}
+
+.story {
+  max-width: 800px;
+  margin: 0 auto 10rem;
+}
+
+.story h2 {
+  font-size: 3rem;
+  margin-bottom: 3rem;
+  letter-spacing: -0.1rem;
+}
+
+.story p {
+  font-size: 1.25rem;
+  line-height: 1.8;
+  color: #888;
+  margin-bottom: 2rem;
+}
+
+.valuesGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 3rem;
+}
+
+.valueCard {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  padding: 4rem;
+  border-radius: 32px;
+}
+
+.valueCard h3 {
+  font-size: 1.5rem;
+  margin-bottom: 1.5rem;
+  color: #fff;
+}
+
+.valueCard p {
+  color: #666;
+  line-height: 1.7;
+}
+
+.team {
+  text-align: center;
+}
+
+.team h2 {
+  font-size: 3rem;
+  margin-bottom: 6rem;
+}
+
+.teamGrid {
+  display: flex;
+  justify-content: center;
+  gap: 8rem;
+}
+
+.member {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.avatar {
+  width: 120px;
+  height: 120px;
+  background: linear-gradient(135deg, #333, #111);
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2rem;
+  font-weight: 800;
+  margin-bottom: 2rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.member h4 {
+  font-size: 1.25rem;
+  margin-bottom: 0.5rem;
+}
+
+.member p {
+  color: #0070f3;
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  letter-spacing: 0.1rem;
+}
+
+@media (max-width: 1024px) {
+  .valuesGrid { grid-template-columns: 1fr; }
+  .teamGrid { flex-direction: column; gap: 4rem; }
+  .title { font-size: 3rem; }
+}

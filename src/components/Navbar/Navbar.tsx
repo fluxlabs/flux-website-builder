@@ -9,10 +9,12 @@ export default function Navbar() {
           Flux<span className={styles.logoHighlight}>Webs</span>
         </Link>
         <div className={styles.links}>
-          <Link href="#pricing">Pricing</Link>
-          <Link href="#portfolio">Portfolio</Link>
+          <Link href="/#pricing">Pricing</Link>
+          <Link href="/#portfolio">Portfolio</Link>
+          <Link href="/technology">Technology</Link>
+          <Link href="/blog">Blog</Link>
           <Link href="/faq">FAQ</Link>
-          <Link href="/contact">Contact</Link>
+          <Link href="/about">About</Link>
           <Link href="/intake" className={styles.stickyCta}>Start Your Build</Link>
         </div>
       </div>

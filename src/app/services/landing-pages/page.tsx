@@ -43,6 +43,24 @@ export default function LandingPagesService() {
             </div>
           </div>
         </section>
+
+        <section className={styles.extended}>
+          <h2>Engineered for Inbound.</h2>
+          <div className={styles.featureRow}>
+            <div className={styles.featureBox}>
+              <h4>Dynamic Content</h4>
+              <p>Personalize headings and CTAs based on visitor source or behavior automatically.</p>
+            </div>
+            <div className={styles.featureBox}>
+              <h4>Sub-100ms Load</h4>
+              <p>Serialized assets and edge caching ensure your leads never wait for a page load.</p>
+            </div>
+            <div className={styles.featureBox}>
+              <h4>Smart Forms</h4>
+              <p>Integrated validation and enrichment to ensure every lead is a quality lead.</p>
+            </div>
+          </div>
+        </section>
       </main>
       <Footer />
     </div>
