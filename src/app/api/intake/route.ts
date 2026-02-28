@@ -80,9 +80,17 @@ export async function POST(req: Request) {
                 // Send notification to admin
                 await resend.emails.send({
                     from: "Flux System <system@fluxwebs.net>",
-                    to: ["admin@flux.com"], // Placeholder admin email
-                    subject: `New Intake: ${businessName || currentUrl}`,
-                    html: `<pre>${JSON.stringify(body, null, 2)}</pre>`,
+                    to: ["jeremy@fluxlabs.net"],
+                    subject: `New Build Request: ${businessName || currentUrl}`,
+                    html: `
+                        <h2>New Intake Received</h2>
+                        <p><strong>Client:</strong> ${name} (${email})</p>
+                        <p><strong>Business:</strong> ${businessName || 'N/A'}</p>
+                        <p><strong>Industry:</strong> ${industry || 'N/A'}</p>
+                        <p><strong>Goal:</strong> ${goal}</p>
+                        <hr/>
+                        <pre>${JSON.stringify(body, null, 2)}</pre>
+                    `,
                 });
             } catch (emailError) {
                 console.error("Email Error:", emailError);

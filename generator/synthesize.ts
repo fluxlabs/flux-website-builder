@@ -111,7 +111,7 @@ async function synthesize(intakeId: string, mode: 'full' | 'research' | 'design'
       // Notify Admin of failure
       await resend.emails.send({
         from: "Flux System <system@fluxwebs.net>",
-        to: ["admin@flux.com"],
+        to: ["jeremy@fluxlabs.net"],
         subject: `Build FAILED: ${intake.business_name || intake.email}`,
         html: `<p>Dry-run build failed for intake ${intakeId}. Check synthesis.log for details.</p>`
       });
