@@ -24,16 +24,7 @@
 }
 
 .logoHighlight {
-  background: linear-gradient(
-    45deg,
-    #0070f3 0%,
-    #ff0080 50%,
-    #0070f3 100%
-  );
-  background-size: 200% auto;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  animation: shine 4s linear infinite;
+  color: #d6c5a5;
   margin-left: 2px;
   margin-right: 8px;
 }
@@ -44,7 +35,7 @@
   justify-content: center;
   align-items: center;
   padding: 4rem 2rem;
-  background: radial-gradient(circle at center, rgba(0, 112, 243, 0.05), transparent 70%);
+  background: radial-gradient(circle at center, rgba(214, 197, 165, 0.05), transparent 70%);
 }
 
 .card {
@@ -125,7 +116,7 @@
   font-size: 0.625rem;
   font-weight: 800;
   text-transform: uppercase;
-  color: #444;
+  color: #d6c5a5;
   margin-bottom: 0.5rem;
   letter-spacing: 0.1rem;
 }
@@ -140,7 +131,7 @@
   padding: 0.35rem 0.75rem;
   border-radius: 4px;
   font-family: monospace;
-  color: #0070f3;
+  color: #d6c5a5;
   font-size: 0.875rem;
 }
 
@@ -159,7 +150,7 @@
   background: #fff;
   color: #000;
   padding: 1.25rem 3.5rem;
-  border-radius: 12px;
+  border-radius: 60px;
   font-weight: 800;
   text-decoration: none;
   transition: all 0.3s cubic-bezier(0.19, 1, 0.22, 1);

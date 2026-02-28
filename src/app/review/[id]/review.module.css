@@ -29,16 +29,7 @@
 }
 
 .logoHighlight {
-  background: linear-gradient(
-    45deg,
-    #0070f3 0%,
-    #ff0080 50%,
-    #0070f3 100%
-  );
-  background-size: 200% auto;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  animation: shine 4s linear infinite;
+  color: #d6c5a5;
   margin-left: 2px;
   margin-right: 8px;
 }
@@ -46,6 +37,7 @@
 .clientInfo {
   font-size: 0.875rem;
   color: #888;
+  letter-spacing: 0.05rem;
 }
 
 .main {
@@ -164,18 +156,19 @@
 
 .statusBadge {
   display: inline-block;
-  background: rgba(0, 112, 243, 0.1);
-  color: #0070f3;
+  background: rgba(214, 197, 165, 0.1);
+  color: #d6c5a5;
   padding: 0.35rem 0.75rem;
   border-radius: 4px;
   font-size: 0.75rem;
   font-weight: 800;
+  border: 1px solid rgba(214, 197, 165, 0.1);
 }
 
 .perfValue {
   font-size: 1.5rem;
   font-weight: 800;
-  color: #22c55e;
+  color: #fff;
 }
 
 .approvalArea {
@@ -188,7 +181,7 @@
   color: #000;
   border: none;
   padding: 1.25rem;
-  border-radius: 12px;
+  border-radius: 60px;
   font-size: 1rem;
   font-weight: 800;
   text-transform: uppercase;

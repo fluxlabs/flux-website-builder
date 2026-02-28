@@ -68,12 +68,12 @@ export default function AboutPage() {
             <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
               <Avatar sx={{ width: 120, height: 120, mb: 3, background: 'linear-gradient(135deg, #333, #111)', border: '1px solid rgba(255,255,255,0.1)', fontSize: '2rem', fontWeight: 800 }}>JM</Avatar>
               <Typography variant="h6" sx={{ fontWeight: 700 }}>Jeremy McSpadden</Typography>
-              <Typography sx={{ color: '#0070f3', textTransform: 'uppercase', fontSize: '0.75rem', fontWeight: 800, letterSpacing: '0.1rem' }}>Founder</Typography>
+              <Typography sx={{ color: '#d6c5a5', textTransform: 'uppercase', fontSize: '0.75rem', fontWeight: 800, letterSpacing: '0.2rem' }}>Founder</Typography>
             </Box>
             <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
               <Avatar sx={{ width: 120, height: 120, mb: 3, background: 'linear-gradient(135deg, #333, #111)', border: '1px solid rgba(255,255,255,0.1)', fontSize: '2rem', fontWeight: 800 }}>AI</Avatar>
               <Typography variant="h6" sx={{ fontWeight: 700 }}>Flux AI</Typography>
-              <Typography sx={{ color: '#0070f3', textTransform: 'uppercase', fontSize: '0.75rem', fontWeight: 800, letterSpacing: '0.1rem' }}>Smart Builder</Typography>
+              <Typography sx={{ color: '#d6c5a5', textTransform: 'uppercase', fontSize: '0.75rem', fontWeight: 800, letterSpacing: '0.2rem' }}>Smart Builder</Typography>
             </Box>
           </Stack>
         </Box>

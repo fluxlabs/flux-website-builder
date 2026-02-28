@@ -87,7 +87,7 @@ export default function BlogPage() {
                       <Typography sx={{ fontSize: '0.7rem', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.1rem', color: '#444' }}>{post.date}</Typography>
                     </Box>
                     <Typography variant="h5" sx={{ fontWeight: 700, mb: 3, color: '#fff', lineHeight: 1.4 }}>{post.title}</Typography>
-                    <MuiLink component={Link} href="#" sx={{ color: '#0070f3', textDecoration: 'none', fontWeight: 700, fontSize: '0.875rem', '&:hover': { textDecoration: 'underline' } }}>
+                    <MuiLink component={Link} href="#" sx={{ color: '#d6c5a5', textDecoration: 'none', fontWeight: 700, fontSize: '0.875rem', '&:hover': { textDecoration: 'underline' } }}>
                       Read Article →
                     </MuiLink>
                   </CardContent>

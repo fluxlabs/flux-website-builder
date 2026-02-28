@@ -188,18 +188,40 @@ function IntakeContent() {
 
   return (
     <Box sx={{ minHeight: '100vh', background: '#000', color: '#fff', position: 'relative', overflow: 'hidden' }}>
-      <Box sx={{ position: 'fixed', inset: 0, background: 'radial-gradient(circle at 10% 10%, rgba(255, 255, 255, 0.03), transparent 40%), radial-gradient(circle at 90% 90%, rgba(255, 255, 255, 0.03), transparent 40%)', zIndex: 0 }} />
+      {/* Cinematic Grain Overlay */}
+      <Box sx={{
+        position: 'absolute',
+        inset: 0,
+        opacity: 0.03,
+        pointerEvents: 'none',
+        backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`,
+        zIndex: 1
+      }} />
 
-      <Container maxWidth="lg" sx={{ position: 'relative', zIndex: 1 }}>
+      <Box sx={{ position: 'fixed', inset: 0, background: 'radial-gradient(circle at 10% 10%, rgba(214, 197, 165, 0.03), transparent 40%), radial-gradient(circle at 90% 90%, rgba(214, 197, 165, 0.03), transparent 40%)', zIndex: 0 }} />
+
+      <Container maxWidth="lg" sx={{ position: 'relative', zIndex: 2 }}>
         <Box component="header" sx={{ py: 4, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-          <Typography variant="h5" component={Link} href="/" sx={{ fontWeight: 900, color: '#fff', textDecoration: 'none', letterSpacing: '-0.05rem' }}>
-            Flux<Box component="span" sx={{ background: 'linear-gradient(45deg, #0070f3 0%, #ff0080 50%, #0070f3 100%)', backgroundSize: '200% auto', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', ml: '2px' }}>Webs</Box>
+          <Typography 
+            variant="h6" 
+            component={Link} 
+            href="/" 
+            sx={{ 
+              fontWeight: 900, 
+              color: '#fff', 
+              textDecoration: 'none',
+              letterSpacing: '0.2rem',
+              textTransform: 'uppercase',
+              fontSize: '1rem'
+            }}
+          >
+            Flux<Box component="span" sx={{ color: '#d6c5a5' }}>.</Box>
           </Typography>
           <Box sx={{ width: 200 }}>
-            <Typography variant="caption" sx={{ color: '#444', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.1rem', mb: 1, display: 'block' }}>
+            <Typography variant="caption" sx={{ color: '#666', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.15rem', mb: 1, display: 'block' }}>
               Progress {step} of {totalSteps}
             </Typography>
-            <LinearProgress variant="determinate" value={(step / totalSteps) * 100} sx={{ height: 2, bgcolor: 'rgba(255,255,255,0.05)', '& .MuiLinearProgress-bar': { bgcolor: '#fff' } }} />
+            <LinearProgress variant="determinate" value={(step / totalSteps) * 100} sx={{ height: 2, bgcolor: 'rgba(255,255,255,0.05)', '& .MuiLinearProgress-bar': { bgcolor: '#d6c5a5' } }} />
           </Box>
         </Box>
 
@@ -207,13 +229,13 @@ function IntakeContent() {
           <AnimatePresence mode="wait">
             {step === 1 && (
               <MotionBox key="step1" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} transition={{ duration: 0.6 }} sx={{ width: '100%' }}>
-                <Typography variant="h2" sx={{ fontWeight: 800, mb: 6, textAlign: 'center', letterSpacing: '-0.15rem' }}>What is the main goal of your site?</Typography>
+                <Typography variant="h2" sx={{ fontWeight: 800, mb: 6, textAlign: 'center', letterSpacing: '-0.1rem', fontSize: { xs: '2.5rem', md: '4rem' } }}>What is the main goal of your site?</Typography>
                 <Grid container spacing={3}>
                   {GOAL_OPTIONS.map(g => (
                     <Grid size={{ xs: 12, sm: 6 }} key={g.id}>
                       <Card onClick={() => { setFormData(prev => ({ ...prev, goal: g.id })); setTimeout(nextStep, 400); }} sx={{ cursor: 'pointer', background: formData.goal === g.id ? '#fff' : 'rgba(255,255,255,0.02)', color: formData.goal === g.id ? '#000' : '#fff', border: '1px solid rgba(255,255,255,0.05)', borderRadius: '32px', transition: 'all 0.3s ease', '&:hover': { transform: 'translateY(-8px)', background: formData.goal === g.id ? '#fff' : 'rgba(255,255,255,0.04)' } }}>
                         <CardContent sx={{ p: 4, display: 'flex', alignItems: 'center', gap: 3 }}>
-                          <Box sx={{ color: formData.goal === g.id ? '#0055ff' : '#d6c5a5' }}>{g.icon}</Box>
+                          <Box sx={{ color: formData.goal === g.id ? '#000' : '#d6c5a5' }}>{g.icon}</Box>
                           <Box><Typography variant="h5" sx={{ fontWeight: 800 }}>{g.label}</Typography><Typography variant="body2" sx={{ opacity: 0.6 }}>{g.desc}</Typography></Box>
                         </CardContent>
                       </Card>
@@ -225,35 +247,36 @@ function IntakeContent() {
 
             {step === 2 && (
               <MotionBox key="step2" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} sx={{ width: '100%', maxWidth: 800, mx: 'auto' }}>
-                <Typography variant="h2" sx={{ fontWeight: 800, mb: 6, textAlign: 'center' }}>Let's start with the basics</Typography>
+                <Typography variant="h2" sx={{ fontWeight: 800, mb: 6, textAlign: 'center', letterSpacing: '-0.1rem', fontSize: { xs: '2.5rem', md: '4rem' } }}>Let's start with the basics</Typography>
                 <Grid container spacing={4}>
-                  <Grid size={{ xs: 12 }}><TextField fullWidth label="Your Name" name="name" value={formData.name} onChange={handleChange} variant="standard" InputLabelProps={{ sx: { color: '#444' } }} inputProps={{ sx: { fontSize: '1.5rem', py: 2, color: '#fff' } }} sx={{ '& .MuiInput-underline:before': { borderBottomColor: 'rgba(255,255,255,0.1)' } }} /></Grid>
-                  <Grid size={{ xs: 12, sm: 6 }}><TextField fullWidth label="Email Address" type="email" name="email" value={formData.email} onChange={handleChange} variant="standard" InputLabelProps={{ sx: { color: '#444' } }} inputProps={{ sx: { fontSize: '1.5rem', py: 2, color: '#fff' } }} sx={{ '& .MuiInput-underline:before': { borderBottomColor: 'rgba(255,255,255,0.1)' } }} /></Grid>
-                  <Grid size={{ xs: 12, sm: 6 }}><TextField fullWidth label="Phone Number" name="phone" value={formData.phone} onChange={handleChange} variant="standard" InputLabelProps={{ sx: { color: '#444' } }} inputProps={{ sx: { fontSize: '1.5rem', py: 2, color: '#fff' } }} sx={{ '& .MuiInput-underline:before': { borderBottomColor: 'rgba(255,255,255,0.1)' } }} /></Grid>
+                  <Grid size={{ xs: 12 }}><TextField fullWidth label="Your Name" name="name" value={formData.name} onChange={handleChange} variant="standard" InputLabelProps={{ sx: { color: '#666' } }} inputProps={{ sx: { fontSize: '1.5rem', py: 2, color: '#fff' } }} sx={{ '& .MuiInput-underline:before': { borderBottomColor: 'rgba(255,255,255,0.1)' }, '& .MuiInput-underline:hover:not(.Mui-disabled):before': { borderBottomColor: '#d6c5a5' }, '& .MuiInput-underline:after': { borderBottomColor: '#d6c5a5' } }} /></Grid>
+                  <Grid size={{ xs: 12, sm: 6 }}><TextField fullWidth label="Email Address" type="email" name="email" value={formData.email} onChange={handleChange} variant="standard" InputLabelProps={{ sx: { color: '#666' } }} inputProps={{ sx: { fontSize: '1.5rem', py: 2, color: '#fff' } }} sx={{ '& .MuiInput-underline:before': { borderBottomColor: 'rgba(255,255,255,0.1)' }, '& .MuiInput-underline:hover:not(.Mui-disabled):before': { borderBottomColor: '#d6c5a5' }, '& .MuiInput-underline:after': { borderBottomColor: '#d6c5a5' } }} /></Grid>
+                  <Grid size={{ xs: 12, sm: 6 }}><TextField fullWidth label="Phone Number" name="phone" value={formData.phone} onChange={handleChange} variant="standard" InputLabelProps={{ sx: { color: '#666' } }} inputProps={{ sx: { fontSize: '1.5rem', py: 2, color: '#fff' } }} sx={{ '& .MuiInput-underline:before': { borderBottomColor: 'rgba(255,255,255,0.1)' }, '& .MuiInput-underline:hover:not(.Mui-disabled):before': { borderBottomColor: '#d6c5a5' }, '& .MuiInput-underline:after': { borderBottomColor: '#d6c5a5' } }} /></Grid>
                 </Grid>
                 <Box sx={{ mt: 8 }}>
-                  <Typography variant="overline" sx={{ color: '#444', fontWeight: 800, mb: 2, display: 'block' }}>Do you already have a website?</Typography>
+                  <Typography variant="overline" sx={{ color: '#d6c5a5', fontWeight: 800, mb: 2, display: 'block', letterSpacing: '0.2rem' }}>Do you already have a website?</Typography>
                   <Stack direction="row" spacing={3}>
-                    <Button fullWidth variant="outlined" onClick={() => setFormData(p => ({ ...p, hasWebsite: true }))} sx={{ py: 3, borderRadius: '20px', border: '1px solid rgba(255,255,255,0.1)', color: formData.hasWebsite === true ? '#000' : '#fff', bgcolor: formData.hasWebsite === true ? '#fff' : 'transparent', '&:hover': { bgcolor: formData.hasWebsite === true ? '#fff' : 'rgba(255,255,255,0.05)' } }}>Yes, update it</Button>
-                    <Button fullWidth variant="outlined" onClick={() => setFormData(p => ({ ...p, hasWebsite: false }))} sx={{ py: 3, borderRadius: '20px', border: '1px solid rgba(255,255,255,0.1)', color: formData.hasWebsite === false ? '#000' : '#fff', bgcolor: formData.hasWebsite === false ? '#fff' : 'transparent', '&:hover': { bgcolor: formData.hasWebsite === false ? '#fff' : 'rgba(255,255,255,0.05)' } }}>No, build a new one</Button>
+                    <Button fullWidth variant="outlined" onClick={() => setFormData(p => ({ ...p, hasWebsite: true }))} sx={{ py: 3, borderRadius: '20px', border: '1px solid rgba(255,255,255,0.1)', color: formData.hasWebsite === true ? '#000' : '#fff', bgcolor: formData.hasWebsite === true ? '#fff' : 'transparent', '&:hover': { bgcolor: formData.hasWebsite === true ? '#fff' : 'rgba(255,255,255,0.05)', borderColor: '#d6c5a5' } }}>Yes, update it</Button>
+                    <Button fullWidth variant="outlined" onClick={() => setFormData(p => ({ ...p, hasWebsite: false }))} sx={{ py: 3, borderRadius: '20px', border: '1px solid rgba(255,255,255,0.1)', color: formData.hasWebsite === false ? '#000' : '#fff', bgcolor: formData.hasWebsite === false ? '#fff' : 'transparent', '&:hover': { bgcolor: formData.hasWebsite === false ? '#fff' : 'rgba(255,255,255,0.05)', borderColor: '#d6c5a5' } }}>No, build a new one</Button>
                   </Stack>
                 </Box>
+
               </MotionBox>
             )}
 
             {step === 3 && (
               <MotionBox key="step3" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} sx={{ width: '100%', maxWidth: 800, mx: 'auto' }}>
-                <Typography variant="h2" sx={{ fontWeight: 800, mb: 6, textAlign: 'center' }}>{formData.hasWebsite ? "Your Current Website" : "About Your Business"}</Typography>
+                <Typography variant="h2" sx={{ fontWeight: 800, mb: 6, textAlign: 'center', letterSpacing: '-0.1rem', fontSize: { xs: '2.5rem', md: '4rem' } }}>{formData.hasWebsite ? "Your Current Website" : "About Your Business"}</Typography>
                 {formData.hasWebsite ? (
                   <Stack spacing={4}>
-                    <TextField fullWidth label="Website Address (URL)" name="currentUrl" value={formData.currentUrl} onChange={handleChange} variant="standard" inputProps={{ sx: { fontSize: '1.5rem', py: 2, color: '#fff' } }} />
-                    <TextField fullWidth label="Business Name" name="businessName" value={formData.businessName} onChange={handleChange} variant="standard" inputProps={{ sx: { fontSize: '1.5rem', py: 2, color: '#fff' } }} />
+                    <TextField fullWidth label="Website Address (URL)" name="currentUrl" value={formData.currentUrl} onChange={handleChange} variant="standard" InputLabelProps={{ sx: { color: '#666' } }} inputProps={{ sx: { fontSize: '1.5rem', py: 2, color: '#fff' } }} sx={{ '& .MuiInput-underline:before': { borderBottomColor: 'rgba(255,255,255,0.1)' }, '& .MuiInput-underline:hover:not(.Mui-disabled):before': { borderBottomColor: '#d6c5a5' }, '& .MuiInput-underline:after': { borderBottomColor: '#d6c5a5' } }} />
+                    <TextField fullWidth label="Business Name" name="businessName" value={formData.businessName} onChange={handleChange} variant="standard" InputLabelProps={{ sx: { color: '#666' } }} inputProps={{ sx: { fontSize: '1.5rem', py: 2, color: '#fff' } }} sx={{ '& .MuiInput-underline:before': { borderBottomColor: 'rgba(255,255,255,0.1)' }, '& .MuiInput-underline:hover:not(.Mui-disabled):before': { borderBottomColor: '#d6c5a5' }, '& .MuiInput-underline:after': { borderBottomColor: '#d6c5a5' } }} />
                   </Stack>
                 ) : (
                   <Grid container spacing={4}>
-                    <Grid size={{ xs: 12 }}><TextField fullWidth label="Business Name" name="businessName" value={formData.businessName} onChange={handleChange} variant="standard" inputProps={{ sx: { fontSize: '1.5rem', py: 2, color: '#fff' } }} /></Grid>
-                    <Grid size={{ xs: 12, sm: 6 }}><TextField fullWidth label="What kind of business?" name="industry" value={formData.industry} onChange={handleChange} variant="standard" inputProps={{ sx: { fontSize: '1.5rem', py: 2, color: '#fff' } }} /></Grid>
-                    <Grid size={{ xs: 12, sm: 6 }}><TextField fullWidth label="City & State" name="location" value={formData.location} onChange={handleChange} variant="standard" inputProps={{ sx: { fontSize: '1.5rem', py: 2, color: '#fff' } }} /></Grid>
+                    <Grid size={{ xs: 12 }}><TextField fullWidth label="Business Name" name="businessName" value={formData.businessName} onChange={handleChange} variant="standard" InputLabelProps={{ sx: { color: '#666' } }} inputProps={{ sx: { fontSize: '1.5rem', py: 2, color: '#fff' } }} sx={{ '& .MuiInput-underline:before': { borderBottomColor: 'rgba(255,255,255,0.1)' }, '& .MuiInput-underline:hover:not(.Mui-disabled):before': { borderBottomColor: '#d6c5a5' }, '& .MuiInput-underline:after': { borderBottomColor: '#d6c5a5' } }} /></Grid>
+                    <Grid size={{ xs: 12, sm: 6 }}><TextField fullWidth label="What kind of business?" name="industry" value={formData.industry} onChange={handleChange} variant="standard" InputLabelProps={{ sx: { color: '#666' } }} inputProps={{ sx: { fontSize: '1.5rem', py: 2, color: '#fff' } }} sx={{ '& .MuiInput-underline:before': { borderBottomColor: 'rgba(255,255,255,0.1)' }, '& .MuiInput-underline:hover:not(.Mui-disabled):before': { borderBottomColor: '#d6c5a5' }, '& .MuiInput-underline:after': { borderBottomColor: '#d6c5a5' } }} /></Grid>
+                    <Grid size={{ xs: 12, sm: 6 }}><TextField fullWidth label="City & State" name="location" value={formData.location} onChange={handleChange} variant="standard" InputLabelProps={{ sx: { color: '#666' } }} inputProps={{ sx: { fontSize: '1.5rem', py: 2, color: '#fff' } }} sx={{ '& .MuiInput-underline:before': { borderBottomColor: 'rgba(255,255,255,0.1)' }, '& .MuiInput-underline:hover:not(.Mui-disabled):before': { borderBottomColor: '#d6c5a5' }, '& .MuiInput-underline:after': { borderBottomColor: '#d6c5a5' } }} /></Grid>
                   </Grid>
                 )}
               </MotionBox>
@@ -261,19 +284,19 @@ function IntakeContent() {
 
             {step === 4 && (
               <MotionBox key="step4" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} sx={{ width: '100%', maxWidth: 900, mx: 'auto' }}>
-                <Typography variant="h2" sx={{ fontWeight: 800, mb: 6, textAlign: 'center' }}>Pick a style you love</Typography>
+                <Typography variant="h2" sx={{ fontWeight: 800, mb: 6, textAlign: 'center', letterSpacing: '-0.1rem', fontSize: { xs: '2.5rem', md: '4rem' } }}>Pick a style you love</Typography>
                 <Box sx={{ mb: 6 }}>
-                  <Typography variant="overline" sx={{ color: '#444', fontWeight: 800, mb: 2, display: 'block' }}>Business Category</Typography>
+                  <Typography variant="overline" sx={{ color: '#d6c5a5', fontWeight: 800, mb: 2, display: 'block', letterSpacing: '0.2rem' }}>Business Category</Typography>
                   <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 2 }}>
                     {VERTICAL_OPTIONS.map(v => (
-                      <Chip key={v} label={v} onClick={() => setFormData(p => ({ ...p, vertical: v }))} sx={{ py: 3, px: 1, borderRadius: '12px', border: '1px solid rgba(255,255,255,0.1)', bgcolor: formData.vertical === v ? '#fff' : 'transparent', color: formData.vertical === v ? '#000' : '#888', fontWeight: 700, '&:hover': { bgcolor: formData.vertical === v ? '#fff' : 'rgba(255,255,255,0.05)' } }} />
+                      <Chip key={v} label={v} onClick={() => setFormData(p => ({ ...p, vertical: v }))} sx={{ py: 3, px: 1, borderRadius: '12px', border: '1px solid rgba(255,255,255,0.1)', bgcolor: formData.vertical === v ? '#fff' : 'transparent', color: formData.vertical === v ? '#000' : '#888', fontWeight: 700, '&:hover': { bgcolor: formData.vertical === v ? '#fff' : 'rgba(255,255,255,0.05)', borderColor: '#d6c5a5' } }} />
                     ))}
                   </Box>
                 </Box>
                 <Grid container spacing={3}>
                   {LAYOUT_OPTIONS.map(l => (
                     <Grid size={{ xs: 12, sm: 6 }} key={l.id}>
-                      <Card onClick={() => setFormData(p => ({ ...p, layout: l.id }))} sx={{ cursor: 'pointer', background: formData.layout === l.id ? 'rgba(255,255,255,0.05)' : 'transparent', border: formData.layout === l.id ? '1px solid #fff' : '1px solid rgba(255,255,255,0.05)', borderRadius: '24px' }}>
+                      <Card onClick={() => setFormData(p => ({ ...p, layout: l.id }))} sx={{ cursor: 'pointer', background: formData.layout === l.id ? 'rgba(255,255,255,0.05)' : 'transparent', border: formData.layout === l.id ? '1px solid #d6c5a5' : '1px solid rgba(255,255,255,0.05)', borderRadius: '24px', transition: 'all 0.3s ease' }}>
                         <CardContent sx={{ p: 3, display: 'flex', alignItems: 'center', gap: 3 }}>
                           <Box sx={{ width: 60, height: 60, borderRadius: '12px', background: l.gradient, flexShrink: 0 }} />
                           <Box><Typography sx={{ fontWeight: 800, color: '#fff' }}>{l.label}</Typography><Typography variant="caption" sx={{ color: '#666' }}>{l.desc}</Typography></Box>
@@ -287,14 +310,14 @@ function IntakeContent() {
 
             {step === 5 && (
               <MotionBox key="step5" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} sx={{ width: '100%', maxWidth: 800, mx: 'auto' }}>
-                <Typography variant="h2" sx={{ fontWeight: 800, mb: 6, textAlign: 'center' }}>Do you have a logo?</Typography>
-                <Box onClick={() => fileInputRef.current?.click()} sx={{ height: 300, border: '2px dashed rgba(255,255,255,0.1)', borderRadius: '32px', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', transition: 'all 0.3s', '&:hover': { borderColor: '#fff', bgcolor: 'rgba(255,255,255,0.02)' } }}>
+                <Typography variant="h2" sx={{ fontWeight: 800, mb: 6, textAlign: 'center', letterSpacing: '-0.1rem', fontSize: { xs: '2.5rem', md: '4rem' } }}>Do you have a logo?</Typography>
+                <Box onClick={() => fileInputRef.current?.click()} sx={{ height: 300, border: '2px dashed rgba(255,255,255,0.1)', borderRadius: '32px', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', transition: 'all 0.3s', '&:hover': { borderColor: '#d6c5a5', bgcolor: 'rgba(214, 197, 165, 0.02)' } }}>
                   <input type="file" ref={fileInputRef} onChange={handleLogoUpload} accept="image/*" style={{ display: 'none' }} />
-                  {formData.logoPreview ? <img src={formData.logoPreview} style={{ height: 120, objectFit: 'contain' }} alt="Logo" /> : <Stack alignItems="center" spacing={2}><Upload size={48} color="#444" /><Typography sx={{ color: '#444', fontWeight: 700 }}>Click to upload your logo</Typography><Typography variant="caption" sx={{ color: '#333' }}>No logo? We can help you build one later.</Typography></Stack>}
+                  {formData.logoPreview ? <img src={formData.logoPreview} style={{ height: 120, objectFit: 'contain' }} alt="Logo" /> : <Stack alignItems="center" spacing={2}><Upload size={48} color="#666" /><Typography sx={{ color: '#666', fontWeight: 700 }}>Click to upload your logo</Typography><Typography variant="caption" sx={{ color: '#444' }}>No logo? We can help you build one later.</Typography></Stack>}
                 </Box>
                 {formData.extractedColors.length > 0 && (
                   <Box sx={{ mt: 6, textAlign: 'center' }}>
-                    <Typography variant="overline" sx={{ color: '#444', fontWeight: 800, mb: 2, display: 'block' }}>Pick a brand color</Typography>
+                    <Typography variant="overline" sx={{ color: '#d6c5a5', fontWeight: 800, mb: 2, display: 'block', letterSpacing: '0.2rem' }}>Pick a brand color</Typography>
                     <Stack direction="row" spacing={2} justifyContent="center">
                       {formData.extractedColors.map(c => (
                         <Box key={c} onClick={() => setFormData(p => ({ ...p, colors: c }))} sx={{ width: 40, height: 40, borderRadius: '50%', bgcolor: c, cursor: 'pointer', border: formData.colors === c ? '3px solid #fff' : 'none', transform: formData.colors === c ? 'scale(1.2)' : 'none', transition: 'all 0.2s' }} />
@@ -307,12 +330,12 @@ function IntakeContent() {
 
             {step === 6 && (
               <MotionBox key="step6" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} sx={{ width: '100%', maxWidth: 800, mx: 'auto' }}>
-                <Typography variant="h2" sx={{ fontWeight: 800, mb: 6, textAlign: 'center' }}>Inspiration</Typography>
+                <Typography variant="h2" sx={{ fontWeight: 800, mb: 6, textAlign: 'center', letterSpacing: '-0.1rem', fontSize: { xs: '2.5rem', md: '4rem' } }}>Inspiration</Typography>
                 <Stack spacing={6}>
-                  <TextField fullWidth multiline rows={2} label="List 2-3 websites you like" name="links" value={formData.links} onChange={handleChange} variant="standard" placeholder="e.g. apple.com, or a competitor's site" inputProps={{ sx: { fontSize: '1.25rem', color: '#fff' } }} />
-                  <TextField fullWidth label="Your Social Media links" name="socialLinks" value={formData.socialLinks} onChange={handleChange} variant="standard" placeholder="Facebook, Instagram, LinkedIn" inputProps={{ sx: { fontSize: '1.25rem', color: '#fff' } }} />
+                  <TextField fullWidth multiline rows={2} label="List 2-3 websites you like" name="links" value={formData.links} onChange={handleChange} variant="standard" placeholder="e.g. apple.com, or a competitor's site" InputLabelProps={{ sx: { color: '#666' } }} inputProps={{ sx: { fontSize: '1.25rem', color: '#fff' } }} sx={{ '& .MuiInput-underline:before': { borderBottomColor: 'rgba(255,255,255,0.1)' }, '& .MuiInput-underline:hover:not(.Mui-disabled):before': { borderBottomColor: '#d6c5a5' }, '& .MuiInput-underline:after': { borderBottomColor: '#d6c5a5' } }} />
+                  <TextField fullWidth label="Your Social Media links" name="socialLinks" value={formData.socialLinks} onChange={handleChange} variant="standard" placeholder="Facebook, Instagram, LinkedIn" InputLabelProps={{ sx: { color: '#666' } }} inputProps={{ sx: { fontSize: '1.25rem', color: '#fff' } }} sx={{ '& .MuiInput-underline:before': { borderBottomColor: 'rgba(255,255,255,0.1)' }, '& .MuiInput-underline:hover:not(.Mui-disabled):before': { borderBottomColor: '#d6c5a5' }, '& .MuiInput-underline:after': { borderBottomColor: '#d6c5a5' } }} />
                   <Box>
-                    <Typography variant="overline" sx={{ color: '#444', fontWeight: 800, mb: 2, display: 'block' }}>Or pick a color you like</Typography>
+                    <Typography variant="overline" sx={{ color: '#d6c5a5', fontWeight: 800, mb: 2, display: 'block', letterSpacing: '0.2rem' }}>Or pick a color you like</Typography>
                     <Stack direction="row" spacing={4} alignItems="center">
                       <input type="color" name="colors" value={formData.colors} onChange={handleChange} style={{ width: 80, height: 80, border: 'none', background: 'none', cursor: 'pointer' }} />
                       <Typography sx={{ fontSize: '3rem', fontWeight: 900 }}>{formData.colors}</Typography>
@@ -324,16 +347,16 @@ function IntakeContent() {
 
             {step === 7 && (
               <MotionBox key="step7" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} sx={{ width: '100%', maxWidth: 800, mx: 'auto' }}>
-                <Typography variant="h2" sx={{ fontWeight: 800, mb: 6, textAlign: 'center' }}>What pages do you need?</Typography>
+                <Typography variant="h2" sx={{ fontWeight: 800, mb: 6, textAlign: 'center', letterSpacing: '-0.1rem', fontSize: { xs: '2.5rem', md: '4rem' } }}>What pages do you need?</Typography>
                 <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 2, justifyContent: 'center', mb: 6 }}>
                   {["Home", "About Us", "Services", "Pricing", "Contact", "Blog", "FAQ"].map((p) => (
-                    <Chip key={p} label={p} onClick={() => handlePageToggle(p)} sx={{ py: 4, px: 2, fontSize: '1.25rem', borderRadius: '20px', border: '1px solid rgba(255,255,255,0.1)', bgcolor: formData.pages.includes(p) ? '#fff' : 'transparent', color: formData.pages.includes(p) ? '#000' : '#888', fontWeight: 800, '&:hover': { bgcolor: formData.pages.includes(p) ? '#fff' : 'rgba(255,255,255,0.05)' } }} />
+                    <Chip key={p} label={p} onClick={() => handlePageToggle(p)} sx={{ py: 4, px: 2, fontSize: '1.25rem', borderRadius: '20px', border: '1px solid rgba(255,255,255,0.1)', bgcolor: formData.pages.includes(p) ? '#fff' : 'transparent', color: formData.pages.includes(p) ? '#000' : '#888', fontWeight: 800, '&:hover': { bgcolor: formData.pages.includes(p) ? '#fff' : 'rgba(255,255,255,0.05)', borderColor: '#d6c5a5' } }} />
                   ))}
                 </Box>
                 <Stack spacing={4}>
-                  <TextField fullWidth multiline rows={2} label="List your services or products" name="servicesList" value={formData.servicesList} onChange={handleChange} variant="standard" placeholder="e.g. Roof repair, Home cleaning, or specific products you sell." inputProps={{ sx: { fontSize: '1.25rem', color: '#fff' } }} />
+                  <TextField fullWidth multiline rows={2} label="List your services or products" name="servicesList" value={formData.servicesList} onChange={handleChange} variant="standard" placeholder="e.g. Roof repair, Home cleaning, or specific products you sell." InputLabelProps={{ sx: { color: '#666' } }} inputProps={{ sx: { fontSize: '1.25rem', color: '#fff' } }} sx={{ '& .MuiInput-underline:before': { borderBottomColor: 'rgba(255,255,255,0.1)' }, '& .MuiInput-underline:hover:not(.Mui-disabled):before': { borderBottomColor: '#d6c5a5' }, '& .MuiInput-underline:after': { borderBottomColor: '#d6c5a5' } }} />
                   {formData.pages.includes("About Us") && (
-                    <TextField fullWidth multiline rows={2} label="Your Story (Optional)" name="heroMessage" value={formData.heroMessage} onChange={handleChange} variant="standard" placeholder="Tell us how you started or what your mission is." inputProps={{ sx: { fontSize: '1.25rem', color: '#fff' } }} />
+                    <TextField fullWidth multiline rows={2} label="Your Story (Optional)" name="heroMessage" value={formData.heroMessage} onChange={handleChange} variant="standard" placeholder="Tell us how you started or what your mission is." InputLabelProps={{ sx: { color: '#666' } }} inputProps={{ sx: { fontSize: '1.25rem', color: '#fff' } }} sx={{ '& .MuiInput-underline:before': { borderBottomColor: 'rgba(255,255,255,0.1)' }, '& .MuiInput-underline:hover:not(.Mui-disabled):before': { borderBottomColor: '#d6c5a5' }, '& .MuiInput-underline:after': { borderBottomColor: '#d6c5a5' } }} />
                   )}
                 </Stack>
               </MotionBox>
@@ -341,44 +364,44 @@ function IntakeContent() {
 
             {step === 8 && (
               <MotionBox key="step8" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} sx={{ width: '100%', maxWidth: 800, mx: 'auto' }}>
-                <Typography variant="h2" sx={{ fontWeight: 800, mb: 6, textAlign: 'center' }}>Voice & Tone</Typography>
+                <Typography variant="h2" sx={{ fontWeight: 800, mb: 6, textAlign: 'center', letterSpacing: '-0.1rem', fontSize: { xs: '2.5rem', md: '4rem' } }}>Voice & Tone</Typography>
                 <Stack spacing={6}>
                   <FormControl fullWidth variant="standard">
-                    <InputLabel sx={{ color: '#444' }}>How should your site sound?</InputLabel>
-                    <Select name="brandVoice" value={formData.brandVoice} onChange={handleChange} sx={{ fontSize: '1.5rem', color: '#fff', py: 1 }}>
+                    <InputLabel sx={{ color: '#666' }}>How should your site sound?</InputLabel>
+                    <Select name="brandVoice" value={formData.brandVoice} onChange={handleChange} sx={{ fontSize: '1.5rem', color: '#fff', py: 1, '&:before': { borderBottomColor: 'rgba(255,255,255,0.1)' }, '&:hover:not(.Mui-disabled):before': { borderBottomColor: '#d6c5a5' }, '&:after': { borderBottomColor: '#d6c5a5' }, '& .MuiSvgIcon-root': { color: '#d6c5a5' } }}>
                       <MenuItem value="Modern & Professional">Modern & Professional</MenuItem>
                       <MenuItem value="Friendly & Welcoming">Friendly & Welcoming</MenuItem>
                       <MenuItem value="High-End & Luxury">High-End & Luxury</MenuItem>
                       <MenuItem value="Simple & Direct">Simple & Direct</MenuItem>
                     </Select>
                   </FormControl>
-                  <TextField fullWidth label="Who are your customers?" name="targetAudience" value={formData.targetAudience} onChange={handleChange} variant="standard" placeholder="e.g. Local homeowners, busy parents, tech startups" inputProps={{ sx: { fontSize: '1.5rem', color: '#fff' } }} />
-                  <TextField fullWidth label="What makes you special?" name="heroMessage" value={formData.heroMessage} onChange={handleChange} variant="standard" placeholder="The one thing people should know about your business." inputProps={{ sx: { fontSize: '1.5rem', color: '#fff' } }} />
+                  <TextField fullWidth label="Who are your customers?" name="targetAudience" value={formData.targetAudience} onChange={handleChange} variant="standard" placeholder="e.g. Local homeowners, busy parents, tech startups" InputLabelProps={{ sx: { color: '#666' } }} inputProps={{ sx: { fontSize: '1.5rem', color: '#fff' } }} sx={{ '& .MuiInput-underline:before': { borderBottomColor: 'rgba(255,255,255,0.1)' }, '& .MuiInput-underline:hover:not(.Mui-disabled):before': { borderBottomColor: '#d6c5a5' }, '& .MuiInput-underline:after': { borderBottomColor: '#d6c5a5' } }} />
+                  <TextField fullWidth label="What makes you special?" name="heroMessage" value={formData.heroMessage} onChange={handleChange} variant="standard" placeholder="The one thing people should know about your business." InputLabelProps={{ sx: { color: '#666' } }} inputProps={{ sx: { fontSize: '1.5rem', color: '#fff' } }} sx={{ '& .MuiInput-underline:before': { borderBottomColor: 'rgba(255,255,255,0.1)' }, '& .MuiInput-underline:hover:not(.Mui-disabled):before': { borderBottomColor: '#d6c5a5' }, '& .MuiInput-underline:after': { borderBottomColor: '#d6c5a5' } }} />
                 </Stack>
               </MotionBox>
             )}
 
             {step === 9 && (
               <MotionBox key="step9" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} sx={{ width: '100%', maxWidth: 1000, mx: 'auto' }}>
-                <Typography variant="h2" sx={{ fontWeight: 800, mb: 6, textAlign: 'center' }}>Ready to build?</Typography>
+                <Typography variant="h2" sx={{ fontWeight: 800, mb: 6, textAlign: 'center', letterSpacing: '-0.1rem', fontSize: { xs: '2.5rem', md: '4rem' } }}>Ready to build?</Typography>
                 <Grid container spacing={4}>
                   <Grid size={{ xs: 12, md: 6 }}>
                     <Box sx={{ p: 4, bgcolor: 'rgba(255,255,255,0.02)', borderRadius: '24px', border: '1px solid rgba(255,255,255,0.05)' }}>
-                      <Typography variant="overline" sx={{ color: '#444' }}>Business</Typography>
+                      <Typography variant="overline" sx={{ color: '#d6c5a5', letterSpacing: '0.15rem' }}>Business</Typography>
                       <Typography variant="h5" sx={{ fontWeight: 800, mb: 1 }}>{formData.businessName || formData.currentUrl}</Typography>
                       <Typography variant="body2" sx={{ color: '#666' }}>{formData.name} • {formData.email}</Typography>
                     </Box>
                   </Grid>
                   <Grid size={{ xs: 12, md: 6 }}>
                     <Box sx={{ p: 4, bgcolor: 'rgba(255,255,255,0.02)', borderRadius: '24px', border: '1px solid rgba(255,255,255,0.05)' }}>
-                      <Typography variant="overline" sx={{ color: '#444' }}>Plan</Typography>
+                      <Typography variant="overline" sx={{ color: '#d6c5a5', letterSpacing: '0.15rem' }}>Plan</Typography>
                       <Typography variant="h5" sx={{ fontWeight: 800, mb: 1 }}>{formData.vertical}</Typography>
-                      <Typography variant="body2" sx={{ color: '#0070f3', fontWeight: 800 }}>{formData.layout} Style • {formData.plan} Plan</Typography>
+                      <Typography variant="body2" sx={{ color: '#d6c5a5', fontWeight: 800 }}>{formData.layout} Style • {formData.plan} Plan</Typography>
                     </Box>
                   </Grid>
                   <Grid size={{ xs: 12 }}>
                     <Box sx={{ p: 4, bgcolor: 'rgba(255,255,255,0.02)', borderRadius: '24px', border: '1px solid rgba(255,255,255,0.05)' }}>
-                      <Typography variant="overline" sx={{ color: '#444' }}>Details</Typography>
+                      <Typography variant="overline" sx={{ color: '#d6c5a5', letterSpacing: '0.15rem' }}>Details</Typography>
                       <Typography variant="h5" sx={{ fontWeight: 800, mb: 1 }}>{formData.brandVoice}</Typography>
                       <Typography variant="body2" sx={{ color: '#666' }}>Target Customers: {formData.targetAudience}</Typography>
                     </Box>
@@ -390,7 +413,7 @@ function IntakeContent() {
         </Box>
 
         <Box sx={{ py: 6, display: 'flex', justifyContent: 'flex-end', alignItems: 'center', gap: 4 }}>
-          {step > 1 && <Button onClick={prevStep} sx={{ color: '#444', fontWeight: 800 }}>Back</Button>}
+          {step > 1 && <Button onClick={prevStep} sx={{ color: '#666', fontWeight: 800, '&:hover': { color: '#d6c5a5' } }}>Back</Button>}
           <Magnetic intensity={0.2}>
             <Button 
               variant="contained" 

@@ -147,8 +147,8 @@ export default function AdminDashboard() {
         <Container maxWidth="xl">
           <Stack direction="row" justifyContent="space-between" alignItems="center">
             <Stack direction="row" spacing={6} alignItems="center">
-              <Typography component={Link} href="/" variant="h6" sx={{ fontWeight: 900, textDecoration: 'none', color: '#fff' }}>Flux<Box component="span" sx={{ color: '#0070f3' }}>Webs</Box></Typography>
-              <Tabs value={tabValue} onChange={(_, v) => { setTabValue(v); setCurrentView(v === 0 ? 'pipeline' : v === 1 ? 'clients' : 'analytics'); }} textColor="inherit" TabIndicatorProps={{ sx: { bgcolor: '#0070f3' } }}>
+              <Typography component={Link} href="/" variant="h6" sx={{ fontWeight: 900, textDecoration: 'none', color: '#fff', letterSpacing: '0.2rem', textTransform: 'uppercase', fontSize: '1rem' }}>Flux<Box component="span" sx={{ color: '#d6c5a5' }}>.</Box></Typography>
+              <Tabs value={tabValue} onChange={(_, v) => { setTabValue(v); setCurrentView(v === 0 ? 'pipeline' : v === 1 ? 'clients' : 'analytics'); }} textColor="inherit" TabIndicatorProps={{ sx: { bgcolor: '#d6c5a5' } }}>
                 <Tab label="Pipeline" sx={{ fontWeight: 700 }} />
                 <Tab label="Clients" sx={{ fontWeight: 700 }} />
                 <Tab label="Analytics" sx={{ fontWeight: 700 }} />
