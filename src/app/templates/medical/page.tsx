@@ -21,14 +21,16 @@ export default function MedicalTemplate() {
       </div>
       
       <nav className={styles.nav}>
-        <div className={styles.logo}>
+        <Link href="/templates/medical" className={styles.logo} style={{ textDecoration: 'none' }}>
           <div style={{ width: '30px', height: '30px', background: '#0070f3', borderRadius: '8px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', fontWeight: 900 }}>+</div>
           PULSE MEDICAL
-        </div>
-        <div style={{ display: 'flex', gap: '2.5rem', fontWeight: 600, alignItems: 'center' }}>
+        </Link>
+        <div style={{ display: 'flex', gap: '2.5rem', fontWeight: 600, fontSize: '0.9rem', alignItems: 'center' }}>
           <Link href="/templates/medical/about" style={{ color: '#666', textDecoration: 'none' }}>About Us</Link>
           <Link href="/templates/medical/services" style={{ color: '#666', textDecoration: 'none' }}>Specialties</Link>
-          <Link href="/templates/medical/contact" className={styles.cta} style={{ padding: '0.6rem 1.5rem' }}>Book Now</Link>
+          <Link href="/templates/medical/doctors" style={{ color: '#666', textDecoration: 'none' }}>Physicians</Link>
+          <Link href="/templates/medical/patients" style={{ color: '#666', textDecoration: 'none' }}>Patients</Link>
+          <Link href="/templates/medical/contact" className={styles.cta} style={{ padding: '0.75rem 1.5rem', fontSize: '0.8rem' }}>BOOK APPOINTMENT</Link>
         </div>
       </nav>
 

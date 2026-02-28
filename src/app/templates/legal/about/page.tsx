@@ -11,6 +11,8 @@ export default function LegalAboutPage() {
         <div style={{ display: 'flex', gap: '3rem', fontFamily: 'Inter', fontSize: '0.75rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.1rem', alignItems: 'center' }}>
           <Link href="/templates/legal/about" style={{ color: '#fff', textDecoration: 'underline', textUnderlineOffset: '8px' }}>About</Link>
           <Link href="/templates/legal/services" style={{ color: '#fff', textDecoration: 'none' }}>Expertise</Link>
+          <Link href="/templates/legal/cases" style={{ color: '#fff', textDecoration: 'none' }}>Cases</Link>
+          <Link href="/templates/legal/team" style={{ color: '#fff', textDecoration: 'none' }}>Partners</Link>
           <Link href="/templates/legal/contact" className={styles.cta} style={{ padding: '0.5rem 1.5rem' }}>Consultation</Link>
         </div>
       </nav>

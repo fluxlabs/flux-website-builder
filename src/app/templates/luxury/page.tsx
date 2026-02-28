@@ -15,12 +15,14 @@ export default function LuxuryTemplate() {
 
   return (
     <div className={styles.container}>
-      <nav className={styles.nav}>
-        <div style={{ display: 'flex', gap: '3rem', alignItems: 'center' }}>
-          <Link href="/templates/luxury/about" style={{ color: '#1c1917', textDecoration: 'none', fontSize: '0.8rem', letterSpacing: '0.1rem' }}>STORY</Link>
-          <div className={styles.logo} style={{ margin: '0 2rem' }}>VALENTE</div>
-          <Link href="/templates/luxury/services" style={{ color: '#1c1917', textDecoration: 'none', fontSize: '0.8rem', letterSpacing: '0.1rem' }}>ATELIER</Link>
-          <Link href="/templates/luxury/contact" style={{ color: '#1c1917', textDecoration: 'none', fontSize: '0.8rem', letterSpacing: '0.1rem' }}>INQUIRY</Link>
+      <nav className={styles.nav} style={{ flexDirection: 'column', gap: '2rem' }}>
+        <Link href="/templates/luxury" className={styles.logo} style={{ color: '#1c1917', textDecoration: 'none' }}>VALENTE</Link>
+        <div style={{ display: 'flex', gap: '4rem', fontSize: '0.7rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.2rem' }}>
+          <Link href="/templates/luxury/about" style={{ color: '#1c1917', textDecoration: 'none' }}>Story</Link>
+          <Link href="/templates/luxury/services" style={{ color: '#1c1917', textDecoration: 'none' }}>Atelier</Link>
+          <Link href="/templates/luxury/collection" style={{ color: '#1c1917', textDecoration: 'none' }}>Collection</Link>
+          <Link href="/templates/luxury/philosophy" style={{ color: '#1c1917', textDecoration: 'none' }}>Philosophy</Link>
+          <Link href="/templates/luxury/contact" style={{ color: '#1c1917', textDecoration: 'none' }}>Inquiry</Link>
         </div>
       </nav>
 

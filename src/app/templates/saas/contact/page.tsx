@@ -19,8 +19,10 @@ export default function SaasContactPage() {
         <Link href="/templates/saas" className={styles.logo} style={{ textDecoration: 'none' }}>NovaSaaS</Link>
         <div style={{ display: 'flex', gap: '2rem', alignItems: 'center' }}>
           <Link href="/templates/saas/about" style={{ color: '#fff', textDecoration: 'none' }}>About</Link>
+          <Link href="/templates/saas/features" style={{ color: '#fff', textDecoration: 'none' }}>Features</Link>
           <Link href="/templates/saas/services" style={{ color: '#fff', textDecoration: 'none' }}>Platform</Link>
-          <Link href="/templates/saas/contact" style={{ color: '#0070f3', textDecoration: 'none', fontWeight: 700 }}>Get Started</Link>
+          <Link href="/templates/saas/pricing" style={{ color: '#fff', textDecoration: 'none' }}>Pricing</Link>
+          <Link href="/templates/saas/contact" className={styles.cta} style={{ padding: '0.5rem 1.5rem', fontSize: '1rem' }}>Get Started</Link>
         </div>
       </nav>
 

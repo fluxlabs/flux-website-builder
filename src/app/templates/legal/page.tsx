@@ -16,10 +16,12 @@ export default function LegalTemplate() {
   return (
     <div className={styles.container}>
       <nav className={styles.nav}>
-        <div className={styles.logo}>JUSTICE & CO</div>
+        <Link href="/templates/legal" className={styles.logo} style={{ color: '#fff', textDecoration: 'none' }}>JUSTICE & CO</Link>
         <div style={{ display: 'flex', gap: '3rem', fontFamily: 'Inter', fontSize: '0.75rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.1rem', alignItems: 'center' }}>
           <Link href="/templates/legal/about" style={{ color: '#fff', textDecoration: 'none' }}>About</Link>
           <Link href="/templates/legal/services" style={{ color: '#fff', textDecoration: 'none' }}>Expertise</Link>
+          <Link href="/templates/legal/cases" style={{ color: '#fff', textDecoration: 'none' }}>Cases</Link>
+          <Link href="/templates/legal/team" style={{ color: '#fff', textDecoration: 'none' }}>Partners</Link>
           <Link href="/templates/legal/contact" className={styles.cta} style={{ padding: '0.5rem 1.5rem' }}>Consultation</Link>
         </div>
       </nav>

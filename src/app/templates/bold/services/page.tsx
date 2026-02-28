@@ -18,7 +18,9 @@ export default function BoldServicesPage() {
         <div style={{ display: 'flex', gap: '2rem', alignItems: 'center' }}>
           <Link href="/templates/bold/about" style={{ color: '#fff', textDecoration: 'none', fontWeight: 900 }}>ABOUT</Link>
           <Link href="/templates/bold/services" style={{ color: '#ffcc00', textDecoration: 'none', fontWeight: 900 }}>SERVICES</Link>
-          <Link href="/templates/bold/contact" className={styles.cta} style={{ padding: '0.5rem 1.5rem', fontSize: '1rem' }}>QUOTE</Link>
+          <Link href="/templates/bold/projects" style={{ color: '#fff', textDecoration: 'none', fontWeight: 900 }}>PROJECTS</Link>
+          <Link href="/templates/bold/faq" style={{ color: '#fff', textDecoration: 'none', fontWeight: 900 }}>FAQ</Link>
+          <Link href="/templates/bold/contact" className={styles.cta} style={{ padding: '0.5rem 1.5rem', fontSize: '1rem', color: '#000' }}>QUOTE</Link>
         </div>
       </nav>
 

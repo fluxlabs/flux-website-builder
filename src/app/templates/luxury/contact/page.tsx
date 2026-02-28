@@ -20,6 +20,8 @@ export default function LuxuryContactPage() {
         <div style={{ display: 'flex', gap: '4rem', fontSize: '0.7rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.2rem' }}>
           <Link href="/templates/luxury/about" style={{ color: '#1c1917', textDecoration: 'none' }}>Story</Link>
           <Link href="/templates/luxury/services" style={{ color: '#1c1917', textDecoration: 'none' }}>Atelier</Link>
+          <Link href="/templates/luxury/collection" style={{ color: '#1c1917', textDecoration: 'none' }}>Collection</Link>
+          <Link href="/templates/luxury/philosophy" style={{ color: '#1c1917', textDecoration: 'none' }}>Philosophy</Link>
           <Link href="/templates/luxury/contact" style={{ color: '#1c1917', textDecoration: 'underline', textUnderlineOffset: '12px' }}>Inquiry</Link>
         </div>
       </nav>
