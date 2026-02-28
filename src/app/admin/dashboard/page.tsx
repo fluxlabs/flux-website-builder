@@ -38,7 +38,8 @@ import {
   Plus,
   Activity,
   ArrowLeft,
-  LogOut
+  LogOut,
+  Mail
 } from "lucide-react";
 
 const MotionCard = motion(Card);
@@ -50,6 +51,7 @@ export default function AdminDashboard() {
   const router = useRouter();
   const [intakes, setIntakes] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
+  const [resending, setResending] = useState<string | null>(null);
   const [user, setUser] = useState<any>(null);
   const [selectedIntake, setSelectedIntake] = useState<any>(null);
   const [selectedClientEmail, setSelectedClientEmail] = useState<string | null>(null);
@@ -165,6 +167,28 @@ export default function AdminDashboard() {
       alert("Failed to trigger seed.");
     } finally {
       setLoading(false);
+    }
+  };
+
+  const resendEmail = async (id: string, type: string) => {
+    try {
+      setResending(type);
+      const res = await fetch("/api/admin/resend-email", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ intakeId: id, type }),
+      });
+      if (res.ok) {
+        alert(`${type.toUpperCase()} email resent successfully.`);
+      } else {
+        const err = await res.json();
+        alert(`Failed to resend email: ${err.error || "Unknown error"}`);
+      }
+    } catch (err) {
+      console.error(err);
+      alert("Failed to resend email.");
+    } finally {
+      setResending(null);
     }
   };
 
@@ -423,6 +447,60 @@ export default function AdminDashboard() {
                     </Select>
                   </FormControl>
                 </Stack>
+              </Box>
+
+              <Box>
+                <Typography variant="overline" sx={{ color: '#444', fontWeight: 800, mb: 2, display: 'block' }}>Email Communications</Typography>
+                <Grid container spacing={2}>
+                  <Grid size={{ xs: 6 }}>
+                    <Button 
+                      fullWidth 
+                      variant="outlined" 
+                      onClick={() => resendEmail(selectedIntake.id, 'welcome')} 
+                      disabled={resending !== null}
+                      startIcon={<Mail size={16} />} 
+                      sx={{ borderColor: 'rgba(255,255,255,0.1)', color: '#fff', fontSize: '0.7rem' }}
+                    >
+                      Resend Welcome
+                    </Button>
+                  </Grid>
+                  <Grid size={{ xs: 6 }}>
+                    <Button 
+                      fullWidth 
+                      variant="outlined" 
+                      onClick={() => resendEmail(selectedIntake.id, 'review')} 
+                      disabled={resending !== null || !selectedIntake.staging_url}
+                      startIcon={<Mail size={16} />} 
+                      sx={{ borderColor: 'rgba(255,255,255,0.1)', color: '#fff', fontSize: '0.7rem' }}
+                    >
+                      Resend Review
+                    </Button>
+                  </Grid>
+                  <Grid size={{ xs: 6 }}>
+                    <Button 
+                      fullWidth 
+                      variant="outlined" 
+                      onClick={() => resendEmail(selectedIntake.id, 'approved')} 
+                      disabled={resending !== null}
+                      startIcon={<Mail size={16} />} 
+                      sx={{ borderColor: 'rgba(255,255,255,0.1)', color: '#fff', fontSize: '0.7rem' }}
+                    >
+                      Send Approved
+                    </Button>
+                  </Grid>
+                  <Grid size={{ xs: 6 }}>
+                    <Button 
+                      fullWidth 
+                      variant="outlined" 
+                      onClick={() => resendEmail(selectedIntake.id, 'live')} 
+                      disabled={resending !== null}
+                      startIcon={<Mail size={16} />} 
+                      sx={{ borderColor: 'rgba(255,255,255,0.1)', color: '#fff', fontSize: '0.7rem' }}
+                    >
+                      Send Live
+                    </Button>
+                  </Grid>
+                </Grid>
               </Box>
             </Stack>
           </Box>
