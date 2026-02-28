@@ -112,13 +112,14 @@ export default function AdminDashboard() {
     } catch (err) { console.error(err); }
   };
 
-  const triggerSynthesis = async (id: string) => {
+  const triggerSynthesis = async (id: string, mode: 'full' | 'research' | 'design' = 'full') => {
     try {
-      alert("Triggering synthesis...");
+      const modeLabel = mode === 'full' ? 'Full Synthesis' : mode === 'research' ? 'Market Research' : 'Design Rethink';
+      alert(`Triggering ${modeLabel}...`);
       await fetch("/api/admin/synthesize", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ intakeId: id }),
+        body: JSON.stringify({ intakeId: id, mode }),
       });
       fetchIntakes();
     } catch (err) { console.error(err); }
@@ -389,8 +390,12 @@ export default function AdminDashboard() {
 
               <Box>
                 <Typography variant="overline" sx={{ color: '#444', fontWeight: 800, mb: 2, display: 'block' }}>Operations</Typography>
-                <Stack direction="row" spacing={2}>
-                  <Button fullWidth variant="contained" onClick={() => triggerSynthesis(selectedIntake.id)} sx={{ bgcolor: '#0070f3', fontWeight: 800, py: 1.5 }}>Rework AI Draft</Button>
+                <Stack direction="column" spacing={2}>
+                  <Button fullWidth variant="contained" onClick={() => triggerSynthesis(selectedIntake.id, 'full')} startIcon={<Rocket size={18} />} sx={{ bgcolor: '#0070f3', fontWeight: 800, py: 2 }}>Build Site</Button>
+                  <Stack direction="row" spacing={2}>
+                    <Button fullWidth variant="outlined" onClick={() => triggerSynthesis(selectedIntake.id, 'research')} startIcon={<Search size={18} />} sx={{ borderColor: 'rgba(255,255,255,0.1)', color: '#fff', fontWeight: 800 }}>Research Content</Button>
+                    <Button fullWidth variant="outlined" onClick={() => triggerSynthesis(selectedIntake.id, 'design')} startIcon={<Activity size={18} />} sx={{ borderColor: 'rgba(255,255,255,0.1)', color: '#fff', fontWeight: 800 }}>Rethink Design</Button>
+                  </Stack>
                   <FormControl fullWidth variant="outlined">
                     <Select value={selectedIntake.status} onChange={(e) => updateStatus(selectedIntake.id, e.target.value)} sx={{ bgcolor: 'rgba(255,255,255,0.02)', color: '#fff' }}>
                       {STATUSES.map(s => <MenuItem key={s} value={s}>{getStatusLabel(s)}</MenuItem>)}

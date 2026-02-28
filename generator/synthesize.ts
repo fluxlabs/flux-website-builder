@@ -7,7 +7,7 @@ import { createGitHubRepo, pushToGitHub, deployToVercel, slugify } from "./deplo
 import fs from "fs";
 import path from "path";
 
-async function synthesize(intakeId: string) {
+async function synthesize(intakeId: string, mode: 'full' | 'research' | 'design' = 'full') {
   const startTime = Date.now();
   
   // Fetch intake details early for notifications
@@ -23,11 +23,11 @@ async function synthesize(intakeId: string) {
   }
 
   try {
-    console.log(`--- [SYNTHESIZING VISION: ${intakeId}] ---`);
+    console.log(`--- [SYNTHESIZING VISION (${mode.toUpperCase()}): ${intakeId}] ---`);
     await logEvent({
       intakeId,
       category: 'AI_GEN',
-      message: `Starting synthesis for ${intake.business_name || 'unknown'}`
+      message: `Starting ${mode} synthesis for ${intake.business_name || 'unknown'}`
     });
     
     // Clean up local builds folder
@@ -38,17 +38,28 @@ async function synthesize(intakeId: string) {
     // Reset status and clear old metrics immediately
     await supabase.from("intakes").update({ 
       status: "ai_generating",
-      staging_url: null,
+      staging_url: mode === 'full' ? null : intake.staging_url,
       build_time_ms: null
     }).eq("id", intakeId);
 
     // 1. Generate Site Data (LLM logic)
-    let siteData = await generateSiteData(intakeId);
+    // In 'research' mode, the engine could focus more on market data
+    // In 'design' mode, it could focus on layout/aesthetics
+    let siteData = await generateSiteData(intakeId); 
     await logEvent({
       intakeId,
       category: 'AI_GEN',
-      message: `Vision Generated: ${siteData.siteTitle}`
+      message: `Vision Generated: ${siteData.siteTitle} (${mode} mode)`
     });
+
+    if (mode === 'research' || mode === 'design') {
+        // If we are just doing research or design rethink, we might just update the vision
+        // and stop there, or continue to build. For now, let's assume 'full' is needed to deploy.
+        // We'll mark it as done so the admin can see the vision in the logs.
+        await logEvent({ intakeId, category: 'AI_GEN', message: `${mode.toUpperCase()} phase complete. Ready for full build.` });
+        await supabase.from("intakes").update({ status: "client_review" }).eq("id", intakeId);
+        return;
+    }
 
     // 2. Build the Next.js Project locally
     let buildDir = await buildSite(intakeId, siteData);
@@ -178,8 +189,9 @@ async function synthesize(intakeId: string) {
 
 // CLI entry point
 const intakeId = process.argv[2];
+const mode = process.argv[3] as any || 'full';
 if (intakeId) {
-  synthesize(intakeId);
+  synthesize(intakeId, mode);
 }
 
 export { synthesize };

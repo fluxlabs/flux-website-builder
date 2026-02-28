@@ -20,7 +20,8 @@ async function startWorker() {
   if (missedIntakes && missedIntakes.length > 0) {
     console.log(`Found ${missedIntakes.length} pending intakes. Processing...`);
     for (const intake of missedIntakes) {
-      await safeSynthesize(intake.id);
+      const mode = await getModeForIntake(intake.id);
+      await safeSynthesize(intake.id, mode);
     }
   }
 
@@ -36,7 +37,8 @@ async function startWorker() {
       },
       async (payload) => {
         console.log("New intake received via Realtime:", payload.new.id);
-        await safeSynthesize(payload.new.id);
+        const mode = await getModeForIntake(payload.new.id);
+        await safeSynthesize(payload.new.id, mode);
       }
     )
     .on(
@@ -49,34 +51,55 @@ async function startWorker() {
       },
       async (payload) => {
         console.log("Intake reset to 'new' via update:", payload.new.id);
-        await safeSynthesize(payload.new.id);
+        const mode = await getModeForIntake(payload.new.id);
+        await safeSynthesize(payload.new.id, mode);
       }
     )
     .subscribe();
 }
 
-let isProcessing = false;
-const queue: string[] = [];
+async function getModeForIntake(intakeId: string): Promise<'full' | 'research' | 'design'> {
+  const { data: logs } = await supabase
+    .from('system_logs')
+    .select('message')
+    .eq('intake_id', intakeId)
+    .eq('category', 'SYSTEM')
+    .ilike('message', 'REQUESTED_MODE:%')
+    .order('created_at', { ascending: false })
+    .limit(1);
+    
+  if (logs && logs.length > 0) {
+    const modeStr = logs[0].message.split(': ')[1];
+    if (['full', 'research', 'design'].includes(modeStr)) {
+      return modeStr as any;
+    }
+  }
+  
+  return 'full';
+}
 
-async function safeSynthesize(id: string) {
+let isProcessing = false;
+const queue: { id: string, mode: 'full' | 'research' | 'design' }[] = [];
+
+async function safeSynthesize(id: string, mode: 'full' | 'research' | 'design' = 'full') {
   if (isProcessing) {
-    console.log(`Worker busy. Adding ${id} to queue.`);
-    queue.push(id);
+    console.log(`Worker busy. Adding ${id} (${mode}) to queue.`);
+    queue.push({ id, mode });
     return;
   }
 
   isProcessing = true;
   try {
-    await synthesize(id);
+    await synthesize(id, mode);
   } catch (err) {
     console.error(`Fatal worker error during synthesis for ${id}:`, err);
   } finally {
     isProcessing = false;
     // Process next in queue if any
-    const nextId = queue.shift();
-    if (nextId) {
-      console.log(`Processing next item in queue: ${nextId}`);
-      await safeSynthesize(nextId);
+    const nextItem = queue.shift();
+    if (nextItem) {
+      console.log(`Processing next item in queue: ${nextItem.id} (${nextItem.mode})`);
+      await safeSynthesize(nextItem.id, nextItem.mode);
     }
   }
 }

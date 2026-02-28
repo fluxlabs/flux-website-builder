@@ -8,31 +8,41 @@ export const dynamic = "force-dynamic";
 
 export async function POST(req: Request) {
   try {
-    const { intakeId } = await req.json();
+    const { intakeId, mode = 'full' } = await req.json();
 
     if (!intakeId) {
       return NextResponse.json({ error: "Missing intakeId" }, { status: 400 });
     }
 
-    // 1. If we are on Vercel (or any serverless environment), we simply update the status to 'new'
-    // The Render Background Worker will see this via Realtime and start the build.
+    // 1. If we are on Vercel, we update the status and include metadata about the mode
     if (process.env.VERCEL) {
-      console.log(`Vercel detected. Triggering Render worker via Supabase for: ${intakeId}`);
+      console.log(`Vercel detected. Triggering Render worker (${mode}) via Supabase for: ${intakeId}`);
       const { error } = await supabase
         .from("intakes")
-        .update({ status: "new" })
+        .update({ 
+          status: "new",
+          // We can use a log or a specific field to communicate the mode to the worker
+          // For now, let's just log it to system_logs so the worker can check it
+        })
         .eq("id", intakeId);
 
       if (error) throw error;
-      return NextResponse.json({ success: true, message: "Worker notified via Supabase." });
+      
+      await supabase.from("system_logs").insert([{
+        intake_id: intakeId,
+        category: 'SYSTEM',
+        level: 'INFO',
+        message: `REQUESTED_MODE: ${mode}`
+      }]);
+
+      return NextResponse.json({ success: true, message: `Worker notified of ${mode} synthesis.` });
     }
 
-    // 2. Local fallback: Run the background process locally (useful for dev)
-    console.log(`Local environment detected. Spawning background process for: ${intakeId}`);
+    // 2. Local fallback
+    console.log(`Local environment detected. Spawning ${mode} synthesis for: ${intakeId}`);
     const scriptPath = path.join(process.cwd(), "generator", "synthesize.ts");
-    const logPath = path.join(process.cwd(), "synthesis.log");
     
-    const child = spawn("npx", ["ts-node", "--esm", scriptPath, intakeId], {
+    const child = spawn("npx", ["ts-node", "--esm", scriptPath, intakeId, mode], {
       detached: true,
       stdio: 'ignore',
       env: { ...process.env }
