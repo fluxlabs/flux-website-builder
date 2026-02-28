@@ -65,16 +65,24 @@
 }
 
 .column li {
-  color: #a1a1a1;
   margin-bottom: 1rem;
   font-size: 0.875rem;
   font-weight: 500;
   cursor: pointer;
-  transition: all 0.2s;
+  transition: all 0.3s ease;
+}
+
+.column li a {
+  color: #888;
+  text-decoration: none;
+  transition: inherit;
+}
+
+.column li:hover a {
+  color: #d6c5a5;
 }
 
 .column li:hover {
-  color: #fff;
   transform: translateX(4px);
 }
 
