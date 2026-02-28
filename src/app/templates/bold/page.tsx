@@ -1,14 +1,26 @@
 "use client";
 
+import { useState } from "react";
 import styles from "./bold.module.css";
 import Link from "next/link";
 
 export default function BoldTemplate() {
+  const [formState, setFormState] = useState<'idle' | 'submitting' | 'success'>('idle');
+
+  const handleQuoteSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    setFormState('submitting');
+    setTimeout(() => setFormState('success'), 1500);
+  };
+
   return (
     <div className={styles.container}>
       <nav className={styles.nav}>
         <div className={styles.logo}>FORGE</div>
-        <div style={{ fontSize: '1.25rem' }}>BUILD // DESTROY // REPEAT</div>
+        <div style={{ display: 'flex', gap: '2rem', alignItems: 'center' }}>
+          <a href="#projects" style={{ color: '#fff', textDecoration: 'none', fontWeight: 900 }}>PROJECTS</a>
+          <a href="#quote" className={styles.cta} style={{ padding: '0.5rem 1.5rem', fontSize: '1rem' }}>QUOTE</a>
+        </div>
       </nav>
 
       <main>
@@ -17,7 +29,7 @@ export default function BoldTemplate() {
           <p style={{ fontSize: '1.5rem', maxWidth: '600px', marginBottom: '4rem', fontFamily: 'sans-serif' }}>
             Heavy industrial solutions for a world that never stops. We move the earth, we shape the metal, we power the grid.
           </p>
-          <Link href="/intake" className={styles.cta}>GET A QUOTE</Link>
+          <a href="#quote" className={styles.cta}>GET A QUOTE</a>
         </section>
 
         <section className={styles.certs}>
@@ -42,7 +54,7 @@ export default function BoldTemplate() {
           </div>
         </section>
 
-        <section className={styles.projects}>
+        <section id="projects" className={styles.projects}>
           <div className={styles.projectCard} style={{ backgroundImage: 'url(https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=1200&q=80)' }}>
             <div className={styles.projectInfo}>
               <h4>SKYLINE REFORGE</h4>
@@ -55,17 +67,39 @@ export default function BoldTemplate() {
               <p>INFRASTRUCTURE // NEVADA</p>
             </div>
           </div>
+          <div className={styles.projectCard} style={{ backgroundImage: 'url(https://images.unsplash.com/photo-1541888087820-252f4c398df9?auto=format&fit=crop&w=1200&q=80)' }}>
+            <div className={styles.projectInfo}>
+              <h4>PORT EXPANSION</h4>
+              <p>MARINE // SEATTLE, WA</p>
+            </div>
+          </div>
+          <div className={styles.projectCard} style={{ backgroundImage: 'url(https://images.unsplash.com/photo-1534398079543-7ae6d016b8be?auto=format&fit=crop&w=1200&q=80)' }}>
+            <div className={styles.projectInfo}>
+              <h4>FOUNDRY ZERO</h4>
+              <p>MANUFACTURING // DETROIT, MI</p>
+            </div>
+          </div>
         </section>
 
-        <section className={styles.quoteSection}>
+        <section id="quote" className={styles.quoteSection}>
           <div className={styles.quoteGrid}>
             <h2>LET'S TALK <br/> <span className={styles.highlight}>POWER.</span></h2>
-            <form className={styles.form} onSubmit={(e) => e.preventDefault()}>
-              <input type="text" placeholder="COMPANY NAME" />
-              <input type="email" placeholder="CONTACT EMAIL" />
-              <textarea placeholder="PROJECT SCOPE" />
-              <button type="button" className={styles.cta}>INITIATE QUOTE</button>
-            </form>
+            {formState === 'success' ? (
+              <div className={styles.successMessage}>
+                <h3>QUOTE INITIATED</h3>
+                <p>A FOREMAN WILL BE IN TOUCH.</p>
+                <button onClick={() => setFormState('idle')} className={styles.cta} style={{ marginTop: '2rem' }}>NEW REQUEST</button>
+              </div>
+            ) : (
+              <form className={styles.form} onSubmit={handleQuoteSubmit}>
+                <input type="text" required placeholder="COMPANY NAME" />
+                <input type="email" required placeholder="CONTACT EMAIL" />
+                <textarea required placeholder="PROJECT SCOPE" />
+                <button type="submit" className={styles.cta} disabled={formState === 'submitting'}>
+                  {formState === 'submitting' ? 'PROCESSING...' : 'INITIATE QUOTE'}
+                </button>
+              </form>
+            )}
           </div>
         </section>
 

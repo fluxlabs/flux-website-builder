@@ -203,6 +203,12 @@
   margin-bottom: 5rem;
 }
 
+.successMessage {
+  border: 1px solid #eab308;
+  padding: 4rem;
+  background: rgba(234, 179, 8, 0.05);
+}
+
 .formGrid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);

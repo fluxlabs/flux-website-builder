@@ -1,13 +1,26 @@
 "use client";
 
+import { useState } from "react";
 import styles from "./luxury.module.css";
 import Link from "next/link";
 
 export default function LuxuryTemplate() {
+  const [formState, setFormState] = useState<'idle' | 'submitting' | 'success'>('idle');
+
+  const handleConsultSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    setFormState('submitting');
+    setTimeout(() => setFormState('success'), 1500);
+  };
+
   return (
     <div className={styles.container}>
       <nav className={styles.nav}>
-        <div className={styles.logo}>VALENTE</div>
+        <div style={{ display: 'flex', gap: '3rem', alignItems: 'center' }}>
+          <a href="#collection" style={{ color: '#1c1917', textDecoration: 'none', fontSize: '0.8rem', letterSpacing: '0.1rem' }}>COLLECTION</a>
+          <div className={styles.logo} style={{ margin: '0 2rem' }}>VALENTE</div>
+          <a href="#contact" style={{ color: '#1c1917', textDecoration: 'none', fontSize: '0.8rem', letterSpacing: '0.1rem' }}>CONSULTATION</a>
+        </div>
       </nav>
 
       <main>
@@ -16,7 +29,7 @@ export default function LuxuryTemplate() {
             <label className={styles.label}>EST. 1994</label>
             <h1>Architecture <br/> of Silence.</h1>
             <p>We believe in spaces that breathe. Our curated portfolio of luxury estates focuses on the intersection of modern minimalism and natural harmony.</p>
-            <Link href="/intake" className={styles.cta}>View Collection</Link>
+            <a href="#collection" className={styles.cta}>View Collection</a>
           </div>
           <div className={styles.heroImage} style={{ backgroundImage: 'url(https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1600&q=80)' }} />
         </section>
@@ -39,7 +52,8 @@ export default function LuxuryTemplate() {
           </div>
         </section>
 
-        <section className={styles.gallery}>
+        <section id="collection" className={styles.gallery}>
+          <h2 style={{ fontSize: '2rem', fontWeight: 300, textAlign: 'center', marginBottom: '4rem', letterSpacing: '0.5rem' }}>CURRENT PORTFOLIO</h2>
           <div className={styles.galleryGrid}>
             <div className={styles.galleryItem} style={{ backgroundImage: 'url(https://images.unsplash.com/photo-1600607687940-4e2a09695d51?auto=format&fit=crop&w=1200&q=80)' }}>
               <div className={styles.itemLabel}>MODERNIST PENTHOUSE, NYC</div>
@@ -56,20 +70,38 @@ export default function LuxuryTemplate() {
           </div>
         </section>
 
-        <section className={styles.viewingSection}>
+        <section className={styles.editorial}>
+          <div className={styles.editorialContent}>
+            <h3 style={{ fontSize: '1.5rem', fontWeight: 300, fontStyle: 'italic', marginBottom: '2rem' }}>"Valente has redefined what it means to acquire space. It is not real estate; it is fine art curation."</h3>
+            <p style={{ letterSpacing: '0.2rem', fontSize: '0.8rem', color: '#a8a29e' }}>— ARCHITECTURAL DIGEST</p>
+          </div>
+        </section>
+
+        <section id="contact" className={styles.viewingSection}>
           <div className={styles.viewingContainer}>
             <header>
               <h2>Private Consultation</h2>
               <p>Request a private tour or portfolio review with our architectural curators.</p>
             </header>
-            <form className={styles.form} onSubmit={(e) => e.preventDefault()}>
-              <div className={styles.formRow}>
-                <input type="text" placeholder="FULL NAME" />
-                <input type="email" placeholder="EMAIL ADDRESS" />
+            
+            {formState === 'success' ? (
+              <div className={styles.successMessage}>
+                <h3 style={{ fontSize: '2rem', fontWeight: 300, marginBottom: '1rem' }}>Request Submitted</h3>
+                <p style={{ color: '#a8a29e' }}>A curator will contact you within 24 hours to arrange your consultation.</p>
+                <button onClick={() => setFormState('idle')} className={styles.cta} style={{ marginTop: '2rem', borderColor: '#a8a29e', color: '#a8a29e' }}>Return</button>
               </div>
-              <textarea placeholder="MESSAGE (OPTIONAL)" />
-              <button type="button" className={styles.cta}>Request Access</button>
-            </form>
+            ) : (
+              <form className={styles.form} onSubmit={handleConsultSubmit}>
+                <div className={styles.formRow}>
+                  <input type="text" required placeholder="FULL NAME" />
+                  <input type="email" required placeholder="EMAIL ADDRESS" />
+                </div>
+                <textarea placeholder="MESSAGE (OPTIONAL)" />
+                <button type="submit" className={styles.cta} disabled={formState === 'submitting'}>
+                  {formState === 'submitting' ? 'Processing...' : 'Request Access'}
+                </button>
+              </form>
+            )}
           </div>
         </section>
 

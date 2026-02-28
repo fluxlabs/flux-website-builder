@@ -1,9 +1,18 @@
 "use client";
 
+import { useState } from "react";
 import styles from "./medical.module.css";
 import Link from "next/link";
 
 export default function MedicalTemplate() {
+  const [formState, setFormState] = useState<'idle' | 'submitting' | 'success'>('idle');
+
+  const handleBookingSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    setFormState('submitting');
+    setTimeout(() => setFormState('success'), 1500);
+  };
+
   return (
     <div className={styles.container}>
       <div className={styles.topBar}>
@@ -13,11 +22,10 @@ export default function MedicalTemplate() {
       
       <nav className={styles.nav}>
         <div className={styles.logo}>PulseHealth</div>
-        <div style={{ display: 'flex', gap: '2.5rem', fontWeight: 600 }}>
-          <span>Specialties</span>
-          <span>Patients</span>
-          <span>Locations</span>
-          <Link href="/intake" className={styles.cta} style={{ padding: '0.6rem 1.5rem', marginTop: '-0.2rem' }}>Book Now</Link>
+        <div style={{ display: 'flex', gap: '2.5rem', fontWeight: 600, alignItems: 'center' }}>
+          <a href="#services" style={{ color: '#1a1a1a', textDecoration: 'none' }}>Specialties</a>
+          <a href="#team" style={{ color: '#1a1a1a', textDecoration: 'none' }}>Doctors</a>
+          <a href="#book" className={styles.cta} style={{ padding: '0.6rem 1.5rem' }}>Book Now</a>
         </div>
       </nav>
 
@@ -26,7 +34,7 @@ export default function MedicalTemplate() {
           <div className={styles.heroContent}>
             <h1>Modern Medicine, <br/> Compassionate Care.</h1>
             <p>Experience healthcare redefined. We combine cutting-edge medical technology with a patient-first approach to ensure your well-being.</p>
-            <Link href="/intake" className={styles.cta}>Start Your Journey</Link>
+            <a href="#book" className={styles.cta}>Start Your Journey</a>
           </div>
           <div className={styles.imagePlaceholder} style={{ backgroundImage: 'url(https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&w=1200&q=80)', backgroundSize: 'cover', backgroundPosition: 'center' }} />
         </section>
@@ -50,7 +58,7 @@ export default function MedicalTemplate() {
           </div>
         </section>
 
-        <section className={styles.services}>
+        <section id="services" className={styles.services}>
           <h2 style={{ textAlign: 'center', fontSize: '2.5rem', marginBottom: '4rem', color: '#003366' }}>Our Specializations</h2>
           <div className={styles.serviceGrid}>
             <div className={styles.serviceCard}>
@@ -76,7 +84,7 @@ export default function MedicalTemplate() {
           </div>
         </section>
 
-        <section className={styles.teamSection}>
+        <section id="team" className={styles.teamSection}>
           <h2 style={{ textAlign: 'center', fontSize: '2.5rem', marginBottom: '4rem', color: '#003366' }}>Meet Our Experts</h2>
           <div className={styles.teamGrid}>
             <div className={styles.teamMember}>
@@ -97,26 +105,37 @@ export default function MedicalTemplate() {
           </div>
         </section>
 
-        <section className={styles.bookingSection}>
+        <section id="book" className={styles.bookingSection}>
           <div className={styles.bookingCard}>
             <div className={styles.bookingInfo}>
               <h2>Book an Appointment</h2>
               <p>Schedule your visit with our specialists today. We offer flexible hours and remote consultations.</p>
             </div>
-            <form className={styles.form} onSubmit={(e) => e.preventDefault()}>
-              <div className={styles.formGrid}>
-                <input type="text" placeholder="Patient Name" />
-                <input type="tel" placeholder="Phone Number" />
-                <select>
-                  <option>Select Specialty</option>
-                  <option>Cardiology</option>
-                  <option>Neurology</option>
-                  <option>Orthopedics</option>
-                </select>
-                <input type="date" />
+            
+            {formState === 'success' ? (
+              <div className={styles.successMessage}>
+                <h3 style={{ fontSize: '2rem', marginBottom: '1rem' }}>Booking Confirmed</h3>
+                <p>We've sent a calendar invitation to your email.</p>
+                <button onClick={() => setFormState('idle')} className={styles.cta} style={{ marginTop: '2rem', background: '#fff', color: '#003366', border: 'none' }}>Book Another</button>
               </div>
-              <button type="button" className={styles.cta} style={{ width: '100%', marginTop: '2rem', border: 'none', cursor: 'pointer' }}>Schedule Visit</button>
-            </form>
+            ) : (
+              <form className={styles.form} onSubmit={handleBookingSubmit}>
+                <div className={styles.formGrid}>
+                  <input type="text" required placeholder="Patient Name" />
+                  <input type="tel" required placeholder="Phone Number" />
+                  <select required>
+                    <option value="">Select Specialty</option>
+                    <option>Cardiology</option>
+                    <option>Neurology</option>
+                    <option>Orthopedics</option>
+                  </select>
+                  <input type="date" required />
+                </div>
+                <button type="submit" className={styles.cta} style={{ width: '100%', marginTop: '2rem', border: 'none', cursor: 'pointer', background: '#0070f3', color: '#fff' }} disabled={formState === 'submitting'}>
+                  {formState === 'submitting' ? 'Processing...' : 'Schedule Visit'}
+                </button>
+              </form>
+            )}
           </div>
         </section>
       </main>

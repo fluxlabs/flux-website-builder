@@ -139,6 +139,18 @@
   line-height: 0.9;
 }
 
+.successMessage {
+  border: 5px solid #ffcc00;
+  padding: 4rem;
+  text-align: center;
+}
+
+.successMessage h3 {
+  font-size: 3rem;
+  color: #ffcc00;
+  margin-bottom: 1rem;
+}
+
 .form {
   display: flex;
   flex-direction: column;

@@ -91,6 +91,17 @@
   padding: 4rem;
 }
 
+.editorial {
+  padding: 10rem 5%;
+  background: #f5f5f4;
+  text-align: center;
+}
+
+.editorialContent {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
 .cta {
   display: inline-block;
   padding: 1.25rem 4rem;
@@ -138,6 +149,11 @@
 .viewingContainer p {
   color: #a8a29e;
   margin-bottom: 5rem;
+}
+
+.successMessage {
+  padding: 4rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .form {
