@@ -2,8 +2,19 @@ import { createClient } from "@supabase/supabase-js";
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || "https://placeholder.supabase.co";
 const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || "placeholder";
+const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY || "";
 
 export const supabase = createClient(supabaseUrl, supabaseAnonKey);
+
+// Use this for background workers and administrative tasks that need to bypass RLS
+export const supabaseAdmin = supabaseServiceKey 
+  ? createClient(supabaseUrl, supabaseServiceKey, {
+      auth: {
+        autoRefreshToken: false,
+        persistSession: false
+      }
+    })
+  : supabase;
 
 export type LogLevel = 'INFO' | 'WARN' | 'ERROR' | 'DEBUG';
 export type LogCategory = 'INTAKE' | 'AI_GEN' | 'DEPLOY' | 'SYSTEM' | 'ADMIN';
@@ -21,7 +32,8 @@ export async function logEvent({
   message: string;
   metadata?: any;
 }) {
-  const { error } = await supabase
+  // Use admin client for logging to ensure logs are always written
+  const { error } = await supabaseAdmin
     .from('system_logs')
     .insert([
       {

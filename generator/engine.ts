@@ -1,4 +1,4 @@
-import { supabase } from "../src/lib/supabase.ts";
+import { supabase, supabaseAdmin } from "../src/lib/supabase.ts";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
 const genAI = new GoogleGenerativeAI(process.env.GOOGLE_GENERATIVE_AI_API_KEY || "");
@@ -42,8 +42,8 @@ interface PageContent {
 }
 
 export async function generateSiteData(intakeId: string) {
-  // 1. Fetch data from Supabase
-  const { data: intake, error } = await supabase
+  // 1. Fetch data from Supabase using Admin client to bypass RLS
+  const { data: intake, error } = await supabaseAdmin
     .from("intakes")
     .select("*")
     .eq("id", intakeId)

@@ -1,7 +1,7 @@
 import { generateSiteData } from "./engine.ts";
 import { buildSite } from "./build.ts";
 import { execSync } from "child_process";
-import { supabase, logEvent } from "../src/lib/supabase.ts";
+import { supabase, supabaseAdmin, logEvent } from "../src/lib/supabase.ts";
 import { resend } from "../src/lib/resend.ts";
 import { createGitHubRepo, pushToGitHub, deployToVercel, slugify } from "./deploy.ts";
 import fs from "fs";
@@ -10,8 +10,8 @@ import path from "path";
 async function synthesize(intakeId: string, mode: 'full' | 'research' | 'design' = 'full') {
   const startTime = Date.now();
   
-  // Fetch intake details early for notifications
-  const { data: intake } = await supabase
+  // Fetch intake details using Admin client
+  const { data: intake } = await supabaseAdmin
     .from("intakes")
     .select("*")
     .eq("id", intakeId)
@@ -35,8 +35,8 @@ async function synthesize(intakeId: string, mode: 'full' | 'research' | 'design'
       execSync(`rm -rf builds`, { stdio: "ignore" });
     } catch (e) {}
 
-    // Reset status and clear old metrics immediately
-    await supabase.from("intakes").update({ 
+    // Reset status using Admin client to bypass RLS
+    await supabaseAdmin.from("intakes").update({ 
       status: "ai_generating",
       staging_url: mode === 'full' ? null : intake.staging_url,
       build_time_ms: null
@@ -57,7 +57,7 @@ async function synthesize(intakeId: string, mode: 'full' | 'research' | 'design'
         // and stop there, or continue to build. For now, let's assume 'full' is needed to deploy.
         // We'll mark it as done so the admin can see the vision in the logs.
         await logEvent({ intakeId, category: 'AI_GEN', message: `${mode.toUpperCase()} phase complete. Ready for full build.` });
-        await supabase.from("intakes").update({ status: "client_review" }).eq("id", intakeId);
+        await supabaseAdmin.from("intakes").update({ status: "client_review" }).eq("id", intakeId);
         return;
     }
 
@@ -70,7 +70,7 @@ async function synthesize(intakeId: string, mode: 'full' | 'research' | 'design'
     });
     
     // Force isolation to prevent parent node_modules/lockfile interference
-    await supabase.from("intakes").update({ status: "ai_generating" }).eq("id", intakeId);
+    await supabaseAdmin.from("intakes").update({ status: "ai_generating" }).eq("id", intakeId);
     fs.writeFileSync(path.join(buildDir, ".npmrc"), "install-links=false\nnode-linker=hoisted");
 
     // 3. Dry-Run Compilation Check
@@ -106,7 +106,7 @@ async function synthesize(intakeId: string, mode: 'full' | 'research' | 'design'
         message: 'Dry-run build failed',
         metadata: { error: error.message }
       });
-      await supabase.from("intakes").update({ status: "new" }).eq("id", intakeId);
+      await supabaseAdmin.from("intakes").update({ status: "new" }).eq("id", intakeId);
       
       // Notify Admin of failure
       await resend.emails.send({
@@ -141,7 +141,7 @@ async function synthesize(intakeId: string, mode: 'full' | 'research' | 'design'
       message: `Synthesis complete and live at ${stagingUrl}`,
       metadata: { buildTimeMs: buildTime }
     });
-    await supabase.from("intakes").update({ 
+    await supabaseAdmin.from("intakes").update({ 
       status: "client_review", 
       staging_url: stagingUrl,
       deploy_hook: deployHook,

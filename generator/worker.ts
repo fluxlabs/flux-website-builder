@@ -1,5 +1,4 @@
-
-import { supabase } from "../src/lib/supabase.ts";
+import { supabase, supabaseAdmin } from "../src/lib/supabase.ts";
 import { synthesize } from "./synthesize.ts";
 
 /**
@@ -11,8 +10,8 @@ async function startWorker() {
   console.log("🚀 Flux AI Build Worker Started...");
   console.log("Monitoring Supabase for new intakes...");
 
-  // 1. Initial Check: Process any "new" intakes that were missed while worker was down
-  const { data: missedIntakes } = await supabase
+  // 1. Initial Check: Process any "new" intakes using Admin client to bypass RLS
+  const { data: missedIntakes } = await supabaseAdmin
     .from("intakes")
     .select("id")
     .eq("status", "new");
@@ -26,7 +25,7 @@ async function startWorker() {
   }
 
   // 2. Realtime Listener: Watch for NEW rows
-  supabase
+  supabaseAdmin
     .channel("schema-db-changes")
     .on(
       "postgres_changes",
@@ -59,7 +58,7 @@ async function startWorker() {
 }
 
 async function getModeForIntake(intakeId: string): Promise<'full' | 'research' | 'design'> {
-  const { data: logs } = await supabase
+  const { data: logs } = await supabaseAdmin
     .from('system_logs')
     .select('message')
     .eq('intake_id', intakeId)

@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { supabase } from "@/lib/supabase";
+import { supabase, supabaseAdmin } from "@/lib/supabase";
 
 export const dynamic = "force-dynamic";
 
@@ -56,8 +56,8 @@ export async function DELETE(req: Request) {
 
     if (!id) return NextResponse.json({ error: "Missing id" }, { status: 400 });
 
-    // 1. Fetch intake to get business name for infrastructure teardown
-    const { data: intake, error: fetchError } = await supabase
+    // 1. Fetch intake using Admin client to bypass RLS
+    const { data: intake, error: fetchError } = await supabaseAdmin
       .from("intakes")
       .select("*")
       .eq("id", id)
