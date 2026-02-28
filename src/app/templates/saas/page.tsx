@@ -59,6 +59,32 @@ export default function SaaSTemplate() {
           </div>
         </section>
 
+        <section className={styles.contactSection}>
+          <div className={styles.contactGrid}>
+            <div className={styles.contactInfo}>
+              <h2>Ready to ship?</h2>
+              <p>Join over 2,000+ companies scaling their infrastructure on NovaSaaS. Get a personalized demo of our edge network.</p>
+              <div className={styles.demoImage} style={{ backgroundImage: 'url(https://images.unsplash.com/photo-1551434678-e076c223a692?auto=format&fit=crop&w=800&q=80)' }} />
+            </div>
+            <form className={styles.form} onSubmit={(e) => e.preventDefault()}>
+              <div className={styles.inputGroup}>
+                <label>Work Email</label>
+                <input type="email" placeholder="name@company.com" />
+              </div>
+              <div className={styles.inputGroup}>
+                <label>Company Size</label>
+                <select>
+                  <option>1-50 employees</option>
+                  <option>51-200 employees</option>
+                  <option>201-1000 employees</option>
+                  <option>1000+ employees</option>
+                </select>
+              </div>
+              <button type="button" className={styles.cta} style={{ width: '100%', border: 'none', cursor: 'pointer' }}>Request Demo</button>
+            </form>
+          </div>
+        </section>
+
         <footer className={styles.footer}>
           <div>© 2026 NovaSaaS. Built with Flux.</div>
           <div style={{ display: 'flex', gap: '2rem' }}>

@@ -97,6 +97,91 @@
   box-shadow: 0 20px 40px rgba(0,0,0,0.05);
 }
 
+.teamSection {
+  padding: 8rem 5%;
+  background: #f8fbff;
+}
+
+.teamGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 4rem;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.teamMember {
+  text-align: center;
+}
+
+.memberPhoto {
+  height: 300px;
+  width: 100%;
+  background-size: cover;
+  background-position: center;
+  border-radius: 30px;
+  margin-bottom: 1.5rem;
+}
+
+.teamMember h4 {
+  font-size: 1.25rem;
+  margin-bottom: 0.5rem;
+  color: #003366;
+}
+
+.teamMember p {
+  color: #0070f3;
+  font-weight: 600;
+  font-size: 0.875rem;
+}
+
+.bookingSection {
+  padding: 10rem 5%;
+}
+
+.bookingCard {
+  max-width: 1000px;
+  margin: 0 auto;
+  background: #003366;
+  padding: 5rem;
+  border-radius: 40px;
+  color: #fff;
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: 5rem;
+  align-items: center;
+}
+
+.bookingInfo h2 {
+  font-size: 3rem;
+  margin-bottom: 1.5rem;
+}
+
+.bookingInfo p {
+  opacity: 0.7;
+  line-height: 1.6;
+}
+
+.formGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+}
+
+.formGrid input,
+.formGrid select {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 1rem;
+  border-radius: 12px;
+  color: #fff;
+  outline: none;
+}
+
+.formGrid input::placeholder {
+  color: rgba(255, 255, 255, 0.5);
+}
+
 .footer {
   padding: 5rem 5%;
   background: #001a33;

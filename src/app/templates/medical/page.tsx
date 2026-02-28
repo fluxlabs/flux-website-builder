@@ -54,6 +54,50 @@ export default function MedicalTemplate() {
             </div>
           </div>
         </section>
+
+        <section className={styles.teamSection}>
+          <h2 style={{ textAlign: 'center', fontSize: '2.5rem', marginBottom: '4rem', color: '#003366' }}>Meet Our Experts</h2>
+          <div className={styles.teamGrid}>
+            <div className={styles.teamMember}>
+              <div className={styles.memberPhoto} style={{ backgroundImage: 'url(https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?auto=format&fit=crop&w=400&q=80)' }} />
+              <h4>Dr. James Wilson</h4>
+              <p>Chief of Cardiology</p>
+            </div>
+            <div className={styles.teamMember}>
+              <div className={styles.memberPhoto} style={{ backgroundImage: 'url(https://images.unsplash.com/photo-1594824476967-48c8b964273f?auto=format&fit=crop&w=400&q=80)' }} />
+              <h4>Dr. Sarah Chen</h4>
+              <p>Senior Neurologist</p>
+            </div>
+            <div className={styles.teamMember}>
+              <div className={styles.memberPhoto} style={{ backgroundImage: 'url(https://images.unsplash.com/photo-1559839734-2b71f1e3c770?auto=format&fit=crop&w=400&q=80)' }} />
+              <h4>Dr. Robert Miller</h4>
+              <p>Orthopedic Surgeon</p>
+            </div>
+          </div>
+        </section>
+
+        <section className={styles.bookingSection}>
+          <div className={styles.bookingCard}>
+            <div className={styles.bookingInfo}>
+              <h2>Book an Appointment</h2>
+              <p>Schedule your visit with our specialists today. We offer flexible hours and remote consultations.</p>
+            </div>
+            <form className={styles.form} onSubmit={(e) => e.preventDefault()}>
+              <div className={styles.formGrid}>
+                <input type="text" placeholder="Patient Name" />
+                <input type="tel" placeholder="Phone Number" />
+                <select>
+                  <option>Select Specialty</option>
+                  <option>Cardiology</option>
+                  <option>Neurology</option>
+                  <option>Orthopedics</option>
+                </select>
+                <input type="date" />
+              </div>
+              <button type="button" className={styles.cta} style={{ width: '100%', marginTop: '2rem', border: 'none', cursor: 'pointer' }}>Schedule Visit</button>
+            </form>
+          </div>
+        </section>
       </main>
 
       <footer className={styles.footer}>

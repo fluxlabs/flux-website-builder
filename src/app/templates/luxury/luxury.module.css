@@ -75,3 +75,97 @@
   letter-spacing: 0.3rem;
   color: #a8a29e;
 }
+
+.gallery {
+  padding: 5rem;
+}
+
+.galleryGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 5rem;
+}
+
+.galleryItem {
+  height: 600px;
+  background-size: cover;
+  background-position: center;
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  padding: 3rem;
+}
+
+.itemLabel {
+  font-size: 0.75rem;
+  letter-spacing: 0.2rem;
+  color: #fff;
+  font-weight: 700;
+}
+
+.viewingSection {
+  padding: 15rem 10%;
+  background: #1c1917;
+  color: #fff;
+}
+
+.viewingContainer {
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.viewingContainer h2 {
+  font-size: 3rem;
+  font-weight: 300;
+  margin-bottom: 1.5rem;
+}
+
+.viewingContainer p {
+  color: #a8a29e;
+  margin-bottom: 5rem;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+}
+
+.formRow {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+}
+
+.form input,
+.form textarea {
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 1rem 0;
+  color: #fff;
+  outline: none;
+  font-family: inherit;
+}
+
+.form textarea {
+  height: 100px;
+}
+
+.form input::placeholder,
+.form textarea::placeholder {
+  color: #444;
+}
+
+.form .cta {
+  border-color: #fff;
+  color: #fff;
+  background: transparent;
+  cursor: pointer;
+}
+
+.form .cta:hover {
+  background: #fff;
+  color: #000;
+}

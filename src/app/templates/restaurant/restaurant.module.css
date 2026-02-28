@@ -95,3 +95,82 @@
   font-size: 1.5rem;
   color: #eab308;
 }
+
+.storySection {
+  padding: 10rem 10%;
+  background: #050505;
+}
+
+.storyGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8rem;
+  align-items: center;
+}
+
+.storyImage {
+  height: 700px;
+  background-size: cover;
+  background-position: center;
+}
+
+.storyContent label {
+  color: #eab308;
+  text-transform: uppercase;
+  letter-spacing: 0.2rem;
+  display: block;
+  margin-bottom: 2rem;
+}
+
+.storyContent h2 {
+  font-size: 4rem;
+  margin-bottom: 2rem;
+}
+
+.storyContent p {
+  font-family: 'Inter', sans-serif;
+  opacity: 0.6;
+  line-height: 2;
+  font-size: 1.125rem;
+}
+
+.reservationSection {
+  padding: 15rem 10%;
+}
+
+.resCard {
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.resCard h2 {
+  font-size: 4rem;
+  margin-bottom: 1rem;
+}
+
+.resCard p {
+  font-family: 'Inter', sans-serif;
+  opacity: 0.5;
+  margin-bottom: 5rem;
+}
+
+.formGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+}
+
+.formGrid input,
+.formGrid select {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 1.5rem;
+  color: #fff;
+  font-family: 'Inter', sans-serif;
+  outline: none;
+}
+
+.formGrid input:focus {
+  border-color: #eab308;
+}
