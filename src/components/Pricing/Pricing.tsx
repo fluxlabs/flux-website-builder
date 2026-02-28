@@ -1,5 +1,7 @@
-import styles from "./Pricing.module.css";
+"use client";
+
 import Link from "next/link";
+import { Box, Container, Typography, Grid, Button, Stack } from "@mui/material";
 import SpotlightCard from "@/components/ui/SpotlightCard";
 import ScrollReveal from "@/components/ui/ScrollReveal";
 import Magnetic from "@/components/ui/Magnetic";
@@ -51,54 +53,106 @@ export default function Pricing() {
   ];
 
   return (
-    <section id="pricing" className={styles.pricing}>
-      <ScrollReveal className={styles.container}>
-        <div className={styles.header}>
-          <h2 className={styles.title}>Simple, No-Guess Pricing</h2>
-          <p className={styles.subtitle}>Pay once, own forever. No hidden monthly fees for building.</p>
-        </div>
-        
-        <div className={styles.grid}>
-          {plans.map((plan) => (
-            <SpotlightCard key={plan.name} className={`${plan.isPopular ? styles.popular : ""}`}>
-              <div className={styles.cardContent}>
-                {plan.isPopular && <div className={styles.badge}>Most Popular</div>}
-                
-                <div className={styles.cardHeader}>
-                  <h3 className={styles.planName}>{plan.name}</h3>
-                  <p className={styles.planDesc}>{plan.description}</p>
-                  <div className={styles.price}>{plan.price}<span className={styles.priceLabel}>/build</span></div>
-                </div>
+    <Box id="pricing" component="section" sx={{ py: 15, background: '#000' }}>
+      <ScrollReveal>
+        <Container maxWidth="lg">
+          <Box sx={{ textAlign: 'center', mb: 10 }}>
+            <Typography 
+              variant="h2" 
+              sx={{ 
+                fontSize: { xs: '2.5rem', md: '3.5rem' }, 
+                fontWeight: 800, 
+                mb: 2,
+                letterSpacing: '-0.1rem'
+              }}
+            >
+              Simple, No-Guess Pricing
+            </Typography>
+            <Typography variant="body1" sx={{ color: '#888', fontSize: '1.25rem' }}>
+              Pay once, own forever. No hidden monthly fees for building.
+            </Typography>
+          </Box>
+          
+          <Grid container spacing={4}>
+            {plans.map((plan) => (
+              <Grid item xs={12} md={4} key={plan.name}>
+                <SpotlightCard sx={{ 
+                  height: '100%', 
+                  border: plan.isPopular ? '1px solid #0070f3' : '1px solid rgba(255,255,255,0.05)',
+                  background: plan.isPopular ? 'rgba(0, 112, 243, 0.05)' : 'rgba(255,255,255,0.02)'
+                }}>
+                  <Box sx={{ p: 4, height: '100%', display: 'flex', flexDirection: 'column' }}>
+                    {plan.isPopular && (
+                      <Typography 
+                        sx={{ 
+                          fontSize: '0.6rem', 
+                          fontWeight: 900, 
+                          textTransform: 'uppercase', 
+                          letterSpacing: '0.1rem',
+                          background: '#0070f3',
+                          color: '#fff',
+                          px: 1.5,
+                          py: 0.5,
+                          borderRadius: '4px',
+                          width: 'fit-content',
+                          mb: 3
+                        }}
+                      >
+                        Most Popular
+                      </Typography>
+                    )}
+                    
+                    <Box sx={{ mb: 4 }}>
+                      <Typography variant="h4" sx={{ fontWeight: 800, mb: 1 }}>{plan.name}</Typography>
+                      <Typography variant="body2" sx={{ color: '#666', mb: 3 }}>{plan.description}</Typography>
+                      <Typography variant="h3" sx={{ fontWeight: 800 }}>
+                        {plan.price}
+                        <Box component="span" sx={{ fontSize: '1rem', color: '#444', ml: 1 }}>/build</Box>
+                      </Typography>
+                    </Box>
 
-                <div className={styles.features}>
-                  <ul>
-                    {plan.features.map((feature) => (
-                      <li key={feature}>
-                        <span className={styles.check}>✓</span>
-                        {feature}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
+                    <Stack spacing={2} sx={{ mb: 6, flexGrow: 1 }}>
+                      {plan.features.map((feature) => (
+                        <Box key={feature} sx={{ display: 'flex', gap: 1.5, alignItems: 'center' }}>
+                          <Typography sx={{ color: '#0070f3', fontWeight: 900 }}>✓</Typography>
+                          <Typography variant="body2" sx={{ color: '#888', fontWeight: 500 }}>{feature}</Typography>
+                        </Box>
+                      ))}
+                    </Stack>
 
-                <Magnetic intensity={0.1} style={{ display: "block" }}>
-                  <Link href="/intake" className={styles.planCta}>
-                    Choose {plan.name}
-                    <div className={styles.ctaArrow}>→</div>
-                  </Link>
-                </Magnetic>
-              </div>
-            </SpotlightCard>
-          ))}
-        </div>
-        
-        <div className={styles.guarantee}>
-          <p>
-            <span className={styles.guaranteeIcon}>🛡️</span>
-            100% Satisfaction Guarantee. We build until you love it.
-          </p>
-        </div>
+                    <Magnetic intensity={0.1}>
+                      <Button 
+                        component={Link} 
+                        href="/intake" 
+                        variant="outlined"
+                        fullWidth
+                        sx={{ 
+                          borderRadius: '12px', 
+                          py: 1.5, 
+                          fontWeight: 800, 
+                          color: '#fff', 
+                          borderColor: 'rgba(255,255,255,0.1)',
+                          textTransform: 'none',
+                          '&:hover': { borderColor: '#fff', background: 'rgba(255,255,255,0.05)' }
+                        }}
+                      >
+                        Choose {plan.name} →
+                      </Button>
+                    </Magnetic>
+                  </Box>
+                </SpotlightCard>
+              </Grid>
+            ))}
+          </Grid>
+          
+          <Box sx={{ mt: 10, textAlign: 'center' }}>
+            <Typography sx={{ color: '#444', fontWeight: 700, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 1.5 }}>
+              <Box component="span" sx={{ fontSize: '1.25rem' }}>🛡️</Box>
+              100% Satisfaction Guarantee. We build until you love it.
+            </Typography>
+          </Box>
+        </Container>
       </ScrollReveal>
-    </section>
+    </Box>
   );
 }

@@ -1,8 +1,11 @@
 "use client";
 
-import styles from "./Features.module.css";
 import { motion } from "framer-motion";
 import { Bot, Zap, BarChart3, Key, MonitorSmartphone, Palette } from "lucide-react";
+import { Box, Container, Typography, Grid, Card, CardContent } from "@mui/material";
+
+const MotionBox = motion(Box);
+const MotionCard = motion(Card);
 
 const features = [
   {
@@ -39,30 +42,111 @@ const features = [
 
 export default function Features() {
   return (
-    <section className={styles.featuresSection}>
-      <div className={styles.container}>
-        <div className={styles.header}>
-          <h2>Why Flux Wins</h2>
-          <p>We replaced the slow agency model with an intelligent engine.</p>
-        </div>
+    <Box component="section" sx={{ py: 15, background: '#000', position: 'relative' }}>
+      <Container maxWidth="lg">
+        <Box sx={{ textAlign: 'center', mb: 10 }}>
+          <Typography 
+            variant="h2" 
+            sx={{ 
+              fontSize: { xs: '2.5rem', md: '3.5rem' }, 
+              fontWeight: 300, 
+              mb: 2,
+              fontFamily: 'serif',
+              background: 'linear-gradient(135deg, #fff 0%, #d6c5a5 100%)',
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent'
+            }}
+          >
+            Why Flux Wins
+          </Typography>
+          <Typography 
+            variant="body1" 
+            sx={{ 
+              color: '#888', 
+              letterSpacing: '0.1rem', 
+              textTransform: 'uppercase',
+              fontSize: '0.875rem'
+            }}
+          >
+            We replaced the slow agency model with an intelligent engine.
+          </Typography>
+        </Box>
         
-        <div className={styles.grid}>
+        <Grid container spacing={4}>
           {features.map((feature, i) => (
-            <motion.div 
-              key={i}
-              className={styles.card}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.1 }}
-            >
-              <div className={styles.icon}>{feature.icon}</div>
-              <h3>{feature.title}</h3>
-              <p>{feature.description}</p>
-            </motion.div>
+            <Grid item xs={12} sm={6} md={4} key={i}>
+              <MotionCard 
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.1 }}
+                sx={{ 
+                  height: '100%',
+                  background: 'transparent',
+                  border: 'none',
+                  borderTop: '1px solid rgba(214, 197, 165, 0.1)',
+                  borderRadius: 0,
+                  pt: 4,
+                  position: 'relative',
+                  '&::after': {
+                    content: '""',
+                    position: 'absolute',
+                    bottom: 0,
+                    left: 0,
+                    width: '0%',
+                    height: '1px',
+                    background: '#d6c5a5',
+                    transition: 'width 0.5s cubic-bezier(0.19, 1, 0.22, 1)'
+                  },
+                  '&:hover::after': {
+                    width: '100%'
+                  },
+                  '&:hover .icon-box': {
+                    color: '#fff',
+                    transform: 'scale(1.05)'
+                  }
+                }}
+              >
+                <CardContent sx={{ p: 0 }}>
+                  <Box 
+                    className="icon-box"
+                    sx={{ 
+                      mb: 3, 
+                      color: '#d6c5a5', 
+                      transition: 'all 0.5s ease',
+                      display: 'flex',
+                      alignItems: 'center'
+                    }}
+                  >
+                    {feature.icon}
+                  </Box>
+                  <Typography 
+                    variant="h5" 
+                    sx={{ 
+                      fontWeight: 400, 
+                      mb: 2, 
+                      color: '#fff',
+                      letterSpacing: '0.05rem'
+                    }}
+                  >
+                    {feature.title}
+                  </Typography>
+                  <Typography 
+                    variant="body2" 
+                    sx={{ 
+                      color: '#888', 
+                      lineHeight: 1.8,
+                      fontWeight: 300
+                    }}
+                  >
+                    {feature.description}
+                  </Typography>
+                </CardContent>
+              </MotionCard>
+            </Grid>
           ))}
-        </div>
-      </div>
-    </section>
+        </Grid>
+      </Container>
+    </Box>
   );
 }

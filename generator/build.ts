@@ -52,33 +52,50 @@ export async function buildSite(intakeId: string, siteData: GeneratedSiteData) {
   }));
 
   const navbarContent = `
+    "use client";
     import Link from "next/link";
+    import { AppBar, Toolbar, Typography, Button, Box, Container } from "@mui/material";
 
     export default function Navbar() {
       const links = ${JSON.stringify(navLinks)};
       return (
-        <nav style={{ padding: '1rem 2rem', borderBottom: '1px solid #eee', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-          <div style={{ fontWeight: 'bold', fontSize: '1.5rem' }}>${siteData.siteTitle}</div>
-          <div style={{ display: 'flex', gap: '1.5rem' }}>
-            {links.map(link => (
-              <Link key={link.href} href={link.href} style={{ textDecoration: 'none', color: '#333', fontWeight: 500 }}>
-                {link.label}
-              </Link>
-            ))}
-          </div>
-        </nav>
+        <AppBar position="sticky" sx={{ backgroundColor: '#fff', color: '#000', boxShadow: 'none', borderBottom: '1px solid #eee' }}>
+          <Container maxWidth="lg">
+            <Toolbar sx={{ justifyContent: 'space-between' }}>
+              <Typography variant="h6" component={Link} href="/" sx={{ fontWeight: 'bold', textDecoration: 'none', color: 'inherit' }}>
+                ${siteData.siteTitle}
+              </Typography>
+              <Box sx={{ display: 'flex', gap: 3 }}>
+                {links.map(link => (
+                  <Button key={link.href} component={Link} href={link.href} sx={{ color: '#333', textTransform: 'none', fontWeight: 500 }}>
+                    {link.label}
+                  </Button>
+                ))}
+              </Box>
+            </Toolbar>
+          </Container>
+        </AppBar>
       );
     }
   `;
   await fs.writeFile(path.join(navbarDir, "Navbar.tsx"), navbarContent);
 
-  // 4. Inject Layout to include Navbar
+  // 4. Inject Layout to include Navbar and MUI Theme
   const layoutPath = path.join(buildDir, "src", "app", "layout.tsx");
   const layoutContent = `
     import type { Metadata } from "next";
     import "./globals.css";
+    import { AppRouterCacheProvider } from '@mui/material-nextjs/v15-appRouter';
+    import { ThemeProvider, createTheme } from '@mui/material/styles';
+    import CssBaseline from '@mui/material/CssBaseline';
     import Navbar from "@/components/Navbar/Navbar";
     import Footer from "@/components/Footer/Footer";
+
+    const theme = createTheme({
+      palette: {
+        primary: { main: '${siteData.brandColor}' },
+      },
+    });
 
     export const metadata: Metadata = {
       title: "${siteData.siteTitle}",
@@ -93,9 +110,14 @@ export async function buildSite(intakeId: string, siteData: GeneratedSiteData) {
       return (
         <html lang="en">
           <body>
-            <Navbar />
-            {children}
-            <Footer siteTitle="${siteData.siteTitle}" />
+            <AppRouterCacheProvider>
+              <ThemeProvider theme={theme}>
+                <CssBaseline />
+                <Navbar />
+                {children}
+                <Footer siteTitle="${siteData.siteTitle}" />
+              </ThemeProvider>
+            </AppRouterCacheProvider>
           </body>
         </html>
       );
@@ -117,11 +139,12 @@ export async function buildSite(intakeId: string, siteData: GeneratedSiteData) {
       import Testimonials from "@/components/Testimonials/Testimonials";
       import ContactForm from "@/components/ContactForm/ContactForm";
       import Pricing from "@/components/Pricing/Pricing";
+      import { Box } from "@mui/material";
 
       export default function Page() {
         const pageData = ${JSON.stringify(page)};
         return (
-          <main>
+          <Box component="main">
             <Hero 
               headline={pageData.hero.headline}
               subtitle={pageData.hero.subtitle}
@@ -142,7 +165,7 @@ export async function buildSite(intakeId: string, siteData: GeneratedSiteData) {
                   return null;
               }
             })}
-          </main>
+          </Box>
         );
       }
     `;

@@ -3,13 +3,15 @@
 import { useRef, useState, MouseEvent } from "react";
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 import styles from "./SpotlightCard.module.css";
+import { Box, SxProps, Theme } from "@mui/material";
 
 interface SpotlightCardProps {
   children: React.ReactNode;
   className?: string;
+  sx?: SxProps<Theme>;
 }
 
-export default function SpotlightCard({ children, className = "" }: SpotlightCardProps) {
+export default function SpotlightCard({ children, className = "", sx }: SpotlightCardProps) {
   const divRef = useRef<HTMLDivElement>(null);
   const [isFocused, setIsFocused] = useState(false);
   const [position, setPosition] = useState({ x: 0, y: 0 });
@@ -68,30 +70,32 @@ export default function SpotlightCard({ children, className = "" }: SpotlightCar
   };
 
   return (
-    <motion.div
-      ref={divRef}
-      onMouseMove={handleMouseMove}
-      onFocus={handleFocus}
-      onBlur={handleBlur}
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
-      className={`${styles.spotlightCard} ${className}`}
-      style={{
-        rotateX,
-        rotateY,
-        transformStyle: "preserve-3d",
-      }}
-    >
-      <div
-        className={styles.spotlight}
+    <Box sx={sx}>
+      <motion.div
+        ref={divRef}
+        onMouseMove={handleMouseMove}
+        onFocus={handleFocus}
+        onBlur={handleBlur}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+        className={`${styles.spotlightCard} ${className}`}
         style={{
-          opacity,
-          WebkitMaskImage: `radial-gradient(400px circle at ${position.x}px ${position.y}px, black, transparent)`,
+          rotateX,
+          rotateY,
+          transformStyle: "preserve-3d",
         }}
-      />
-      <div className={styles.content} style={{ transform: "translateZ(30px)" }}>
-        {children}
-      </div>
-    </motion.div>
+      >
+        <div
+          className={styles.spotlight}
+          style={{
+            opacity,
+            WebkitMaskImage: `radial-gradient(400px circle at ${position.x}px ${position.y}px, black, transparent)`,
+          }}
+        />
+        <div className={styles.content} style={{ transform: "translateZ(30px)" }}>
+          {children}
+        </div>
+      </motion.div>
+    </Box>
   );
 }
