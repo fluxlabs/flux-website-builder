@@ -1,0 +1,11 @@
+// Flux Website Builder — Browser Supabase Client (Cookie-based for SSR)
+// Copyright (c) 2026 Jeremy McSpadden <jeremy@fluxlabs.net>
+
+import { createBrowserClient } from "@supabase/ssr";
+
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || "";
+const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || "";
+
+export function createSupabaseBrowser() {
+  return createBrowserClient(supabaseUrl, supabaseAnonKey);
+}

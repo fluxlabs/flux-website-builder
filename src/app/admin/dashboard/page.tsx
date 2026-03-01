@@ -24,7 +24,7 @@ import {
   FormControl
 } from "@mui/material";
 import { useRouter } from "next/navigation";
-import { supabase } from "@/lib/supabase";
+import { createSupabaseBrowser } from "@/lib/supabase-browser";
 import {
   Rocket,
   Search,
@@ -56,6 +56,7 @@ export default function AdminDashboard() {
 
   useEffect(() => {
     const checkUser = async () => {
+      const supabase = createSupabaseBrowser();
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) {
         router.push("/admin/login");
@@ -67,6 +68,7 @@ export default function AdminDashboard() {
   }, [router]);
 
   const handleLogout = async () => {
+    const supabase = createSupabaseBrowser();
     await supabase.auth.signOut();
     router.push("/admin/login");
   };

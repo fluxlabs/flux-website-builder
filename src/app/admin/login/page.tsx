@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { supabase } from "@/lib/supabase";
+import { createSupabaseBrowser } from "@/lib/supabase-browser";
 import { 
   Box, 
   Container, 
@@ -30,6 +30,7 @@ export default function AdminLoginPage() {
     setError(null);
 
     try {
+      const supabase = createSupabaseBrowser();
       const { data, error: authError } = await supabase.auth.signInWithPassword({
         email,
         password,
