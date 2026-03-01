@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import { 
   Box, 
   Container, 
@@ -21,21 +21,16 @@ import {
   Tabs,
   Select,
   MenuItem,
-  FormControl,
-  InputLabel
+  FormControl
 } from "@mui/material";
 import { useRouter } from "next/navigation";
 import { supabase } from "@/lib/supabase";
-import { 
-  Rocket, 
-  Search, 
-  Trash2, 
-  RefreshCcw, 
-  ExternalLink, 
-  User, 
-  Calendar,
+import {
+  Rocket,
+  Search,
+  Trash2,
+  ExternalLink,
   X,
-  Plus,
   Activity,
   ArrowLeft,
   LogOut,
@@ -100,24 +95,31 @@ export default function AdminDashboard() {
   };
 
   useEffect(() => {
-    let interval: any;
+    let interval: ReturnType<typeof setInterval>;
     if (user) {
       fetchIntakes();
-      interval = setInterval(fetchIntakes, 10000);
+      interval = setInterval(fetchIntakes, 15000); // 15s is sufficient for pipeline view
     }
     return () => clearInterval(interval);
   }, [user]);
 
+  // Only poll logs when actively needed: selected intake is building, or analytics view
+  const isActivelyBuilding = selectedIntake?.status === 'ai_generating' || selectedIntake?.status === 'new';
   useEffect(() => {
-    let logInterval: any;
-    if (selectedIntake || currentView === 'analytics') {
+    let logInterval: ReturnType<typeof setInterval>;
+    if (currentView === 'analytics') {
       fetchLogs();
-      logInterval = setInterval(fetchLogs, 3000);
+      logInterval = setInterval(fetchLogs, 10000); // Analytics: slower poll
+    } else if (selectedIntake && isActivelyBuilding) {
+      fetchLogs();
+      logInterval = setInterval(fetchLogs, 5000); // Active build: moderate poll
+    } else if (selectedIntake) {
+      fetchLogs(); // Fetch once for non-building intakes, no polling
     } else {
       setLiveLogs([]);
     }
     return () => clearInterval(logInterval);
-  }, [selectedIntake, currentView]);
+  }, [selectedIntake, currentView, isActivelyBuilding]);
 
   const updateStatus = async (id: string, status: string) => {
     try {

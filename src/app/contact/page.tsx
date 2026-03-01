@@ -12,14 +12,32 @@ const MotionTypography = motion(Typography);
 export default function ContactPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [error, setError] = useState("");
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-    setTimeout(() => {
-      setIsSubmitting(false);
+    setError("");
+    const form = e.target as HTMLFormElement;
+    const formData = new FormData(form);
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: formData.get("name"),
+          email: formData.get("email"),
+          subject: formData.get("subject"),
+          message: formData.get("message"),
+        }),
+      });
+      if (!res.ok) throw new Error("Failed to send");
       setSubmitted(true);
-    }, 1500);
+    } catch {
+      setError("Something went wrong. Please try again or email us directly.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -85,28 +103,36 @@ export default function ContactPage() {
                 </Box>
               ) : (
                 <Box component="form" onSubmit={handleSubmit} sx={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
-                  <TextField 
-                    fullWidth 
-                    label="Full Name" 
-                    variant="standard" 
-                    required 
+                  {error && (
+                    <Typography sx={{ color: '#ef4444', fontSize: '0.875rem', p: 2, background: 'rgba(239,68,68,0.1)', borderRadius: '8px' }}>
+                      {error}
+                    </Typography>
+                  )}
+                  <TextField
+                    fullWidth
+                    name="name"
+                    label="Full Name"
+                    variant="standard"
+                    required
                     InputLabelProps={{ sx: { color: '#666', fontSize: '0.75rem', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.1rem' } }}
                     inputProps={{ sx: { color: '#fff', fontSize: '1.25rem', pt: 2 } }}
                   />
-                  <TextField 
-                    fullWidth 
-                    label="Email Address" 
-                    variant="standard" 
-                    type="email" 
-                    required 
+                  <TextField
+                    fullWidth
+                    name="email"
+                    label="Email Address"
+                    variant="standard"
+                    type="email"
+                    required
                     InputLabelProps={{ sx: { color: '#666', fontSize: '0.75rem', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.1rem' } }}
                     inputProps={{ sx: { color: '#fff', fontSize: '1.25rem', pt: 2 } }}
                   />
-                  <TextField 
-                    fullWidth 
-                    select 
-                    label="Subject" 
-                    variant="standard" 
+                  <TextField
+                    fullWidth
+                    select
+                    name="subject"
+                    label="Subject"
+                    variant="standard"
                     defaultValue="General Inquiry"
                     InputLabelProps={{ sx: { color: '#666', fontSize: '0.75rem', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.1rem' } }}
                     SelectProps={{ sx: { color: '#fff', fontSize: '1.25rem', pt: 2 } }}
@@ -116,13 +142,14 @@ export default function ContactPage() {
                     <MenuItem value="Partnership">Partnership</MenuItem>
                     <MenuItem value="Support">Support</MenuItem>
                   </TextField>
-                  <TextField 
-                    fullWidth 
-                    multiline 
-                    rows={4} 
-                    label="Message" 
-                    variant="standard" 
-                    required 
+                  <TextField
+                    fullWidth
+                    multiline
+                    rows={4}
+                    name="message"
+                    label="Message"
+                    variant="standard"
+                    required
                     InputLabelProps={{ sx: { color: '#666', fontSize: '0.75rem', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.1rem' } }}
                     inputProps={{ sx: { color: '#fff', fontSize: '1.25rem', pt: 2 } }}
                   />

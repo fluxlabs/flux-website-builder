@@ -1,21 +1,76 @@
+// Flux Website Builder — Intake API
+// Copyright (c) 2026 Jeremy McSpadden <jeremy@fluxlabs.net>
+
 import { NextResponse } from "next/server";
-import { supabase } from "@/lib/supabase";
+import { supabase, supabaseAdmin } from "@/lib/supabase";
 import { resend } from "@/lib/resend";
 
 export const dynamic = "force-dynamic";
 
+const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const MAX_TEXT_LENGTH = 2000;
+const MAX_URL_LENGTH = 500;
+
+// Simple rate limiter — 5 requests per 15 minutes per IP
+const rateLimitMap = new Map<string, number[]>();
+const RATE_LIMIT_WINDOW = 15 * 60 * 1000;
+const RATE_LIMIT_MAX = 5;
+
+function checkRateLimit(ip: string): boolean {
+  const now = Date.now();
+  const timestamps = rateLimitMap.get(ip) || [];
+  const recent = timestamps.filter(t => now - t < RATE_LIMIT_WINDOW);
+  rateLimitMap.set(ip, recent);
+  if (recent.length >= RATE_LIMIT_MAX) return false;
+  recent.push(now);
+  return true;
+}
+
+// Cleanup stale entries every 10 minutes
+setInterval(() => {
+  const now = Date.now();
+  rateLimitMap.forEach((timestamps, ip) => {
+    const recent = timestamps.filter(t => now - t < RATE_LIMIT_WINDOW);
+    if (recent.length === 0) rateLimitMap.delete(ip);
+    else rateLimitMap.set(ip, recent);
+  });
+}, 10 * 60 * 1000);
+
+function sanitizeText(text: string | undefined | null, maxLen = MAX_TEXT_LENGTH): string {
+  if (!text || typeof text !== "string") return "";
+  return text.trim().slice(0, maxLen);
+}
+
 export async function POST(req: Request) {
   try {
+    // Rate limiting
+    const ip = req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "unknown";
+    if (!checkRateLimit(ip)) {
+      return NextResponse.json({ error: "Too many requests. Please try again later." }, { status: 429 });
+    }
+
     const body = await req.json();
-    const { 
-      name, email, phone, hasWebsite, currentUrl, businessName, 
-      industry, location, employeeCount, links, socialLinks, servicesList, 
+    const {
+      name, email, phone, hasWebsite, currentUrl, businessName,
+      industry, location, employeeCount, links, socialLinks, servicesList,
       colors, logoUrl, goal, pages, brandVoice, targetAudience, heroMessage,
       vertical, layout, extractedColors,
       logoQuality, rebuildLogo
     } = body;
 
-    console.log("Received intake request:", body);
+    // Validate required fields
+    if (!name || typeof name !== "string" || name.trim().length < 1) {
+      return NextResponse.json({ error: "Name is required" }, { status: 400 });
+    }
+    if (!email || !EMAIL_REGEX.test(email)) {
+      return NextResponse.json({ error: "Valid email is required" }, { status: 400 });
+    }
+    if (!goal || typeof goal !== "string") {
+      return NextResponse.json({ error: "Goal is required" }, { status: 400 });
+    }
+    if (!Array.isArray(pages) || pages.length === 0) {
+      return NextResponse.json({ error: "At least one page is required" }, { status: 400 });
+    }
 
     // 1. Save to Supabase
     if (process.env.NEXT_PUBLIC_SUPABASE_URL && process.env.NEXT_PUBLIC_SUPABASE_URL !== "your-supabase-url") {
@@ -23,30 +78,30 @@ export async function POST(req: Request) {
         .from("intakes")
         .insert([
             {
-            name,
-            email,
-            phone,
-            has_website: hasWebsite,
-            business_name: businessName,
-            current_url: currentUrl,
-            industry,
-            location,
-            employee_count: employeeCount,
-            links,
-            social_links: socialLinks,
-            services_list: servicesList,
-            colors,
-            logo_url: logoUrl,
-            goal,
-            pages,
-            brand_voice: brandVoice,
-            target_audience: targetAudience,
-            hero_message: heroMessage,
-            vertical,
-            layout,
-            extracted_colors: extractedColors,
-            logo_quality: logoQuality,
-            rebuild_logo: rebuildLogo,
+            name: sanitizeText(name, 200),
+            email: sanitizeText(email, 320),
+            phone: sanitizeText(phone, 30),
+            has_website: !!hasWebsite,
+            business_name: sanitizeText(businessName, 200),
+            current_url: sanitizeText(currentUrl, MAX_URL_LENGTH),
+            industry: sanitizeText(industry, 200),
+            location: sanitizeText(location, 200),
+            employee_count: sanitizeText(employeeCount, 50),
+            links: sanitizeText(links, MAX_TEXT_LENGTH),
+            social_links: sanitizeText(socialLinks, MAX_TEXT_LENGTH),
+            services_list: sanitizeText(servicesList, MAX_TEXT_LENGTH),
+            colors: sanitizeText(colors, 50),
+            logo_url: sanitizeText(logoUrl, MAX_URL_LENGTH),
+            goal: sanitizeText(goal, 100),
+            pages: Array.isArray(pages) ? pages.map((p: string) => sanitizeText(p, 50)).slice(0, 20) : [],
+            brand_voice: sanitizeText(brandVoice, 100),
+            target_audience: sanitizeText(targetAudience, MAX_TEXT_LENGTH),
+            hero_message: sanitizeText(heroMessage, MAX_TEXT_LENGTH),
+            vertical: sanitizeText(vertical, 100),
+            layout: sanitizeText(layout, 100),
+            extracted_colors: Array.isArray(extractedColors) ? extractedColors.slice(0, 10) : [],
+            logo_quality: sanitizeText(logoQuality, 20),
+            rebuild_logo: !!rebuildLogo,
             status: "new",
             },
         ])
@@ -54,7 +109,7 @@ export async function POST(req: Request) {
 
         if (supabaseError) {
             console.error("Supabase Error:", supabaseError);
-            return NextResponse.json({ error: "Failed to save to database", details: supabaseError }, { status: 500 });
+            return NextResponse.json({ error: "Failed to save to database" }, { status: 500 });
         }
 
         const intakeId = supabaseData[0].id;
@@ -137,9 +192,9 @@ export async function POST(req: Request) {
     } else {
         return NextResponse.json({ success: true });
     }
-  } catch (error: any) {
+  } catch (error) {
     console.error("Internal Server Error:", error);
-    return NextResponse.json({ error: "Internal Server Error", details: error.message }, { status: 500 });
+    return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
   }
 }
 
@@ -150,13 +205,14 @@ export async function GET(req: Request) {
 
     if (!id) return NextResponse.json({ error: "Missing id" }, { status: 400 });
 
-    const { data, error } = await supabase
+    const { data, error } = await supabaseAdmin
       .from("intakes")
       .select("*")
       .eq("id", id)
       .single();
 
     if (error || !data) {
+      console.error("Fetch Intake Error:", error);
       return NextResponse.json({ error: "Not found" }, { status: 404 });
     }
 

@@ -14,10 +14,10 @@ export default function LaunchGuidePage() {
   useEffect(() => {
     const fetchIntake = async () => {
       try {
-        const res = await fetch(`/api/admin/intakes`);
+        const res = await fetch(`/api/review?id=${id}`);
+        if (!res.ok) throw new Error("Not found");
         const data = await res.json();
-        const item = data.find((i: any) => i.id === id);
-        setIntake(item);
+        setIntake(data);
       } catch (err) {
         console.error(err);
       } finally {

@@ -4,7 +4,14 @@
   color: #fff;
   display: flex;
   flex-direction: column;
-  overflow: hidden;
+  overflow: auto;
+}
+
+@media (max-width: 900px) {
+  .container {
+    height: auto;
+    min-height: 100vh;
+  }
 }
 
 .header {
@@ -111,6 +118,28 @@
   border-left: 1px solid rgba(255, 255, 255, 0.05);
   display: flex;
   flex-direction: column;
+}
+
+@media (max-width: 900px) {
+  .main {
+    flex-direction: column;
+    height: auto;
+  }
+  .previewPane {
+    height: 60vh;
+    padding: 1rem;
+  }
+  .sidebar {
+    width: 100%;
+    border-left: none;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+  }
+  .sidebarContent {
+    padding: 2rem;
+  }
+  .header {
+    padding: 1rem 1.5rem;
+  }
 }
 
 .sidebarContent {

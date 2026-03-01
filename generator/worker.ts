@@ -82,6 +82,11 @@ const queue: { id: string, mode: 'full' | 'research' | 'design' }[] = [];
 
 async function safeSynthesize(id: string, mode: 'full' | 'research' | 'design' = 'full') {
   if (isProcessing) {
+    // Deduplicate — don't queue the same intake twice
+    if (queue.find(item => item.id === id)) {
+      console.log(`Worker busy. ${id} already in queue, skipping.`);
+      return;
+    }
     console.log(`Worker busy. Adding ${id} (${mode}) to queue.`);
     queue.push({ id, mode });
     return;

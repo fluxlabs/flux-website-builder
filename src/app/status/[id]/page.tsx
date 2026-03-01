@@ -24,34 +24,35 @@ export default function BuildStatusPage() {
 
   const fetchData = async () => {
     try {
-      const res = await fetch(`/api/intake?id=${id}`);
-      const data = await res.json();
-      setIntake(data);
-      
-      if (data.status === 'ai_generating' || data.status === 'new') {
-        const logRes = await fetch(`/api/admin/logs?intakeId=${id}`);
-        const logData = await logRes.json();
-        const logsArray = Array.isArray(logData.logs) ? logData.logs : [];
-        
+      // Single API call returns both intake + logs
+      const res = await fetch(`/api/status?id=${id}`);
+      if (!res.ok) {
+        console.error(`Status API returned ${res.status}`);
+        return;
+      }
+      const { intake: intakeData, logs: logsArray } = await res.json();
+      setIntake(intakeData);
+
+      if (intakeData.status === 'ai_generating' || intakeData.status === 'new') {
         // Convert logs array to a displayable string
-        const logText = logsArray
+        const logText = (logsArray || [])
           .slice()
           .reverse()
-          .map((log: any) => `[${new Date(log.created_at).toLocaleTimeString()}] ${log.message}`)
+          .map((log: { created_at: string; message: string }) => `[${new Date(log.created_at).toLocaleTimeString()}] ${log.message}`)
           .join('\n');
-          
+
         setLogs(logText);
-        
-        // Update steps based on logs (check most recent logs first)
-        const messages = logsArray.map((log: any) => log.message);
-        const hasLog = (text: string) => messages.some((m: string) => m && m.includes(text));
+
+        // Update steps based on logs
+        const messages = (logsArray || []).map((log: { message: string }) => log.message);
+        const hasLog = (text: string) => messages.some((m: string) => m && m.toLowerCase().includes(text.toLowerCase()));
 
         if (hasLog("SYNTHESIS COMPLETE")) setCurrentStep(5);
         else if (hasLog("STARTING AUTOMATED DEPLOYMENT") || hasLog("Triggering Vercel deployment")) setCurrentStep(4);
         else if (hasLog("Installing dependencies") || hasLog("scaffolding built")) setCurrentStep(3);
-        else if (hasLog("Initiating AI research") || hasLog("Starting synthesis")) setCurrentStep(2);
+        else if (hasLog("Starting synthesis") || hasLog("AI research")) setCurrentStep(2);
         else setCurrentStep(1);
-      } else if (data.status === 'client_review' || data.status === 'approved' || data.status === 'live') {
+      } else if (intakeData.status === 'client_review' || intakeData.status === 'approved' || intakeData.status === 'live') {
         setCurrentStep(5);
       }
     } catch (err) {
@@ -63,9 +64,11 @@ export default function BuildStatusPage() {
 
   useEffect(() => {
     fetchData();
-    const interval = setInterval(fetchData, 3000);
+    // Stop polling once build is complete
+    if (currentStep >= 5) return;
+    const interval = setInterval(fetchData, 8000);
     return () => clearInterval(interval);
-  }, [id]);
+  }, [id, currentStep]);
 
   if (loading) return <div className={styles.loading}>Connecting...</div>;
   if (!intake) return <div className={styles.error}>Website not found.</div>;

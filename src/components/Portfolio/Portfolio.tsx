@@ -3,6 +3,7 @@
 import { Box, Container, Typography, Link as MuiLink, Grid } from "@mui/material";
 import ScrollReveal from "@/components/ui/ScrollReveal";
 import Link from "next/link";
+import Image from "next/image";
 
 export default function Portfolio() {
   const items = [
@@ -39,12 +40,12 @@ export default function Portfolio() {
                     '&:hover .title': { color: '#d6c5a5', letterSpacing: '0.2rem' }
                   }}
                 >
-                  <Box 
-                    component="img"
+                  <Image
                     src={item.image}
-                    sx={{ 
-                      width: '100%', 
-                      height: '100%', 
+                    alt={item.name}
+                    fill
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                    style={{
                       objectFit: 'cover',
                       transition: 'transform 1.2s cubic-bezier(0.19, 1, 0.22, 1)'
                     }}

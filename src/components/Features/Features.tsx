@@ -1,6 +1,5 @@
 "use client";
 
-import { motion } from "framer-motion";
 import { Bot, Zap, Key } from "lucide-react";
 import { Box, Container, Typography, Stack, Divider, Grid } from "@mui/material";
 

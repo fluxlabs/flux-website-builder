@@ -1,3 +1,6 @@
+// Flux Website Builder — Logo Upload API
+// Copyright (c) 2026 Jeremy McSpadden <jeremy@fluxlabs.net>
+
 import { NextResponse } from "next/server";
 import { v2 as cloudinary } from "cloudinary";
 
@@ -6,6 +9,9 @@ cloudinary.config({
   api_key: process.env.CLOUDINARY_API_KEY,
   api_secret: process.env.CLOUDINARY_API_SECRET,
 });
+
+const ALLOWED_TYPES = ["image/png", "image/jpeg", "image/jpg", "image/webp", "image/svg+xml", "image/gif"];
+const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10MB
 
 export async function POST(req: Request) {
   try {
@@ -17,6 +23,22 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "No file provided" }, { status: 400 });
     }
 
+    // Validate file type
+    if (!ALLOWED_TYPES.includes(file.type)) {
+      return NextResponse.json(
+        { error: "Invalid file type. Allowed: PNG, JPEG, WebP, SVG, GIF" },
+        { status: 400 }
+      );
+    }
+
+    // Validate file size
+    if (file.size > MAX_FILE_SIZE) {
+      return NextResponse.json(
+        { error: "File too large. Maximum size is 10MB." },
+        { status: 400 }
+      );
+    }
+
     const bytes = await file.arrayBuffer();
     const buffer = Buffer.from(bytes);
 
@@ -25,7 +47,7 @@ export async function POST(req: Request) {
       const uploadStream = cloudinary.uploader.upload_stream(
         {
           folder: "flux-logos",
-          // If high quality, apply some auto-optimization/cropping
+          resource_type: "image",
           transformation: quality === 'high' ? [
             { width: 800, height: 800, crop: "limit" },
             { fetch_format: "auto", quality: "auto" }
@@ -39,9 +61,9 @@ export async function POST(req: Request) {
       uploadStream.end(buffer);
     });
 
-    const result: any = await uploadPromise;
+    const result = await uploadPromise as { secure_url: string; public_id: string };
 
-    return NextResponse.json({ 
+    return NextResponse.json({
       url: result.secure_url,
       publicId: result.public_id
     });

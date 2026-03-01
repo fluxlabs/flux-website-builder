@@ -1,11 +1,15 @@
+// Flux Website Builder — Synthesis Pipeline
+// Copyright (c) 2026 Jeremy McSpadden <jeremy@fluxlabs.net>
+
 import { generateSiteData } from "./engine.ts";
 import { buildSite } from "./build.ts";
 import { execSync } from "child_process";
-import { supabase, supabaseAdmin, logEvent } from "../src/lib/supabase.ts";
+import { supabaseAdmin, logEvent } from "../src/lib/supabase.ts";
 import { resend } from "../src/lib/resend.ts";
 import { createGitHubRepo, pushToGitHub, deployToVercel, slugify } from "./deploy.ts";
-import fs from "fs";
+import fs from "fs-extra";
 import path from "path";
+import os from "os";
 
 async function synthesize(intakeId: string, mode: 'full' | 'research' | 'design' = 'full') {
   const startTime = Date.now();
@@ -27,7 +31,7 @@ async function synthesize(intakeId: string, mode: 'full' | 'research' | 'design'
     await logEvent({
       intakeId,
       category: 'AI_GEN',
-      message: `Starting ${mode} synthesis for ${intake.business_name || 'unknown'}`
+      message: `Starting ${mode} synthesis for ${intake.business_name || 'unknown'} (Starting synthesis - Initiating AI research)`
     });
     
     // Clean up local builds folder
@@ -155,7 +159,7 @@ async function synthesize(intakeId: string, mode: 'full' | 'research' | 'design'
     await logEvent({ 
       intakeId, 
       category: 'DEPLOY', 
-      message: `Synthesis complete and live at ${stagingUrl}`,
+      message: `SYNTHESIS COMPLETE: Live at ${stagingUrl}`,
       metadata: { buildTimeMs: buildTime }
     });
     await supabaseAdmin.from("intakes").update({ 
@@ -219,7 +223,17 @@ async function synthesize(intakeId: string, mode: 'full' | 'research' | 'design'
       message: 'Unexpected synthesis error',
       metadata: { error: error.message || String(error) }
     });
-    await supabase.from("intakes").update({ status: "new" }).eq("id", intakeId);
+    // BUG FIX: Use supabaseAdmin (not supabase) to bypass RLS in worker context
+    await supabaseAdmin.from("intakes").update({ status: "new" }).eq("id", intakeId);
+  } finally {
+    // Always clean up temp build directory to prevent disk fill
+    const buildDir = path.join(os.tmpdir(), "flux-synthesis", intakeId);
+    try {
+      await fs.remove(buildDir);
+      console.log(`Cleaned up temp dir: ${buildDir}`);
+    } catch (cleanupErr) {
+      console.error(`Failed to clean up ${buildDir}:`, cleanupErr);
+    }
   }
 }
 

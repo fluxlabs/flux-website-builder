@@ -31,8 +31,13 @@ CREATE TABLE IF NOT EXISTS intakes (
   logo_quality text,
   rebuild_logo boolean DEFAULT false,
   deploy_hook text,
-  build_time_ms bigint -- added for analytics
+  build_time_ms bigint, -- added for analytics
+  staging_url text
 );
+
+-- Performance indexes
+CREATE INDEX IF NOT EXISTS idx_intakes_status ON intakes(status);
+CREATE INDEX IF NOT EXISTS idx_intakes_created_at ON intakes(created_at DESC);
 
 -- Enable RLS
 ALTER TABLE intakes ENABLE ROW LEVEL SECURITY;

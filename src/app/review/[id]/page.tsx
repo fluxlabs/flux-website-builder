@@ -17,10 +17,10 @@ export default function ReviewPage() {
   useEffect(() => {
     const fetchIntake = async () => {
       try {
-        const res = await fetch(`/api/admin/intakes`);
+        const res = await fetch(`/api/review?id=${id}`);
+        if (!res.ok) throw new Error("Not found");
         const data = await res.json();
-        const item = data.find((i: any) => i.id === id);
-        setIntake(item);
+        setIntake(data);
       } catch (err) {
         console.error(err);
       } finally {
@@ -33,11 +33,12 @@ export default function ReviewPage() {
   const handleApprove = async () => {
     setIsApproving(true);
     try {
-      await fetch("/api/admin/intakes", {
+      const res = await fetch("/api/review", {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ id, status: "approved" }),
+        body: JSON.stringify({ id }),
       });
+      if (!res.ok) throw new Error("Approval failed");
       router.push(`/review/${id}/success`);
     } catch (err) {
       console.error(err);

@@ -1,40 +1,51 @@
+// Flux Website Builder — Admin Intakes API
+// Copyright (c) 2026 Jeremy McSpadden <jeremy@fluxlabs.net>
+
 import { NextResponse } from "next/server";
-import { supabase, supabaseAdmin } from "@/lib/supabase";
+import { supabaseAdmin } from "@/lib/supabase";
 
 export const dynamic = "force-dynamic";
 
+const ALLOWED_STATUSES = ["new", "ai_generating", "staging_ready", "client_review", "approved", "live", "archived"];
+
 export async function GET() {
   try {
-    const { data, error } = await supabase
+    const { data, error } = await supabaseAdmin
       .from("intakes")
-      .select("*")
+      .select("id, name, email, business_name, status, goal, vertical, layout, hero_message, staging_url, created_at, build_time_ms, current_url")
       .neq("status", "archived")
-      .order("created_at", { ascending: false });
-
-    console.log("Supabase call finished. Data:", data, "Error:", error);
+      .order("created_at", { ascending: false })
+      .limit(200);
 
     if (error) {
       console.error("Supabase Error:", error);
-      return NextResponse.json([]); // Return empty array on error
+      return NextResponse.json({ error: "Failed to fetch intakes" }, { status: 500 });
     }
 
     if (!Array.isArray(data)) {
-        console.warn("Supabase returned non-array data:", data);
-        return NextResponse.json([]);
+      return NextResponse.json([]);
     }
 
     return NextResponse.json(data);
   } catch (error) {
     console.error("Internal Error:", error);
-    return NextResponse.json([]); // Return empty array on error
+    return NextResponse.json({ error: "Internal server error" }, { status: 500 });
   }
 }
 
 export async function PATCH(req: Request) {
   try {
     const { id, status } = await req.json();
-    
-    const { data, error } = await supabase
+
+    if (!id || !status) {
+      return NextResponse.json({ error: "Missing id or status" }, { status: 400 });
+    }
+
+    if (!ALLOWED_STATUSES.includes(status)) {
+      return NextResponse.json({ error: "Invalid status value" }, { status: 400 });
+    }
+
+    const { data, error } = await supabaseAdmin
       .from("intakes")
       .update({ status })
       .eq("id", id)
@@ -97,7 +108,7 @@ export async function DELETE(req: Request) {
 
     // 5. Soft Delete in Supabase (Backup Routine)
     // We update the status to 'archived' instead of hard deleting so you can restore the data later.
-    const { error } = await supabase
+    const { error } = await supabaseAdmin
       .from("intakes")
       .update({ status: "archived" })
       .eq("id", id);
